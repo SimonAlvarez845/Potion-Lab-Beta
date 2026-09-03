@@ -1,0 +1,395 @@
+
+.lista-miembros-celda {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: right;
+}
+
+.tarjeta-gremio-insignia {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  font-size: 1.25rem;
+  place-items: center;
+  display: grid;
+}
+
+.lista-miembros-celda-rol {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.lista-miembros-texto-rol {
+  align-items: center;
+  gap: 0.375rem;
+  background-color: #ffffff0d;
+  border-radius: 9999px;
+  display: inline-flex;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+}
+
+.tarjeta-gremio-texto-rol {
+  font-weight: 700;
+  color: #ddd6ff;
+}
+
+.lista-miembros-icono-star {
+  color: #ffd236;
+}
+
+.lista-miembros-celda-fecha {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: .75rem;
+  color: #62748e;
+}
+
+.tarjeta-gremio-descripcion {
+  margin-top: 1rem;
+  -webkit-line-clamp: 2;
+  font-size: .875rem;
+  line-height: 1.5rem;
+  color: #90a1b9;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.lista-miembros-icono-shield {
+  color: #53eafd;
+}
+
+.tarjeta-gremio-franja-color {
+  height: 0.375rem;
+}
+
+.lista-miembros-detalle-email {
+  font-size: .75rem;
+  color: #45556c;
+}
+
+.tarjeta-gremio-texto-publico {
+  align-items: center;
+  gap: 0.375rem;
+  background-color: #ffffff0d;
+  border-radius: 9999px;
+  display: flex;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #90a1b9;
+}
+
+.tarjeta-gremio-enlace-gremios {
+  margin-top: 1rem;
+  border-radius: .75rem;
+  background-color: #ffffff0d;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+}
+
+.tarjeta-gremio-enlace-gremios:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.tarjeta-gremio-enlace-gremios:hover {
+  background-color: #a685ff1a;
+  color: #fff;
+}
+
+.tarjeta-gremio-descripcion-lema {
+  margin-top: 0.5rem;
+  font-size: .75rem;
+  color: #62748e;
+  font-style: italic;
+}
+
+.lista-miembros-celda-especialidad {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: .75rem;
+  color: #90a1b9;
+}
+
+.lista-miembros-icono-chevron-down {
+  pointer-events: none;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  color: #45556c;
+  position: absolute;
+}
+
+.lista-miembros-insignia-iniciales {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: .75rem;
+  background-color: #ffffff0d;
+  place-items: center;
+  display: grid;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+}
+
+.lista-miembros-titulo-columna-rol {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.lista-miembros-boton-nombrar-catador {
+  border-radius: .5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #53eafd33;
+  background-color: #53eafd1a;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #a2f4fd;
+}
+
+.lista-miembros-boton-nombrar-catador:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.lista-miembros-boton-nombrar-catador:hover {
+  background-color: #53eafd33;
+}
+
+.tarjeta-gremio-titulo-seccion-nombre {
+  font-family: Cinzel,Georgia,serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.lista-miembros-titulo-columna-ingreso {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.tarjeta-gremio-boton-unirme-al-gremio {
+  margin-top: 1rem;
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c4b4ff33;
+  background-color: #c4b4ff1a;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #ddd6ff;
+}
+
+.tarjeta-gremio-boton-unirme-al-gremio:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.tarjeta-gremio-boton-unirme-al-gremio:hover {
+  background-color: #c4b4ff33;
+}
+
+.lista-miembros-titulo-columna-acciones {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: right;
+}
+
+.lista-miembros-titulo-columna-alquimista {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.lista-miembros-texto-cambiar-rol-de-nombre {
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+.lista-miembros-titulo-columna-especialidad {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.tarjeta-gremio-contenedor-flexible-publico {
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  display: flex;
+}
+
+.tarjeta-gremio-tarjeta-publico-nombre-lema {
+  border-radius: 1rem;
+  background: #12152ceb;
+  border: 1px solid #ffffff1a;
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 8px 20px #00000040;
+}
+
+.tarjeta-gremio-texto-users-length-miembros {
+  align-items: center;
+  gap: 0.5rem;
+  color: #62748e;
+  display: flex;
+}
+
+.lista-miembros-dato-destacado-nombre-completo {
+  font-size: .75rem;
+  color: #e2e8f0;
+  display: block;
+}
+
+.tarjeta-gremio-contenedor-flexible-nombre-lema {
+  margin-top: 1.25rem;
+  flex: 1;
+}
+
+.lista-miembros-selector-aprendiz-alquimista-senior {
+  border-radius: .5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff1a;
+  background-color: #0f172b;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+}
+
+.lista-miembros-selector-aprendiz-alquimista-senior:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.lista-miembros-etiqueta-campo-cambiar-rol-de-nombre {
+  position: relative;
+}
+
+.lista-miembros-celda-iniciales-nombre-completo-email {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.tarjeta-gremio-contenedor-flexible-publico-nombre-lema {
+  padding: 1.25rem;
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+}
+
+.lista-miembros-contenedor-flexible-cambiar-rol-de-nombre {
+  align-items: center;
+  gap: 0.5rem;
+  display: inline-flex;
+}
+
+.lista-miembros-tabla-alquimista-especialidad-ingreso-rol {
+  width: 100%;
+  min-width: 42.5rem;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tarjeta-gremio-contenedor-flexible-users-length-miembros {
+  margin-top: 1.5rem;
+  border-top-style: solid;
+  border-color: #ffffff14;
+  border-top-width: 1px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding-top: 1rem;
+  font-size: .75rem;
+}
+
+.lista-miembros-fila-tabla-iniciales-nombre-completo-email {
+  border-bottom-style: solid;
+  border-color: #ffffff0f;
+  border-bottom-width: 1px;
+  font-size: .875rem;
+}
+
+.lista-miembros-fila-tabla-iniciales-nombre-completo-email:last-child {
+  border-style: solid;
+  border-width: 0;
+}
+
+.lista-miembros-contenedor-alquimista-especialidad-ingreso-rol {
+  overflow-x: auto;
+}
+
+.lista-miembros-fila-tabla-alquimista-especialidad-ingreso-rol {
+  border-bottom-style: solid;
+  border-color: #ffffff1a;
+  border-bottom-width: 1px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: #45556c;
+  text-transform: uppercase;
+}
+
+.lista-miembros-contenedor-flexible-iniciales-nombre-completo-email {
+  align-items: center;
+  gap: 0.75rem;
+  display: flex;
+}

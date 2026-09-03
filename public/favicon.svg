@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="potion" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#101329"/>
+  <path fill="none" stroke="#f8e7b0" stroke-linecap="round" stroke-width="5" d="M24 13h16M27 15v14L17 45a8 8 0 0 0 7 12h16a8 8 0 0 0 7-12L37 29V15"/>
+  <path fill="url(#potion)" d="M21 43h22l4 7a5 5 0 0 1-4 7H21a5 5 0 0 1-4-7z"/>
+  <circle cx="27" cy="46" r="2" fill="#fff"/>
+  <circle cx="36" cy="51" r="2.5" fill="#fff" opacity=".8"/>
+</svg>

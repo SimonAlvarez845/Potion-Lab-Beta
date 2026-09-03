@@ -1,0 +1,584 @@
+
+.acceso-insignia {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background-color: #8d54ff;
+  font-size: 1.5rem;
+  color: #fff;
+  place-items: center;
+  display: grid;
+}
+
+.acceso-boton-modo {
+  border-radius: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.acceso-boton-modo:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-icono-lock {
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: #45556c;
+  position: absolute;
+}
+
+.acceso-icono-mail {
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: #45556c;
+  position: absolute;
+}
+
+.acceso-icono-user {
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: #45556c;
+  position: absolute;
+}
+
+.acceso-texto-lock {
+  display: block;
+  position: relative;
+}
+
+.acceso-texto-mail {
+  display: block;
+  position: relative;
+}
+
+.acceso-texto-user {
+  display: block;
+  position: relative;
+}
+
+.acceso-texto-email {
+  margin-top: .25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .75rem;
+  color: #45556c;
+  display: block;
+  overflow: hidden;
+}
+
+.acceso-texto-correo {
+  margin-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+  display: block;
+}
+
+.acceso-selector-modo {
+  border-radius: .75rem;
+  background-color: #0003;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  display: grid;
+  padding: .25rem;
+}
+
+.acceso-cuadricula-map {
+  margin-top: 2.5rem;
+  gap: 1rem;
+  font-size: .875rem;
+  color: #cad5e2;
+  display: grid;
+}
+
+.acceso-insignia-check {
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: #004e3b;
+  font-size: .75rem;
+  color: #5ee9b5;
+  border-radius: 9999px;
+  place-items: center;
+  display: grid;
+}
+
+.acceso-campo-avatar-url {
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff1a;
+  width: 100%;
+  background-color: #ffffff0d;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .875rem;
+  color: #fff;
+  outline: none;
+}
+
+.acceso-campo-avatar-url:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-campo-avatar-url::placeholder {
+  color: #45556c;
+}
+
+.acceso-campo-formulario {
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff1a;
+  width: 100%;
+  background-color: #ffffff0d;
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .875rem;
+  color: #fff;
+  outline: none;
+}
+
+.acceso-campo-formulario:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-texto-contrasena {
+  margin-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+  display: block;
+}
+
+.acceso-boton-modo-activo {
+  background-color: #ffffff1a;
+  color: #fff;
+}
+
+.acceso-descripcion-error {
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffa2ae26;
+  background-color: #ffa2ae14;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .75rem;
+  line-height: 1.25rem;
+  color: #ffccd3;
+}
+
+.acceso-nombre-logo-movil {
+  font-family: Cinzel,Georgia,serif;
+  font-size: 1.125rem;
+  color: #fff;
+}
+
+.acceso-texto-especialidad {
+  margin-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+  display: block;
+}
+
+.acceso-boton-modo-inactivo {
+  color: #62748e;
+}
+
+.acceso-boton-modo-inactivo:hover {
+  color: #cad5e2;
+}
+
+.acceso-insignia-logo-movil {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 1rem;
+  background-color: #8d54ff;
+  font-size: 1.5rem;
+  color: #fff;
+  place-items: center;
+  display: grid;
+}
+
+.acceso-boton-etiqueta-email {
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff1a;
+  background-color: #ffffff0d;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: left;
+}
+
+.acceso-boton-etiqueta-email:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-boton-etiqueta-email:hover {
+  background-color: #c4b4ff1a;
+}
+
+.acceso-selector-especialidad {
+  border-radius: .75rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff1a;
+  width: 100%;
+  background-color: #0f172b;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: .875rem;
+  color: #fff;
+  outline: none;
+}
+
+.acceso-selector-especialidad:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-cuadricula-cuentas-demo {
+  gap: 0.5rem;
+  display: grid;
+}
+
+.acceso-dato-destacado-etiqueta {
+  font-size: .75rem;
+  color: #e2e8f0;
+  display: block;
+}
+
+.acceso-texto-nombre-de-usuario {
+  margin-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+  display: block;
+}
+
+.acceso-boton-ocultar-contrasena {
+  top: 50%;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  transform: translateY(-50%);
+  border-radius: .5rem;
+  color: #45556c;
+  place-items: center;
+  display: grid;
+  position: absolute;
+}
+
+.acceso-boton-ocultar-contrasena:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-boton-ocultar-contrasena:hover {
+  color: #cad5e2;
+}
+
+.acceso-dato-destacado-potion-lab {
+  letter-spacing: .025em;
+  color: #fff;
+  font-family: Cinzel,Georgia,serif;
+  display: block;
+}
+
+.acceso-texto-avatar-url-opcional {
+  margin-bottom: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #cad5e2;
+  display: block;
+}
+
+.acceso-etiqueta-campo-correo-mail {
+  display: block;
+}
+
+.acceso-seccion-potion-lab-map-sea {
+  min-height: calc(100vh - 3rem);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.acceso-texto-pociones-definitivas {
+  color: #a2f4fd;
+  display: block;
+}
+
+.acceso-boton-entra-a-tu-laboratorio {
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: .75rem;
+  background-color: #8d54ff;
+  width: 100%;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  font-size: .875rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+}
+
+.acceso-boton-entra-a-tu-laboratorio:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.acceso-boton-entra-a-tu-laboratorio:hover {
+  background-color: #a685ff;
+}
+
+.acceso-seccion-potion-lab-libera-tu {
+  border-right-style: solid;
+  border-color: #ffffff14;
+  border-right-width: 1px;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  display: none;
+  position: relative;
+  overflow: hidden;
+  padding: 3rem;
+}
+
+.acceso-contenedor-potion-lab-map-sea {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.acceso-pantalla-potion-lab-libera-tu {
+  min-height: 100vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.acceso-texto-libera-tu-mago-interior {
+  font-size: .75rem;
+  color: #62748e;
+}
+
+.acceso-contenedor-flexible-potion-lab {
+  margin-bottom: 2.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  display: flex;
+}
+
+.acceso-elemento-lista-check-beneficio {
+  align-items: center;
+  gap: 0.75rem;
+  display: flex;
+}
+
+.acceso-etiqueta-campo-contrasena-lock {
+  display: block;
+}
+
+.acceso-descripcion-sea-bienvenido-mago {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: #c4b4ff;
+  text-transform: uppercase;
+}
+
+.acceso-etiqueta-campo-especialidad-map {
+  display: block;
+}
+
+.acceso-contenedor-map-sea-bienvenido-mago {
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  background: #12152ceb;
+  border: 1px solid #ffffff1a;
+  box-shadow: 0 8px 20px #00000040;
+}
+
+.acceso-etiqueta-campo-avatar-url-opcional {
+  display: block;
+}
+
+.acceso-contenedor-cuentas-de-prueba-acceso {
+  margin-top: 1.75rem;
+  border-top-style: solid;
+  border-color: #ffffff14;
+  border-top-width: 1px;
+  padding-top: 1.5rem;
+}
+
+.acceso-contenedor-sea-bienvenido-mago-abre {
+  margin-top: 2rem;
+}
+
+.acceso-descripcion-usa-nuestras-cuentas-de {
+  margin-top: 0.5rem;
+  font-size: .875rem;
+  line-height: 1.5rem;
+  color: #62748e;
+}
+
+.acceso-descripcion-cuentas-de-prueba-acceso {
+  margin-bottom: 0.75rem;
+  text-align: center;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: #45556c;
+  text-transform: uppercase;
+}
+
+.acceso-titulo-principal-de-ideas-a-pociones {
+  font-family: Cinzel,Georgia,serif;
+  font-size: 3rem;
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: #fff;
+}
+
+.acceso-titulo-seccion-abre-tu-portal-magico {
+  margin-top: 0.5rem;
+  font-family: Cinzel,Georgia,serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.acceso-etiqueta-campo-nombre-de-usuario-user {
+  display: block;
+}
+
+.acceso-descripcion-organiza-tu-gremio-propone {
+  margin-top: 1.75rem;
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #90a1b9;
+}
+
+.acceso-formulario-correo-mail-contrasena-lock {
+  margin-top: 1.75rem;
+}
+
+.acceso-formulario-correo-mail-contrasena-lock > * + * {
+  margin-top: 1rem;
+}
+
+.acceso-contenedor-nueva-temporada-carnaval-del {
+  max-width: 42rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  position: relative;
+}
+
+.acceso-contenedor-flexible-potion-lab-libera-tu {
+  align-items: center;
+  gap: 0.75rem;
+  display: flex;
+  position: relative;
+}
+
+.acceso-descripcion-nueva-temporada-carnaval-del {
+  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: #53eafd;
+  text-transform: uppercase;
+  display: flex;
+}
+
+.acceso-descripcion-proyecto-academico-ingenieria {
+  font-size: .75rem;
+  color: #45556c;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .acceso-seccion-potion-lab-map-sea {
+    min-height: 100vh;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .acceso-seccion-potion-lab-libera-tu {
+    display: flex;
+  }
+
+  .acceso-pantalla-potion-lab-libera-tu {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    padding: 0;
+    display: grid;
+  }
+
+  .acceso-contenedor-flexible-potion-lab {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .acceso-seccion-potion-lab-libera-tu {
+    padding: 4rem;
+  }
+
+  .acceso-titulo-principal-de-ideas-a-pociones {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 640px) {
+  .acceso-cuadricula-map {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .acceso-cuadricula-cuentas-demo {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .acceso-pantalla-potion-lab-libera-tu {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .acceso-contenedor-map-sea-bienvenido-mago {
+    padding: 2rem;
+  }
+}

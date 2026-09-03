@@ -1,0 +1,9 @@
+@import "./styles/base.css";
+@import "./styles/authentication.css";
+@import "./styles/common.css";
+@import "./styles/formula.css";
+@import "./styles/gremio.css";
+@import "./styles/layout.css";
+@import "./styles/pages.css";
+
+/* Todo se encuentra en la carpeta de styles */
