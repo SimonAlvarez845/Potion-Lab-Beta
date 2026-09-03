@@ -1,0 +1,420 @@
+
+.barra-superior-imagen {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.barra-lateral-insignia {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 1rem;
+  background-color: #8d54ff;
+  font-size: 1.5rem;
+  color: #fff;
+  place-items: center;
+  display: grid;
+}
+
+.barra-lateral-icono-zap {
+  color: #fee685;
+}
+
+.barra-superior-insignia {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background-color: #8d54ff;
+  font-size: 1.25rem;
+  color: #fff;
+  place-items: center;
+  display: grid;
+}
+
+.barra-superior-indicador {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #5ee9b5;
+  border-radius: 9999px;
+}
+
+.layout-principal-pantalla {
+  width: 100%;
+  max-width: 80rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.barra-lateral-enlace-activo {
+  background-color: #8d54ff;
+  color: #fff;
+}
+
+.barra-lateral-enlace-opcion {
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.barra-lateral-enlace-opcion:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.layout-principal-aplicacion {
+  min-height: 100vh;
+  color: #f1f5f9;
+}
+
+.barra-lateral-barra-progreso {
+  margin-top: 0.75rem;
+  height: 0.375rem;
+  background-color: #ffffff0f;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.barra-superior-enlace-perfil {
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  display: flex;
+}
+
+.barra-superior-enlace-perfil:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.barra-superior-enlace-perfil:hover {
+  background-color: #ffffff0d;
+}
+
+.barra-lateral-enlace-inactivo {
+  color: #90a1b9;
+}
+
+.barra-lateral-enlace-inactivo:hover {
+  background-color: #ffffff0d;
+  color: #f1f5f9;
+}
+
+.barra-lateral-icono-decorativo {
+  font-size: 1.125rem;
+  color: #ddd6ff;
+}
+
+.barra-lateral-relleno-progreso {
+  background-color: #a685ff;
+  border-radius: 9999px;
+  height: 100%;
+  display: block;
+}
+
+.barra-superior-enlace-potion-lab {
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  display: flex;
+}
+
+.barra-superior-enlace-potion-lab:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.barra-superior-insignia-iniciales {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background-color: #8d54ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  place-items: center;
+  display: grid;
+}
+
+.barra-lateral-navegacion-principal {
+  flex: 1;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.barra-lateral-navegacion-principal > * + * {
+  margin-top: 0.25rem;
+}
+
+.barra-superior-boton-cerrar-sesion {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  color: #62748e;
+  place-items: center;
+  display: grid;
+}
+
+.barra-superior-boton-cerrar-sesion:focus {
+  outline-offset: 2px;
+  outline: 2px solid #55d9e8;
+}
+
+.barra-superior-boton-cerrar-sesion:hover {
+  background-color: #ff667f1a;
+  color: #ffa2ae;
+}
+
+.barra-lateral-texto-zap-nivel-nivel {
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  display: flex;
+}
+
+.barra-superior-detalle-especialidad {
+  font-size: 0.75rem;
+  color: #62748e;
+}
+
+.layout-principal-contenido-con-barra {
+  min-height: 100vh;
+}
+
+.barra-lateral-descripcion-laboratorio {
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #45556c;
+  text-transform: uppercase;
+}
+
+.barra-lateral-detalle-academia-arcana {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #62748e;
+  text-transform: uppercase;
+}
+
+.barra-lateral-dato-destacado-potion-lab {
+  font-family: Cinzel, Georgia, serif;
+  font-size: 1rem;
+  letter-spacing: 0.025em;
+  color: #fff;
+  display: block;
+}
+
+.barra-superior-dato-destacado-potion-lab {
+  font-family: Cinzel, Georgia, serif;
+  font-size: 0.875rem;
+  color: #fff;
+}
+
+.barra-lateral-descripcion-consejo-del-dia {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fee685;
+}
+
+.barra-lateral-detalle-progreso-nivel-100-px {
+  font-size: 0.75rem;
+  color: #62748e;
+}
+
+.barra-lateral-seccion-consejo-del-dia-puedes {
+  border-radius: 1rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffd23626;
+  background-color: #ffd2360f;
+  padding: 1rem;
+}
+
+.barra-lateral-seccion-progreso-del-alquimista {
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #ffffff0a;
+  border: 1px solid #ffffff14;
+}
+
+.barra-superior-dato-destacado-nombre-completo {
+  max-width: 10rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: #fff;
+  display: block;
+  overflow: hidden;
+}
+
+.barra-superior-descripcion-todo-listo-para-una {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #cad5e2;
+}
+
+.barra-superior-descripcion-laboratorio-conectado {
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #62748e;
+  text-transform: uppercase;
+  display: flex;
+}
+
+.barra-superior-texto-nombre-completo-especialidad {
+  text-align: left;
+  display: none;
+}
+
+.barra-lateral-descripcion-puedes-cambiar-tu-eleccion {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  color: #90a1b9;
+}
+
+.barra-lateral-lista-vertical-zap-nivel-nivel-progreso {
+  margin: 1rem;
+}
+
+.barra-lateral-lista-vertical-zap-nivel-nivel-progreso > * + * {
+  margin-top: 0.75rem;
+}
+
+.barra-lateral-panel-lateral-potion-lab-academia-arcana {
+  z-index: 30;
+  width: 17rem;
+  border-right-style: solid;
+  top: 0;
+  bottom: 0;
+  border-color: #ffffff1a;
+  border-right-width: 1px;
+  display: none;
+  position: fixed;
+  left: 0;
+  background-color: #020618;
+}
+
+.barra-lateral-contenedor-flexible-zap-nivel-nivel-progreso {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.barra-superior-contenedor-laboratorio-conectado-todo-listo {
+  display: none;
+}
+
+.barra-superior-encabezado-potion-lab-laboratorio-conectado {
+  z-index: 20;
+  border-bottom-style: solid;
+  border-color: #ffffff1a;
+  border-bottom-width: 1px;
+  position: sticky;
+  top: 0;
+  background-color: #020618;
+}
+
+.barra-lateral-contenedor-flexible-potion-lab-academia-arcana {
+  height: 5rem;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom-style: solid;
+  border-color: #ffffff14;
+  border-bottom-width: 1px;
+  display: flex;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.barra-superior-contenedor-flexible-potion-lab-laboratorio-conectado {
+  height: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+}
+
+.barra-superior-contenedor-flexible-bell-nombre-completo-especialidad {
+  align-items: center;
+  gap: 0.5rem;
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .layout-principal-pantalla {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .barra-superior-enlace-potion-lab {
+    display: none;
+  }
+
+  .layout-principal-contenido-con-barra {
+    padding-left: 17rem;
+  }
+
+  .barra-lateral-panel-lateral-potion-lab-academia-arcana {
+    flex-direction: column;
+    display: flex;
+  }
+
+  .barra-superior-contenedor-laboratorio-conectado-todo-listo {
+    display: block;
+  }
+
+  .barra-superior-contenedor-flexible-potion-lab-laboratorio-conectado {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .layout-principal-pantalla {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .barra-superior-texto-nombre-completo-especialidad {
+    display: block;
+  }
+
+  .barra-superior-contenedor-flexible-potion-lab-laboratorio-conectado {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .barra-superior-contenedor-flexible-bell-nombre-completo-especialidad {
+    gap: 0.75rem;
+  }
+}
