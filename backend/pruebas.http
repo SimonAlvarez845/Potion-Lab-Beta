@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:3000
+
+
+## Extension Utilizada: REST Client
+### Oprima Ctrl+Alt+R sobre cada prueba para verificar su funcionamiento
+
+### PRUEBAS DEL REGISTRO 
+  
+### PRUEBA 1: comprobar que la API funciona
+GET {{baseUrl}}/api/salud
+Accept: application/json
+
+### PRUEBA 2: registrar un usuario
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Simon Prueba",
+  "email": "aprendiz2@potionlab.com",
+  "password": "Potion123"
+}
+
+### PRUEBA 3: registro sin nombre
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "email": "nombrevacio@potionlab.com",
+  "password": "123456"
+}
+
+### PRUEBA 4: registro con email invalido
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Simon Prueba",
+  "email": "correo-invalido",
+  "password": "123456"
+}
+
+### PRUEBA 5: contraseña super corta
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Simon Prueba",
+  "email": "passwordcorta@potionlab.com",
+  "password": "12345"
+}
+
+### PRUEBA 6: registro con email repetido
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Otro Usuario",
+  "email": "aprendiz2@potionlab.com",
+  "password": "Potion123"
+}

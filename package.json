@@ -1,5 +1,5 @@
 {
-  "name": "potion-lab",
+  "name": "potion-lab-frontend",
   "private": true,
   "version": "2.0.0",
   "type": "module",
@@ -10,10 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "jsonwebtoken": "^9.0.3",
-    "mongodb": "^7.6.0",
-    "mongoose": "^9.9.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
