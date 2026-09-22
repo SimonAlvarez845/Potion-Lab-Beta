@@ -306,6 +306,9 @@ const FECHA_CIERRE_DEMO = new Date(
   Date.now() + 7 * 24 * 60 * 60 * 1000,
 ).toISOString();
 
+// Les damos una fecha inicial a las formulas que se cargan por defecto en estado de votacion
+const FECHA_APERTURA_DEMO = new Date().toISOString();
+
 export const FORMULAS_INICIALES = [
   {
     id: "f1",
@@ -343,6 +346,7 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u3",
     fechaCreacion: "2026-08-24T14:00:00Z",
+    fechaAperturaVotacion: FECHA_APERTURA_DEMO,
     fechaCierre: FECHA_CIERRE_DEMO,
     categorias: crearCategorias(),
     veto: null,
@@ -356,6 +360,7 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u8",
     fechaCreacion: "2026-08-23T12:00:00Z",
+    fechaAperturaVotacion: FECHA_APERTURA_DEMO,
     fechaCierre: FECHA_CIERRE_DEMO,
     categorias: crearCategorias(),
     veto: null,
@@ -370,6 +375,7 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u12",
     fechaCreacion: "2026-08-22T18:00:00Z",
+    fechaAperturaVotacion: FECHA_APERTURA_DEMO,
     fechaCierre: FECHA_CIERRE_DEMO,
     categorias: crearCategorias(),
     veto: null,

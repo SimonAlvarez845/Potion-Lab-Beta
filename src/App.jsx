@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { Link, Route, Routes } from "react-router-dom";
 import Acceso from "./components/authentication/Acceso";
@@ -90,6 +90,10 @@ function App() {
     "potionlab-v2-formulas",
     FORMULAS_INICIALES,
   );
+
+  // necesitamos guardar una memoria de como estaban las formulas antes para uno de los useEffect()
+  const formulasAnterioresRef = useRef(formulas);
+
   const [votos, setVotos] = useLocalStorage(
     "potionlab-v2-votos",
     VOTOS_INICIALES,
@@ -121,7 +125,6 @@ function App() {
     if (vencidas.length === 0) return;
 
     // Si esta vencida, recorremos las fórmulas y comparamos sus ids para hallar la que este vencida, luego cambiamos el estado solamente de todas las que esten vencidas
-    // nos apoyamos de el some() - que pregunta si existe al menos un elemento que cumpla la condicion
     setFormulas((anteriores) =>
       anteriores.map((formula) => {
         const estaVencida = vencidas.some(
@@ -130,6 +133,8 @@ function App() {
         return estaVencida ? { ...formula, estado: "closed" } : formula;
       }),
     );
+
+    // Hacemos .filter() antes de mappear la auditoria porque las sanciones (como la que hay en el useEffect() de mas abajo pueden contener una sancion que ya fue registrada anteriormente en la auditoria.
     setAuditoria((anterior) => {
       const nuevos = vencidas
         .filter(
@@ -152,10 +157,119 @@ function App() {
     });
   }, [formulas, setAuditoria, setFormulas]);
 
-  //-------------------------------------------------------------------------------------------------
+  // Revisa si el Catador Oficial voto durante sus primeras 48 horas. Si despues de esas 48 horas el Catador Oficial del gremio de esa fórmula no ha emitido ningun voto en esa fórmula, pierde su rol y pasa a "Aprendiz". Si emitio al menos un voto en cualquiera de las tres categorías, conserva su rol.
+  useEffect(() => {
+    const ahora = Date.now();
+
+    // Recorre las fórmulas y construye una lista de objetos solo con las que generen sanciones. Esto se busco directamente ya que seria mas dificil hacerlo con un map puesto que quedariamos con un array de arrays.
+    const sanciones = formulas.flatMap((formula) => {
+      if (!formula.fechaAperturaVotacion) return [];
+
+      // fechaAperturaVotacion esta guardada como texto por lo cual toca buscar como hacer el casteo para poder realizar "fecha actual" - "fecha apertura" >=  tiempo (en ms) de 48 horas
+      const fechaApertura = new Date(formula.fechaAperturaVotacion).getTime();
+      const pasaron48Horas =
+        !Number.isNaN(fechaApertura) &&
+        ahora - fechaApertura >= 48 * 60 * 60 * 1000;
+
+      if (!pasaron48Horas) return [];
+
+      const gremio = gremios.find((item) => item.id === formula.gremioId);
+      const catador = gremio?.miembros.find(
+        (miembro) => miembro.rol === "Catador oficial",
+      );
+
+      if (!catador) return [];
+
+      // revise si el catador voto
+      const votoCatador = votos[formula.id]?.[catador.usuarioId] ?? {};
+
+      // si tiene al menos una categoria la formula no genera sancion
+      if (Object.keys(votoCatador).length > 0) return [];
+
+      return [
+        {
+          formulaId: formula.id,
+          gremioId: gremio.id,
+          usuarioId: catador.usuarioId,
+        },
+      ];
+    });
+
+    if (sanciones.length === 0) return;
+
+    // recorre todos los gremios y, dentro de cada uno, recorre todos sus miembros para degradar únicamente al Catador sancionado a "Aprendiz"
+    setGremios((anteriores) =>
+      anteriores.map((gremio) => ({
+        ...gremio,
+        miembros: gremio.miembros.map((miembro) =>
+          sanciones.some(
+            (sancion) =>
+              sancion.gremioId === gremio.id &&
+              sancion.usuarioId === miembro.usuarioId,
+          ) && miembro.rol === "Catador oficial"
+            ? { ...miembro, rol: "Aprendiz" }
+            : miembro,
+        ),
+      })),
+    );
+
+    setAuditoria((anterior) => {
+      const nuevos = sanciones
+        .filter(
+          (sancion) =>
+            !anterior.some(
+              (evento) =>
+                evento.formulaId === sancion.formulaId &&
+                evento.usuarioId === sancion.usuarioId &&
+                evento.titulo === "Catador removido",
+            ),
+        )
+        .map((sancion) => ({
+          id: `a-catador-${sancion.formulaId}-${Date.now()}`,
+          formulaId: sancion.formulaId,
+          usuarioId: sancion.usuarioId,
+          fecha: new Date().toISOString(),
+          titulo: "Catador removido",
+          detalle:
+            "El Catador Oficial perdio su rol al no votar durante las primeras 48 horas.",
+        }));
+
+      return nuevos.length > 0 ? [...nuevos, ...anterior] : anterior;
+    });
+  }, [formulas, gremios, votos, setAuditoria, setGremios]);
+
+  // Detecta solo las formulas cuyo estado acaba de pasar de voting a closed
+  // Useref() --> cajita donde React puede almacenar un valor entre renders sin provocar un render cuando ese valor cambia.
+  useEffect(() => {
+    // .current es donde useRef guarda su valor en memoria auxiliar
+    const formulasAnteriores = formulasAnterioresRef.current;
+
+    // buscamos solo las que pasen de voting a closed y deontro solo la version anterior de esa formula
+    const recienCerradas = formulas.filter((formulaActual) => {
+      const formulaAnterior = formulasAnteriores.find(
+        (formula) => formula.id === formulaActual.id,
+      );
+
+      // guardamos solo las formulas que pasen, las demas las ignoramos
+      return (
+        formulaAnterior?.estado === "voting" &&
+        formulaActual.estado === "closed"
+      );
+    });
+
+    // al terminar de comparar quiero actualizar la memoria y decir que las formulas actuales pasan a ser mis anteriores para la proxima comparacion
+    formulasAnterioresRef.current = formulas;
+
+    // recorremos unicamente las que se acaban de cerrar y, por cada una, las destilamos automaticamente (por eso el true) lo cual nos lo exige el enunciado
+    recienCerradas.forEach((formula) => {
+      destilarFormula(formula.id, true);
+    });
+  }, [formulas]);
+
+  // ------------------------------------------------------------------------------------------------
   // Toda funcion de App suele seguir el mismo flujo:
   // Busqueda -> Validacion -> Actualizacion Estado -> Guardado en localStorage
-  // el ultimo paso en caso de que aplique seria hacer la auditoria
+  // el ultimo paso en caso de que aplique seria lo equivalente a realizar una auditoria
 
   // Para actualizar arrays se repiten tres patrones:
   // agregar    -> spread (...)
@@ -167,7 +281,7 @@ function App() {
 
   // todo setter viene de useLocalStorage asi que al actualizar el
   // estado los datos tambien quedan almacenados en el mismo navegador
-  // -------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------
 
   // es la funcion que Acceso.jsx recibe como onLogin
   function iniciarSesion(email, password) {
@@ -586,7 +700,15 @@ function App() {
     // Actualizacion del estado de estado
     setFormulas((anteriores) =>
       anteriores.map((item) =>
-        item.id === formulaId ? { ...item, estado: nuevoEstado } : item,
+        item.id === formulaId
+          ? {
+              ...item,
+              estado: nuevoEstado,
+              ...(nuevoEstado === "voting"
+                ? { fechaAperturaVotacion: new Date().toISOString() }
+                : {}),
+            }
+          : item,
       ),
     );
     // siempre hay que indicarle al usuario
@@ -607,16 +729,16 @@ function App() {
 
   // Es la función que FormulaDetallePage.jsx recibe como onDistill.
   // Su deber es convertir una fórmula cerrada en una pocion y guardarla en el grimorio.
-  function destilarFormula(formulaId) {
+  function destilarFormula(formulaId, automatico = false) {
     const formula = formulas.find((item) => item.id === formulaId);
     const gremio = gremios.find((item) => item.id === formula?.gremioId);
-    const rol = obtenerRol(gremio, usuarioActivo.id);
+    const rol = obtenerRol(gremio, usuarioActivo?.id);
 
     if (
       !formula ||
       formula.estado !== "closed" ||
       grimorio.some((pocion) => pocion.formulaId === formulaId) ||
-      !["Gran Maestre", "Alquimista sénior"].includes(rol)
+      (!automatico && !["Gran Maestre", "Alquimista sénior"].includes(rol))
     ) {
       return;
     }
@@ -652,7 +774,7 @@ function App() {
     );
 
     // Si el creador es el usuario conectado tambien se le debe actualizar todo
-    if (usuarioActivo.id === formula.creadaPorId) {
+    if (usuarioActivo?.id === formula.creadaPorId) {
       setUsuarioActivo((anterior) => ({
         ...anterior,
         puntos: anterior.puntos + 20,
@@ -660,7 +782,6 @@ function App() {
       }));
     }
 
-    // EXPLICAR ESTO SI HAY TIEMPO
     // esta auditoria solo registra las decisiones que no se resolvieron por mayoria
     setAuditoria((anterior) => [
       {
