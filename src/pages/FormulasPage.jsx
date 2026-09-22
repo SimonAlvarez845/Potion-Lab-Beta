@@ -5,7 +5,7 @@ import EncabezadoPagina from "../components/common/EncabezadoPagina";
 import EstadoVacio from "../components/common/EstadoVacio";
 import TarjetaFormula from "../components/formula/TarjetaFormula";
 
-function FormulasPage({ formulas, gremios, usuarios, votos }) {
+function FormulasPage({ formulas, gremios, usuario, usuarios, votos }) {
   // Estado de la busqueda
   const [busqueda, setBusqueda] = useState("");
 
@@ -52,7 +52,9 @@ function FormulasPage({ formulas, gremios, usuarios, votos }) {
               formula={formula}
               gremio={gremios.find((item) => item.id === formula.gremioId)}
               key={formula.id}
-              votosCompletados={Object.keys(votos[formula.id] ?? {}).length}
+              votosCompletados={
+                Object.keys(votos[formula.id]?.[usuario?.id] ?? {}).length
+              }
             />
           ))}
         </section>

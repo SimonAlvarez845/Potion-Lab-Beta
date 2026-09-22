@@ -9,7 +9,7 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { GiPotionBall, GiSparkles } from "react-icons/gi";
-import { CUENTAS_DEMO, ESPECIALIDADES } from "../../data/seedData";
+import { ESPECIALIDADES } from "../../data/seedData";
 import FondoAlquimico from "../common/FondoAlquimico";
 
 // Puerta de entrada de la App
@@ -19,7 +19,7 @@ const claseCampoAcceso = "acceso-campo-formulario";
 
 // La logica importante es delegada a otros metodos, aqui solo
 // nos encargamos de manejar la interfaz, el form, sus estados, validaciones, y eventos.
-function Acceso({ onLogin, onRegister }) {
+function Acceso({ cuentasDemo, onLogin, onRegister }) {
   const [modo, setModo] = useState("login");
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [error, setError] = useState("");
@@ -27,8 +27,8 @@ function Acceso({ onLogin, onRegister }) {
   // se guarda un objeto para que el login aparezca precargado con una cuenta de prueba
   const [formulario, setFormulario] = useState({
     nombreCompleto: "",
-    email: CUENTAS_DEMO[0].email,
-    password: CUENTAS_DEMO[0].password,
+    email: cuentasDemo[0].email,
+    password: cuentasDemo[0].password,
     especialidad: ESPECIALIDADES[0],
     avatarUrl: "",
   });
@@ -65,7 +65,8 @@ function Acceso({ onLogin, onRegister }) {
     }
 
     // si pasa las validaciones envia todo el objeto
-    onRegister(formulario);
+    const resultado = onRegister(formulario);
+    if (!resultado.ok) setError(resultado.mensaje);
   }
 
   // se ejecuta cuando haces click en una cuenta demo
@@ -320,14 +321,14 @@ function Acceso({ onLogin, onRegister }) {
               </button>
             </form>
 
-            {/* Misma idea (render condicional): las cuentas deben desaparecer en modo registro*/}
+            {/* Misma idea (render condicional): las cuentas deben desaparecer en modo registro. Los botones de acceso rapido deben actualizarse si se modifica el usuario o correo dentro de una cuenta demo por lo cual siempre van a mostrar la info correcta */}
             {modo === "login" && (
               <div className="acceso-contenedor-cuentas-de-prueba-acceso">
                 <p className="acceso-descripcion-cuentas-de-prueba-acceso">
                   Cuentas de Prueba: Acceso Rápido
                 </p>
                 <div className="acceso-cuadricula-cuentas-demo">
-                  {CUENTAS_DEMO.map((cuenta) => (
+                  {cuentasDemo.map((cuenta) => (
                     <button
                       className="acceso-boton-etiqueta-email"
                       key={cuenta.email}

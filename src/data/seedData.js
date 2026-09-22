@@ -2,6 +2,9 @@
    Es la base de datos fake que vamos a usar como motor inicial de la App 
    Todo lleva export porque vamos a usar las ctes desde otros archivos*/
 
+import { esCatadorOficial } from "../utils/roles.js";
+import { obtenerPesoVoto } from "../utils/voting.js";
+
 export const ESPECIALIDADES = [
   "Herbalista",
   "Runista",
@@ -298,6 +301,11 @@ export function crearCategorias(
   }));
 }
 
+// Formula: fecha actual + 7 días de una semana incluyendo su tiempo (× 24 horas × 60 minutos × 60 segundos × 1000 milisegundos) vuelvelo una fecha en js y guardala como un string.
+const FECHA_CIERRE_DEMO = new Date(
+  Date.now() + 7 * 24 * 60 * 60 * 1000,
+).toISOString();
+
 export const FORMULAS_INICIALES = [
   {
     id: "f1",
@@ -308,7 +316,7 @@ export const FORMULAS_INICIALES = [
     estado: "proposal",
     creadaPorId: "u3",
     fechaCreacion: "2026-08-26T13:00:00Z",
-    fechaCierre: "2026-09-02T23:59:00Z",
+    fechaCierre: FECHA_CIERRE_DEMO,
     categorias: crearCategorias(),
     veto: null,
   },
@@ -322,7 +330,7 @@ export const FORMULAS_INICIALES = [
     estado: "proposal",
     creadaPorId: "u8",
     fechaCreacion: "2026-08-27T09:30:00Z",
-    fechaCierre: "2026-09-03T18:00:00Z",
+    fechaCierre: FECHA_CIERRE_DEMO,
     categorias: crearCategorias(),
     veto: null,
   },
@@ -335,13 +343,8 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u3",
     fechaCreacion: "2026-08-24T14:00:00Z",
-    fechaCierre: "2026-09-01T22:00:00Z",
-    categorias: crearCategorias([
-      [3, 2],
-      [2, 3],
-      [2, 3],
-    ]),
-    desempate: { catador: "polvo-estelar", granMaestre: "mandragora" },
+    fechaCierre: FECHA_CIERRE_DEMO,
+    categorias: crearCategorias(),
     veto: null,
   },
   {
@@ -353,13 +356,8 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u8",
     fechaCreacion: "2026-08-23T12:00:00Z",
-    fechaCierre: "2026-08-31T20:00:00Z",
-    categorias: crearCategorias([
-      [2, 2],
-      [1, 3],
-      [2, 2],
-    ]),
-    desempate: { catador: "cristal-lunar", granMaestre: "polvo-estelar" },
+    fechaCierre: FECHA_CIERRE_DEMO,
+    categorias: crearCategorias(),
     veto: null,
   },
   {
@@ -372,13 +370,8 @@ export const FORMULAS_INICIALES = [
     estado: "voting",
     creadaPorId: "u12",
     fechaCreacion: "2026-08-22T18:00:00Z",
-    fechaCierre: "2026-09-01T23:30:00Z",
-    categorias: crearCategorias([
-      [1, 2],
-      [1, 2],
-      [1, 2],
-    ]),
-    desempate: { catador: "bano-arcano", granMaestre: "llama-azul" },
+    fechaCierre: FECHA_CIERRE_DEMO,
+    categorias: crearCategorias(),
     veto: null,
   },
   {
@@ -391,12 +384,7 @@ export const FORMULAS_INICIALES = [
     creadaPorId: "u1",
     fechaCreacion: "2026-08-17T11:00:00Z",
     fechaCierre: "2026-08-24T11:00:00Z",
-    categorias: crearCategorias([
-      [2, 1],
-      [2, 1],
-      [2, 1],
-    ]),
-    desempate: { catador: "mandragora", granMaestre: "llama-azul" },
+    categorias: crearCategorias(),
     veto: null,
   },
   {
@@ -410,7 +398,6 @@ export const FORMULAS_INICIALES = [
     fechaCreacion: "2026-08-15T16:00:00Z",
     fechaCierre: "2026-08-22T16:00:00Z",
     categorias: crearCategorias(),
-    desempate: { catador: "cristal-lunar", granMaestre: "polvo-estelar" },
     veto: null,
   },
   {
@@ -457,6 +444,61 @@ export const FORMULAS_INICIALES = [
     resultadoId: "p3",
   },
 ];
+
+// Cada fila representa un usuario votando las 3 categorías de una fórmula y guarda sus resultados.
+// Aca se cumple lo que pide el enunciado: 15 filas x 3 categorias = 45 votos
+const VOTOS_DEMO = [
+  ["f3", "u1", "mandragora", "llama-azul", "cristal-lunar"],
+  ["f3", "u3", "mandragora", "bano-arcano", "calavera-plata"],
+  ["f3", "u4", "polvo-estelar", "bano-arcano", "cristal-lunar"],
+  ["f3", "u5", "polvo-estelar", "llama-azul", "calavera-plata"],
+  ["f3", "u6", "mandragora", "llama-azul", "cristal-lunar"],
+  ["f4", "u2", "mandragora", "llama-azul", "cristal-lunar"],
+  ["f4", "u7", "polvo-estelar", "bano-arcano", "calavera-plata"],
+  ["f4", "u8", "mandragora", "bano-arcano", "cristal-lunar"],
+  ["f4", "u9", "polvo-estelar", "llama-azul", "calavera-plata"],
+  ["f5", "u10", "mandragora", "bano-arcano", "cristal-lunar"],
+  ["f5", "u11", "polvo-estelar", "llama-azul", "calavera-plata"],
+  ["f5", "u12", "mandragora", "bano-arcano", "cristal-lunar"],
+  ["f6", "u1", "mandragora", "llama-azul", "cristal-lunar"],
+  ["f6", "u3", "polvo-estelar", "bano-arcano", "calavera-plata"],
+  ["f7", "u2", "polvo-estelar", "bano-arcano", "cristal-lunar"],
+];
+
+// Recorre las 15 filas y construye un unico megaobjeto que contenga toda la info de votacion
+export const VOTOS_INICIALES = VOTOS_DEMO.reduce(
+  (votos, [formulaId, usuarioId, ingrediente, metodo, frasco]) => {
+    // encuentra la formula, el usuario, el gremio al que pertenece la formula, y si el usuario es catador
+    const formula = FORMULAS_INICIALES.find((item) => item.id === formulaId);
+    const usuario = USUARIOS_DEMO.find((item) => item.id === usuarioId);
+    const gremio = GREMIOS_INICIALES.find(
+      (item) => item.id === formula.gremioId,
+    );
+    const catadorOficial = esCatadorOficial(gremio, usuarioId);
+
+    // Guarda el peso calculado con la especialidad y el rol reales del usuario. Es importante ponerlo asi ya que recordemos en voting.js se definen reglas especificas de peso a tener en cuenta aca
+    if (!votos[formulaId]) {
+      votos[formulaId] = {};
+    }
+
+    votos[formulaId][usuarioId] = {
+      ingrediente: {
+        opcionId: ingrediente,
+        peso: obtenerPesoVoto(usuario, "ingrediente", catadorOficial),
+      },
+      metodo: {
+        opcionId: metodo,
+        peso: obtenerPesoVoto(usuario, "metodo", catadorOficial),
+      },
+      frasco: {
+        opcionId: frasco,
+        peso: obtenerPesoVoto(usuario, "frasco", catadorOficial),
+      },
+    };
+    return votos;
+  },
+  {},
+);
 
 export const GRIMORIO_INICIAL = [
   {

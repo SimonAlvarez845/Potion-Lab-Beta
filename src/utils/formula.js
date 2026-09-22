@@ -1,4 +1,4 @@
-import { calcularGanador, obtenerPesoVoto } from "./voting";
+import { calcularGanador } from "./voting";
 
 export const TRANSICIONES_VALIDAS = {
   proposal: "voting",
@@ -7,25 +7,13 @@ export const TRANSICIONES_VALIDAS = {
 };
 
 // Toma una formula cerrada y los resultados de voting para construir una pocion
-export function crearPocionDesdeFormula(
-  formula,
-  votosFormula,
-  usuario,
-  catadorOficial,
-) {
-  // Recorre cada categoria y calcula el peso, luego determina el ganador
-  const ganadores = formula.categorias.map((categoria) => {
-    const peso = obtenerPesoVoto(usuario, categoria.id, catadorOficial);
-    return {
-      categoriaId: categoria.id,
-      ...calcularGanador(
-        categoria,
-        formula,
-        votosFormula?.[categoria.id],
-        peso,
-      ),
-    };
-  });
+export function crearPocionDesdeFormula(formula, votosFormula, gremio) {
+  // Calcula el ganador de cada categoria usando los votos
+  // de todos los usuarios de la formula.
+  const ganadores = formula.categorias.map((categoria) => ({
+    categoriaId: categoria.id,
+    ...calcularGanador(categoria, formula, votosFormula, gremio),
+  }));
 
   // Busca el ingrediente ganador
   const ingrediente = ganadores.find(

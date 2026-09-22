@@ -4,19 +4,19 @@ import TarjetaFormula from "../components/formula/TarjetaFormula";
 import TarjetaGremio from "../components/gremio/TarjetaGremio";
 
 // Es el panel principal de la App y lo primero que se ve al entrar a tu cuenta
-// Se encarga de: recibir y filtrar datos --> calcular indicadores --> mostrar los accesos mediante las tarjetas 
+// Se encarga de: recibir y filtrar datos --> calcular indicadores --> mostrar los accesos mediante las tarjetas
 function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
-  
-    // Almacena los gremios donde aparece el usuario conectado.
+  // Almacena los gremios donde aparece el usuario conectado.
 
   const misGremios = gremios.filter((gremio) =>
     gremio.miembros.some((miembro) => miembro.usuarioId === usuario.id),
   );
 
   // Almacena las formulas en votación que pertenecen a los gremios del usuario.
-  const formulasActivas = formulas.filter((formula) =>
-    formula.estado === "voting"
-      && misGremios.some((gremio) => gremio.id === formula.gremioId),
+  const formulasActivas = formulas.filter(
+    (formula) =>
+      formula.estado === "voting" &&
+      misGremios.some((gremio) => gremio.id === formula.gremioId),
   );
 
   return (
@@ -33,10 +33,18 @@ function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
       />
 
       <section className="resumen-cuadricula-indicadores-personales">
-        <p>Puntos: <strong>{usuario.puntos}</strong></p>
-        <p>Gremios: <strong>{misGremios.length}</strong></p>
-        <p>Votaciones abiertas: <strong>{formulasActivas.length}</strong></p>
-        <p>Participación: <strong>{usuario.participacion}%</strong></p>
+        <p>
+          Puntos: <strong>{usuario.puntos}</strong>
+        </p>
+        <p>
+          Gremios: <strong>{misGremios.length}</strong>
+        </p>
+        <p>
+          Votaciones abiertas: <strong>{formulasActivas.length}</strong>
+        </p>
+        <p>
+          Participación: <strong>{usuario.participacion}%</strong>
+        </p>
       </section>
 
       <section>
@@ -44,7 +52,9 @@ function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
           <h2 className="resumen-titulo-seccion-formulas-que-requieren-atencion">
             Fórmulas para votar
           </h2>
-          <Link className="resumen-enlace-formulas" to="/formulas">Ver todas</Link>
+          <Link className="resumen-enlace-formulas" to="/formulas">
+            Ver todas
+          </Link>
         </div>
         <div className="resumen-cuadricula-map">
           {/* Resumen muestra max dos fórmulas activas. Si la formula no tiene votos usa un objeto vacio. Funciona contando las categorías votadas dentro de cada formula con Object.keys().length  */}
@@ -54,7 +64,9 @@ function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
               formula={formula}
               gremio={gremios.find((item) => item.id === formula.gremioId)}
               key={formula.id}
-              votosCompletados={Object.keys(votos[formula.id] ?? {}).length}
+              votosCompletados={
+                Object.keys(votos[formula.id]?.[usuario.id] ?? {}).length
+              }
             />
           ))}
         </div>
@@ -63,7 +75,9 @@ function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
       <section>
         <div className="resumen-contenedor-flexible-comunidad-tus-gremios-explorar">
           <h2 className="resumen-titulo-seccion-tus-gremios">Tus gremios</h2>
-          <Link className="resumen-enlace-gremios" to="/gremios">Ver todos</Link>
+          <Link className="resumen-enlace-gremios" to="/gremios">
+            Ver todos
+          </Link>
         </div>
         <div className="resumen-cuadricula-mis-gremios">
           {/* Resumen muestra max tres gremios */}

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { FiAlertCircle } from "react-icons/fi";
+import { Link, Route, Routes } from "react-router-dom";
 import Acceso from "./components/authentication/Acceso";
 import Aviso from "./components/common/Aviso";
+import EstadoVacio from "./components/common/EstadoVacio";
 import LayoutPrincipal from "./components/layout/LayoutPrincipal";
 import UsuarioContext from "./context/UsuarioContext";
 import {
@@ -11,6 +13,7 @@ import {
   GREMIOS_INICIALES,
   GRIMORIO_INICIAL,
   USUARIOS_DEMO,
+  VOTOS_INICIALES,
 } from "./data/seedData";
 import useLocalStorage from "./hooks/useLocalStorage";
 import FormulaDetallePage from "./pages/FormulaDetallePage";
@@ -24,6 +27,7 @@ import RankingPage from "./pages/RankingPage";
 import ResumenPage from "./pages/ResumenPage";
 import { crearPocionDesdeFormula, TRANSICIONES_VALIDAS } from "./utils/formula";
 import { esCatadorOficial, obtenerRol, puedeCrearFormula } from "./utils/roles";
+import { obtenerPesoVoto } from "./utils/voting";
 
 // App es el padre central. Sus responsabilidades son las siguientes:
 // Mantiene el estado usando un custom hook con LocalStorage
@@ -40,6 +44,40 @@ function App() {
     "potionlab-v2-cuentas",
     CUENTAS_DEMO,
   );
+
+  // Toma las cuentas demo guardadas para mostrar sus correos actuales en Acceso.
+  const cuentasDemoActuales = CUENTAS_DEMO.map(
+    (cuentaDemo) =>
+      cuentas.find((cuenta) => cuenta.usuarioId === cuentaDemo.usuarioId) ??
+      cuentaDemo,
+  );
+
+  // Mantiene actualizadas las "cuentas demo" aunque el navegador tenga una version vieja guardada.
+  // Las cuentas creadas por el usuario se conservan y evitan posibles bugs a usuarios que ya usaron una version anterior.
+
+  useEffect(() => {
+    setCuentas((anteriores) => {
+      const cuentasCreadas = anteriores.filter(
+        (cuenta) =>
+          !CUENTAS_DEMO.some(
+            (cuentaDemo) => cuentaDemo.usuarioId === cuenta.usuarioId,
+          ),
+      );
+
+      // Mantenemos "sincronizados" el usuario activo, la lista de usuarios y las cuentas demo para que todos tengan siempre el mismo correo.
+      const cuentasDemoActualizadas = CUENTAS_DEMO.map((cuentaDemo) => ({
+        ...cuentaDemo,
+        email:
+          usuarios.find((usuario) => usuario.id === cuentaDemo.usuarioId)
+            ?.email ?? cuentaDemo.email,
+      }));
+
+      // combinamos los dos arrays y ponemos el de cuentasCreadas al final para que lo nuevo tenga prioridad
+      return [...cuentasDemoActualizadas, ...cuentasCreadas];
+    });
+  }, [setCuentas, usuarios]);
+  // debe repetirse cada que cambie usuarios o se modifique el setter de la cuenta
+
   const [usuarioActivo, setUsuarioActivo] = useLocalStorage(
     "potionlab-v2-sesion",
     null,
@@ -52,7 +90,10 @@ function App() {
     "potionlab-v2-formulas",
     FORMULAS_INICIALES,
   );
-  const [votos, setVotos] = useLocalStorage("potionlab-v2-votos", {}); // es un objeto debe empezar vacio
+  const [votos, setVotos] = useLocalStorage(
+    "potionlab-v2-votos",
+    VOTOS_INICIALES,
+  ); // es un objeto debe empezar vacio
   const [grimorio, setGrimorio] = useLocalStorage(
     "potionlab-v2-grimorio",
     GRIMORIO_INICIAL,
@@ -154,13 +195,21 @@ function App() {
 
   // Es la funcion que Acceso recibe como onRegister
   function registrarUsuario(datos) {
+    // siempre limpiamos el correo al guardarlo
+    const email = datos.email.trim().toLowerCase();
+
+    // Evita dupes o crear otra cuenta con el mismo correo.
+    if (cuentas.some((cuenta) => cuenta.email.trim().toLowerCase() === email)) {
+      return { ok: false, mensaje: "Ese correo ya está registrado." };
+    }
+
     const id = `u-${Date.now()}`; // lo buscamos: forma practica de generar un ID casi unico
 
     // Agrega stats iniciales y toma los datos de los inputs del form
     const nuevoUsuario = {
       id,
       nombreCompleto: datos.nombreCompleto.trim(),
-      email: datos.email.trim().toLowerCase(),
+      email,
       especialidad: datos.especialidad,
       avatarUrl: datos.avatarUrl.trim(),
       puntos: 0,
@@ -183,6 +232,7 @@ function App() {
 
     // Un plus: inicio de sesion automatico tras registro
     setUsuarioActivo(nuevoUsuario);
+    return { ok: true };
   }
 
   // Para decidir que interfaz mostrar cuando el usuario se salga
@@ -355,6 +405,21 @@ function App() {
       };
     }
 
+    // Evita guardar dos veces la misma formula propuesta por un mismo usuario repetido. Un doble submit no debe dar mas puntos
+    if (
+      formulas.some(
+        (formula) =>
+          formula.creadaPorId === usuarioActivo.id &&
+          formula.gremioId === datos.gremioId &&
+          formula.nombrePocion === datos.nombrePocion.trim() &&
+          formula.efectoDeseado === datos.efectoDeseado.trim() &&
+          formula.dificultad === datos.dificultad &&
+          formula.fechaCierre === datos.fechaCierre,
+      )
+    ) {
+      return { ok: false, mensaje: "Esta fórmula ya fue creada." };
+    }
+
     // Creacion del objeto
     const id = `f-${Date.now()}`;
     const nuevaFormula = {
@@ -368,12 +433,27 @@ function App() {
       fechaCreacion: new Date().toISOString(),
       fechaCierre: datos.fechaCierre,
       categorias: datos.categorias,
-      desempate: {}, // se usa despues si lo hay
       veto: null, // nadie ha usado el veto todavia
     };
 
     // Agregacion del estado (al principio) y lo guardamos en LocalStorage
     setFormulas((anteriores) => [nuevaFormula, ...anteriores]);
+    // Un creador debe ganar 10 puntos una sola vez al guardar una nueva formula.
+
+    // modifica el usuario en la lista de los 12 usuarios (actualizando efectivamente el ranking)
+    setUsuarios((anteriores) =>
+      anteriores.map((usuario) =>
+        usuario.id === usuarioActivo.id
+          ? { ...usuario, puntos: usuario.puntos + 10 }
+          : usuario,
+      ),
+    );
+
+    // modifica los puntos del usuario cuya sesion este iniciada
+    setUsuarioActivo((anterior) => ({
+      ...anterior,
+      puntos: anterior.puntos + 10,
+    }));
     setAuditoria((anterior) => [
       {
         id: `a-${Date.now()}`,
@@ -393,21 +473,42 @@ function App() {
     // Busca formula, si existe busca gremio, si existe busca si usuario pertenece a gremio
     const formula = formulas.find((item) => item.id === formulaId);
     const gremio = gremios.find((item) => item.id === formula?.gremioId);
+
     const esMiembro = gremio?.miembros.some(
       (miembro) => miembro.usuarioId === usuarioActivo.id,
     );
 
-    //  Validacion
+    // Validacion: solo puede votar si la formula esta abierta y pertenece al gremio
     if (formula?.estado !== "voting" || !esMiembro) return;
 
-    // Actualizamos su estado, misma logica que forms pero con una capa adicional porque votos es un objeto que puede cambiar tanto su formula como su categoria
+    // Calculamos cuanto vale el voto del usuario en esta categoria.
+    // Esto depende de su especialidad y de si es Catador Oficial.
+    const peso = obtenerPesoVoto(
+      usuarioActivo,
+      categoriaId,
+      esCatadorOficial(gremio, usuarioActivo.id),
+    );
+
+    // Actualizamos su estado, misma logica que forms pero con capas adicionales
+    // porque votos ahora guarda:
+    // formula -> usuario -> categoria -> { opcionId, peso }
     setVotos((anteriores) => ({
       ...anteriores,
+
       [formulaId]: {
         ...anteriores[formulaId],
-        [categoriaId]: opcionId,
+
+        [usuarioActivo.id]: {
+          ...(anteriores[formulaId]?.[usuarioActivo.id] ?? {}),
+
+          [categoriaId]: {
+            opcionId,
+            peso,
+          },
+        },
       },
     }));
+
     mostrarAviso(
       "Tu elección fue registrada. Puedes cambiarla mientras siga abierta.",
     );
@@ -418,6 +519,7 @@ function App() {
     const formula = formulas.find((item) => item.id === formulaId);
     const gremio = gremios.find((item) => item.id === formula?.gremioId);
 
+    // Un veto debe cancelarse si no existe la formula, no esta en estado de votacion, ya existe otro veto activo y no es catador oficial
     if (
       !formula ||
       formula.estado !== "voting" ||
@@ -427,7 +529,7 @@ function App() {
       return;
     }
 
-    // La añade al principio al igual que el log
+    //function votar La añade al principio al igual que el log
     setFormulas((anteriores) =>
       anteriores.map((item) =>
         item.id === formulaId
@@ -513,6 +615,7 @@ function App() {
     if (
       !formula ||
       formula.estado !== "closed" ||
+      grimorio.some((pocion) => pocion.formulaId === formulaId) ||
       !["Gran Maestre", "Alquimista sénior"].includes(rol)
     ) {
       return;
@@ -522,8 +625,7 @@ function App() {
     const nuevaPocion = crearPocionDesdeFormula(
       formula,
       votos[formulaId] ?? {}, // Si no existen votos para una formula, usa un objeto vacio.
-      usuarioActivo,
-      esCatadorOficial(gremio, usuarioActivo.id), // un booleano
+      gremio,
     );
 
     // Para actualizar el estado debemos agregarla al grimorio, marcar su estado y establecer una relacion para saber cual formula produjo cual pocion mediante los ids
@@ -535,6 +637,28 @@ function App() {
           : item,
       ),
     );
+
+    // Misma idea: La destilacion suma puntos y rareza  al creador de la formula. Diff: considerar que quien destila no necesariamente es quien creo la formula por lo cual no se puede usar usuarioActivo.id
+    setUsuarios((anteriores) =>
+      anteriores.map((usuario) =>
+        usuario.id === formula.creadaPorId
+          ? {
+              ...usuario,
+              puntos: usuario.puntos + 20,
+              rarezaTotal: usuario.rarezaTotal + nuevaPocion.rareza,
+            }
+          : usuario,
+      ),
+    );
+
+    // Si el creador es el usuario conectado tambien se le debe actualizar todo
+    if (usuarioActivo.id === formula.creadaPorId) {
+      setUsuarioActivo((anterior) => ({
+        ...anterior,
+        puntos: anterior.puntos + 20,
+        rarezaTotal: anterior.rarezaTotal + nuevaPocion.rareza,
+      }));
+    }
 
     // EXPLICAR ESTO SI HAY TIEMPO
     // esta auditoria solo registra las decisiones que no se resolvieron por mayoria
@@ -553,7 +677,7 @@ function App() {
           formulaId,
           fecha: new Date().toISOString(),
           titulo: "Desempate resuelto",
-          detalle: `${decision.opcion} ganó mediante ${decision.metodo}.`,
+          detalle: `${decision.opcion} gano mediante ${decision.metodo}.`,
         })),
       ...anterior,
     ]);
@@ -562,8 +686,22 @@ function App() {
 
   // Es la función que PerfilPage.jsx recibe como onSaveProfile.
   function guardarPerfil(datos) {
-    // El orden aqui es clave, si una propiedad se repite, la última gana, por eso copiamos primero los datos viejos y luego los actualizados. Esto es lo que hacen las paginas para que un usuario pueda actualizar su perfil si su sesion esta activa
-    const actualizado = { ...usuarioActivo, ...datos };
+    const email = datos.email.trim().toLowerCase();
+
+    // Permite el correo propio, pero evita usar el de otra cuenta distinta
+    if (
+      cuentas.some(
+        (cuenta) =>
+          cuenta.usuarioId !== usuarioActivo.id &&
+          cuenta.email.trim().toLowerCase() === email,
+      )
+    ) {
+      mostrarAviso("Ese correo ya esta registrado.");
+      return;
+    }
+
+    // Si una prop se repite la ultima gana, por eso copiamos primero los datos viejos y luego los actualizados segun su relevancia. Primero se actualiza la sesion, luego la lista de usuarios con los datos y por ultimo el login de su cuenta.
+    const actualizado = { ...usuarioActivo, ...datos, email };
 
     setUsuarioActivo(actualizado);
 
@@ -572,12 +710,30 @@ function App() {
         usuario.id === actualizado.id ? actualizado : usuario,
       ),
     );
+
+    if (actualizado.email !== usuarioActivo.email) {
+      // Busca la cuenta por el id del usuario y actualiza solo su correo (se usa al cambiar el perfil una vez ingresado)
+      setCuentas((anteriores) =>
+        anteriores.map((cuenta) =>
+          cuenta.usuarioId === actualizado.id
+            ? { ...cuenta, email: actualizado.email }
+            : cuenta,
+        ),
+      );
+    }
+
     mostrarAviso("Perfil actualizado correctamente crack.");
   }
 
   // Si el usuario es null entonces no esta activo y app solo devuelve <Acceso/>, de lo contrario si debe aparecer toda la App
   if (!usuarioActivo) {
-    return <Acceso onLogin={iniciarSesion} onRegister={registrarUsuario} />;
+    return (
+      <Acceso
+        cuentasDemo={cuentasDemoActuales}
+        onLogin={iniciarSesion}
+        onRegister={registrarUsuario}
+      />
+    );
   }
 
   // Uso del Context:
@@ -633,6 +789,7 @@ function App() {
                 gremios={gremios}
                 usuarios={usuarios}
                 votos={votos}
+                usuario={usuarioActivo}
               />
             }
           />
@@ -680,6 +837,21 @@ function App() {
               <PerfilPage
                 onSaveProfile={guardarPerfil}
                 usuario={usuarioActivo}
+              />
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <EstadoVacio
+                accion={
+                  <Link className="estado-vacio-accion" to="/">
+                    Volver al inicio
+                  </Link>
+                }
+                descripcion="La ruta no existe"
+                icono={FiAlertCircle}
+                titulo="Pagina no encontrada"
               />
             }
           />

@@ -1,8 +1,10 @@
 import { calcularResultados } from "../../utils/voting";
 
-// AQUI VOY
+// Calcula los resultados usando los votos de todos los usuarios.
+// La seleccion personal se usa aparte solamente para marcar "Tu voto".
 function CategoriaVotacion({
   categoria,
+  votosFormula,
   opcionSeleccionada,
   pesoVoto,
   veto,
@@ -11,12 +13,7 @@ function CategoriaVotacion({
   onVote,
   onVeto,
 }) {
-  const resultados = calcularResultados(
-    categoria,
-    opcionSeleccionada,
-    pesoVoto,
-    veto,
-  );
+  const resultados = calcularResultados(categoria, votosFormula, veto);
 
   return (
     <fieldset className="categoria-votacion-elemento-fieldset-nombre-descripcion-peso-de">
