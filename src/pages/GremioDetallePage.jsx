@@ -41,14 +41,24 @@ function GremioDetallePage({
       </Link>
 
       <section className="gremio-detalle-seccion-gremio-publico-nombre">
-        <p className="gremio-detalle-descripcion-gremio-publico">
-          Gremio {gremio.tipo === "publico" ? "público" : "privado"}
-        </p>
-        <h1 className="gremio-detalle-titulo-principal-nombre">
-          {gremio.nombre}
-        </h1>
-        <p className="gremio-detalle-descripcion-lema">“{gremio.lema}”</p>
-        <p className="gremio-detalle-descripcion">{gremio.descripcion}</p>
+        <div className="gremio-detalle-identidad">
+          <div className="gremio-detalle-emblema imagen-con-respaldo" role="img" aria-label={`Emblema de ${gremio.nombre}`}>
+            <span aria-hidden="true">{gremio.nombre.charAt(0)}</span>
+            {gremio.emblemaUrl && (
+              <img key={gremio.emblemaUrl} src={gremio.emblemaUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+            )}
+          </div>
+          <div className="gremio-detalle-presentacion">
+            <p className="gremio-detalle-descripcion-gremio-publico">
+              Gremio {gremio.tipo === "publico" ? "público" : "privado"}
+            </p>
+            <h1 className="gremio-detalle-titulo-principal-nombre">
+              {gremio.nombre}
+            </h1>
+            <p className="gremio-detalle-descripcion-lema">“{gremio.lema}”</p>
+            <p className="gremio-detalle-descripcion">{gremio.descripcion}</p>
+          </div>
+        </div>
         {puedeCrear && (
           <Link
             className="gremio-detalle-enlace-formulas-nueva-gremio"

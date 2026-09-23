@@ -13,12 +13,14 @@ function TarjetaFormula({ formula, gremio, creador, votosCompletados = 0 }) {
         <h2 className="tarjeta-formula-titulo-seccion-nombre-pocion">{formula.nombrePocion}</h2>
         <p className="tarjeta-formula-descripcion-efecto-deseado">{formula.efectoDeseado}</p>
       </div>
-      <p className="tarjeta-formula-texto-user">
-        Autor: {creador?.nombreCompleto ?? "Desconocido"}
-      </p>
-      <p className="tarjeta-formula-contenedor-tu-participacion-votos-completados">
-        Tus votos: {votosCompletados}/3
-      </p>
+      <div className="tarjeta-formula-metadatos">
+        <p className="tarjeta-formula-texto-user">
+          Autor: {creador?.nombreCompleto ?? "Desconocido"}
+        </p>
+        <p className="tarjeta-formula-contenedor-tu-participacion-votos-completados">
+          Tus votos: {votosCompletados}/3
+        </p>
+      </div>
       <Link className="tarjeta-formula-enlace-formulas" to={`/formulas/${formula.id}`}>
         Ver fórmula
       </Link>

@@ -11,15 +11,24 @@
 :root {
   font-family: "Manrope", Arial, sans-serif;
   line-height: 1.5;
-  color: #f8f7ff;
-  background-color: #080a16;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  --color-fondo: #151c18;
+  --color-superficie: #1e2821;
+  --color-borde: #3b483d;
+  --color-texto: #eee8da;
+  --color-secundario: #adb7a8;
+  --color-acento: #c8ac75;
+  --color-verde: #a5c49c;
+  --color-error: #dfaaa0;
+  color-scheme: dark;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background-color: #080a16;
+  background-color: var(--color-fondo);
 }
 
 h1,
@@ -93,3 +102,9 @@ img {
 #root {
   min-height: 100vh;
 }
+
+/* El foco sigue siendo visible al navegar con el teclado. */
+:focus-visible { outline: 2px solid var(--color-acento); outline-offset: 3px; }
+::selection { background: #c8ac7540; color: var(--color-texto); }
+input::placeholder, textarea::placeholder { color: #9ba793; opacity: 1; }
+

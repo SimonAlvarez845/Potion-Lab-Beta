@@ -7,30 +7,40 @@ function TarjetaGremio({ gremio, usuarioId, onJoin }) {
     <article className="tarjeta-gremio-tarjeta-publico-nombre-lema">
       <div className="tarjeta-gremio-franja-color" style={{ background: gremio.acento }} />
       <div className="tarjeta-gremio-contenedor-flexible-publico-nombre-lema">
-        <p className="tarjeta-gremio-texto-publico">
-          Gremio {gremio.tipo === "publico" ? "público" : "privado"}
-        </p>
-        <div className="tarjeta-gremio-contenedor-flexible-nombre-lema">
-          <h2 className="tarjeta-gremio-titulo-seccion-nombre">{gremio.nombre}</h2>
-          <p className="tarjeta-gremio-descripcion-lema">“{gremio.lema}”</p>
-          <p className="tarjeta-gremio-descripcion">{gremio.descripcion}</p>
+        <div className="tarjeta-gremio-encabezado">
+          <div className="tarjeta-gremio-emblema imagen-con-respaldo" role="img" aria-label={`Emblema de ${gremio.nombre}`}>
+            <span aria-hidden="true">{gremio.nombre.charAt(0)}</span>
+            {gremio.emblemaUrl && (
+              <img key={gremio.emblemaUrl} src={gremio.emblemaUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+            )}
+          </div>
+          <div className="tarjeta-gremio-contenedor-flexible-nombre-lema">
+            <p className="tarjeta-gremio-texto-publico">
+              Gremio {gremio.tipo === "publico" ? "público" : "privado"}
+            </p>
+            <h2 className="tarjeta-gremio-titulo-seccion-nombre">{gremio.nombre}</h2>
+            <p className="tarjeta-gremio-descripcion-lema">“{gremio.lema}”</p>
+          </div>
         </div>
-        <p className="tarjeta-gremio-texto-users-length-miembros">
-          {gremio.miembros.length} miembros
-        </p>
-        {pertenece ? (
-          <Link className="tarjeta-gremio-enlace-gremios" to={`/gremios/${gremio.id}`}>
-            Ver gremio
-          </Link>
-        ) : (
-          <button
-            className="tarjeta-gremio-boton-unirme-al-gremio"
-            onClick={() => onJoin(gremio)}
-            type="button"
-          >
-            {gremio.tipo === "publico" ? "Unirme al gremio" : "Ingresar código"}
-          </button>
-        )}
+        <p className="tarjeta-gremio-descripcion">{gremio.descripcion}</p>
+        <div className="tarjeta-gremio-pie">
+          <p className="tarjeta-gremio-texto-users-length-miembros">
+            {gremio.miembros.length} miembros
+          </p>
+          {pertenece ? (
+            <Link className="tarjeta-gremio-enlace-gremios" to={`/gremios/${gremio.id}`}>
+              Ver gremio
+            </Link>
+          ) : (
+            <button
+              className="tarjeta-gremio-boton-unirme-al-gremio"
+              onClick={() => onJoin(gremio)}
+              type="button"
+            >
+              {gremio.tipo === "publico" ? "Unirme al gremio" : "Ingresar código"}
+            </button>
+          )}
+        </div>
       </div>
     </article>
   );

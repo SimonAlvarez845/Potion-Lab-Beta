@@ -24,6 +24,12 @@ function PerfilPage({ usuario, onSaveProfile }) {
       </header>
 
       <form className="perfil-formulario-informacion-personal-la-autenticacion" onSubmit={manejarEnvio}>
+        <div className="perfil-avatar imagen-con-respaldo" role="img" aria-label={`Vista previa del avatar de ${formulario.nombreCompleto}`}>
+          <span aria-hidden="true">{formulario.nombreCompleto.charAt(0)}</span>
+          {formulario.avatarUrl && (
+            <img key={formulario.avatarUrl} src={formulario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+          )}
+        </div>
         <label className="perfil-etiqueta-campo-user-nombre-completo">
           <span className="perfil-texto-user-nombre-completo">Nombre completo</span>
           <input

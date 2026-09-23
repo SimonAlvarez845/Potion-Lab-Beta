@@ -21,7 +21,15 @@ function ListaMiembros({ gremio, usuarios, puedeAdministrar, onChangeRole, onApp
             return (
               <tr className="lista-miembros-fila-tabla-iniciales-nombre-completo-email" key={miembro.usuarioId}>
                 <td className="lista-miembros-celda-iniciales-nombre-completo-email">
-                  <strong className="lista-miembros-dato-destacado-nombre-completo">{usuario.nombreCompleto}</strong>
+                  <div className="lista-miembros-contenedor-flexible-iniciales-nombre-completo-email">
+                    <span className="lista-miembros-insignia-iniciales imagen-con-respaldo" role="img" aria-label={`Perfil de ${usuario.nombreCompleto}`}>
+                      <span aria-hidden="true">{usuario.nombreCompleto.charAt(0)}</span>
+                      {usuario.avatarUrl && (
+                        <img key={usuario.avatarUrl} src={usuario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+                      )}
+                    </span>
+                    <strong className="lista-miembros-dato-destacado-nombre-completo">{usuario.nombreCompleto}</strong>
+                  </div>
                 </td>
                 <td className="lista-miembros-celda-especialidad">{usuario.especialidad}</td>
                 <td className="lista-miembros-celda-fecha">{formatearFecha(miembro.fechaIngreso)}</td>

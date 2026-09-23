@@ -8,6 +8,7 @@ const formularioInicial = {
   nombre: "",
   lema: "",
   tipo: "publico",
+  emblemaUrl: "",
 };
 
 const unionInicial = {
@@ -39,7 +40,6 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
     const resultado = onCreateGuild({
       ...formulario,
       descripcion: `Gremio creado por ${usuario.nombreCompleto}.`,
-      emblemaUrl: "",
     });
 
     if (!resultado.ok) {
@@ -101,6 +101,16 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
             onChange={manejarCambio}
             required
             value={formulario.lema}
+          />
+        </label>
+        <label className="gremios-etiqueta-campo-lema">
+          <span className="gremios-texto-lema">URL del emblema</span>
+          <input
+            className="gremios-campo-lema"
+            name="emblemaUrl"
+            onChange={manejarCambio}
+            type="url"
+            value={formulario.emblemaUrl}
           />
         </label>
         <label className="gremios-etiqueta-campo-visibilidad-publico-privado">

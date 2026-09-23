@@ -20,8 +20,11 @@ function BarraSuperior({ onLogout }) {
           
         {/* Para que el usuario pueda acceder en todo momento a su perfil o cerrar sesion . */}
           <Link className="barra-superior-enlace-perfil" to="/perfil">
-            <span className="barra-superior-insignia-iniciales">
-              {usuario.nombreCompleto.charAt(0)}
+            <span className="barra-superior-insignia-iniciales imagen-con-respaldo" role="img" aria-label={`Perfil de ${usuario.nombreCompleto}`}>
+              <span aria-hidden="true">{usuario.nombreCompleto.charAt(0)}</span>
+              {usuario.avatarUrl && (
+                <img key={usuario.avatarUrl} src={usuario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+              )}
             </span>
             <span className="barra-superior-texto-nombre-completo-especialidad">
               <strong className="barra-superior-dato-destacado-nombre-completo">{usuario.nombreCompleto}</strong>

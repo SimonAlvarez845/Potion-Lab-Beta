@@ -21,6 +21,7 @@ function RankingPage({ usuarios, usuarioActivo }) {
             <thead>
               <tr className="ranking-fila-tabla-posicion-alquimista-puntos-rareza">
                 <th className="ranking-titulo-columna-posicion">Posición</th>
+                <th className="ranking-columna-perfil">Perfil</th>
                 <th className="ranking-titulo-columna-alquimista">
                   Alquimista
                 </th>
@@ -43,6 +44,14 @@ function RankingPage({ usuarios, usuarioActivo }) {
                   key={usuario.id}
                 >
                   <td className="ranking-celda-posicion">#{indice + 1}</td>
+                  <td className="ranking-columna-perfil">
+                    <div className="ranking-avatar imagen-con-respaldo" role="img" aria-label={`Perfil de ${usuario.nombreCompleto}`}>
+                      <span aria-hidden="true">{usuario.nombreCompleto.charAt(0)}</span>
+                      {usuario.avatarUrl && (
+                        <img key={usuario.avatarUrl} src={usuario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+                      )}
+                    </div>
+                  </td>
                   <td className="ranking-celda-iniciales-nombre-completo-especialidad">
                     <strong className="ranking-dato-destacado-nombre-completo">
                       {usuario.nombreCompleto}{" "}

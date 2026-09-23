@@ -2,32 +2,33 @@
 .barra-superior-imagen {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.75rem;
+  border-radius: 0.375rem;
   object-fit: cover;
 }
 
 .barra-lateral-insignia {
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 1rem;
-  background-color: #8d54ff;
+  border-radius: 0.75rem 0.25rem;
+  background-color: #2c3a2c;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-acento);
   place-items: center;
   display: grid;
+  border: 1px solid #63734d;
 }
 
 .barra-lateral-icono-zap {
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .barra-superior-insignia {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   font-size: 1.25rem;
-  color: #fff;
+  color: var(--color-texto);
   place-items: center;
   display: grid;
 }
@@ -35,7 +36,7 @@
 .barra-superior-indicador {
   width: 0.5rem;
   height: 0.5rem;
-  background-color: #5ee9b5;
+  background-color: var(--color-verde);
   border-radius: 9999px;
 }
 
@@ -51,14 +52,15 @@
 }
 
 .barra-lateral-enlace-activo {
-  background-color: #8d54ff;
-  color: #fff;
+  background-color: #2c3a2c;
+  color: var(--color-texto);
+  box-shadow: inset 3px 0 var(--color-acento);
 }
 
 .barra-lateral-enlace-opcion {
   align-items: center;
   gap: 0.75rem;
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.75rem;
@@ -70,12 +72,12 @@
 
 .barra-lateral-enlace-opcion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .layout-principal-aplicacion {
   min-height: 100vh;
-  color: #f1f5f9;
+  color: var(--color-texto);
 }
 
 .barra-lateral-barra-progreso {
@@ -89,7 +91,7 @@
 .barra-superior-enlace-perfil {
   align-items: center;
   gap: 0.75rem;
-  border-radius: 0.75rem;
+  border-radius: 0.375rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.375rem;
@@ -99,29 +101,29 @@
 
 .barra-superior-enlace-perfil:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .barra-superior-enlace-perfil:hover {
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
 }
 
 .barra-lateral-enlace-inactivo {
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .barra-lateral-enlace-inactivo:hover {
-  background-color: #ffffff0d;
-  color: #f1f5f9;
+  background-color: #ffffff05;
+  color: var(--color-texto);
 }
 
 .barra-lateral-icono-decorativo {
   font-size: 1.125rem;
-  color: #ddd6ff;
+  color: var(--color-acento);
 }
 
 .barra-lateral-relleno-progreso {
-  background-color: #a685ff;
+  background-color: #d9bd89;
   border-radius: 9999px;
   height: 100%;
   display: block;
@@ -130,25 +132,26 @@
 .barra-superior-enlace-potion-lab {
   align-items: center;
   gap: 0.75rem;
-  border-radius: 0.75rem;
+  border-radius: 0.375rem;
   display: flex;
 }
 
 .barra-superior-enlace-potion-lab:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .barra-superior-insignia-iniciales {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: #2c3a2c;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-acento);
   place-items: center;
   display: grid;
+  border: 1px solid var(--color-borde);
 }
 
 .barra-lateral-navegacion-principal {
@@ -166,20 +169,20 @@
 .barra-superior-boton-cerrar-sesion {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.75rem;
-  color: #62748e;
+  border-radius: 0.375rem;
+  color: var(--color-secundario);
   place-items: center;
   display: grid;
 }
 
 .barra-superior-boton-cerrar-sesion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .barra-superior-boton-cerrar-sesion:hover {
-  background-color: #ff667f1a;
-  color: #ffa2ae;
+  background-color: #dfaaa01a;
+  color: var(--color-error);
 }
 
 .barra-lateral-texto-zap-nivel-nivel {
@@ -187,13 +190,13 @@
   gap: 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-texto);
   display: flex;
 }
 
 .barra-superior-detalle-especialidad {
   font-size: 0.75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .layout-principal-contenido-con-barra {
@@ -204,10 +207,10 @@
   margin-bottom: 0.75rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #45556c;
+  letter-spacing: 0.12em;
+  color: #9ba793;
   text-transform: uppercase;
 }
 
@@ -215,7 +218,7 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #62748e;
+  color: var(--color-secundario);
   text-transform: uppercase;
 }
 
@@ -223,41 +226,41 @@
   font-family: Cinzel, Georgia, serif;
   font-size: 1rem;
   letter-spacing: 0.025em;
-  color: #fff;
+  color: var(--color-texto);
   display: block;
 }
 
 .barra-superior-dato-destacado-potion-lab {
   font-family: Cinzel, Georgia, serif;
   font-size: 0.875rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .barra-lateral-descripcion-consejo-del-dia {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .barra-lateral-detalle-progreso-nivel-100-px {
   font-size: 0.75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .barra-lateral-seccion-consejo-del-dia-puedes {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffd23626;
-  background-color: #ffd2360f;
+  border-color: #c8ac7526;
+  background-color: #c8ac750f;
   padding: 1rem;
 }
 
 .barra-lateral-seccion-progreso-del-alquimista {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1rem;
   background: #ffffff0a;
-  border: 1px solid #ffffff14;
+  border: 1px solid var(--color-borde);
 }
 
 .barra-superior-dato-destacado-nombre-completo {
@@ -265,7 +268,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.75rem;
-  color: #fff;
+  color: var(--color-texto);
   display: block;
   overflow: hidden;
 }
@@ -273,7 +276,7 @@
 .barra-superior-descripcion-todo-listo-para-una {
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .barra-superior-descripcion-laboratorio-conectado {
@@ -282,7 +285,7 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #62748e;
+  color: var(--color-secundario);
   text-transform: uppercase;
   display: flex;
 }
@@ -296,7 +299,7 @@
   margin-top: 0.5rem;
   font-size: 0.75rem;
   line-height: 1.25rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .barra-lateral-lista-vertical-zap-nivel-nivel-progreso {
@@ -313,12 +316,12 @@
   border-right-style: solid;
   top: 0;
   bottom: 0;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   border-right-width: 1px;
   display: none;
   position: fixed;
   left: 0;
-  background-color: #020618;
+  background-color: #111712;
 }
 
 .barra-lateral-contenedor-flexible-zap-nivel-nivel-progreso {
@@ -334,11 +337,11 @@
 .barra-superior-encabezado-potion-lab-laboratorio-conectado {
   z-index: 20;
   border-bottom-style: solid;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   position: sticky;
   top: 0;
-  background-color: #020618;
+  background-color: #111712;
 }
 
 .barra-lateral-contenedor-flexible-potion-lab-academia-arcana {
@@ -346,7 +349,7 @@
   align-items: center;
   gap: 0.75rem;
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   display: flex;
   padding-left: 1.5rem;
@@ -367,6 +370,7 @@
   align-items: center;
   gap: 0.5rem;
   display: flex;
+  margin-left: auto;
 }
 
 @media (min-width: 1024px) {

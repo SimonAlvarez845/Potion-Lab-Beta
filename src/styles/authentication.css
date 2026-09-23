@@ -2,12 +2,13 @@
 .acceso-insignia {
   width: 3rem;
   height: 3rem;
-  border-radius: 1rem;
-  background-color: #8d54ff;
+  border-radius: 0.5rem;
+  background-color: #2c3a2c;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-acento);
   place-items: center;
   display: grid;
+  border: 1px solid #63734d;
 }
 
 .acceso-boton-modo {
@@ -22,14 +23,14 @@
 
 .acceso-boton-modo:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-icono-lock {
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
@@ -37,7 +38,7 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
@@ -45,7 +46,7 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
@@ -69,7 +70,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
   display: block;
   overflow: hidden;
 }
@@ -78,12 +79,12 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .acceso-selector-modo {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   background-color: #0003;
   grid-template-columns: repeat(2,minmax(0,1fr));
   display: grid;
@@ -94,134 +95,134 @@
   margin-top: 2.5rem;
   gap: 1rem;
   font-size: .875rem;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: grid;
 }
 
 .acceso-insignia-check {
   width: 1.75rem;
   height: 1.75rem;
-  background-color: #004e3b;
+  background-color: #304a36;
   font-size: .75rem;
-  color: #5ee9b5;
+  color: var(--color-verde);
   border-radius: 9999px;
   place-items: center;
   display: grid;
 }
 
 .acceso-campo-avatar-url {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .acceso-campo-avatar-url:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-campo-avatar-url::placeholder {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .acceso-campo-formulario {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 2.75rem;
   padding-right: 2.75rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .acceso-campo-formulario:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-texto-contrasena {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .acceso-boton-modo-activo {
-  background-color: #ffffff1a;
-  color: #fff;
+  background-color: var(--color-borde);
+  color: var(--color-texto);
 }
 
 .acceso-descripcion-error {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffa2ae26;
-  background-color: #ffa2ae14;
+  border-color: #dfaaa026;
+  background-color: #dfaaa014;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .acceso-nombre-logo-movil {
   font-family: Cinzel,Georgia,serif;
   font-size: 1.125rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .acceso-texto-especialidad {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .acceso-boton-modo-inactivo {
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .acceso-boton-modo-inactivo:hover {
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .acceso-insignia-logo-movil {
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 1rem;
-  background-color: #8d54ff;
+  border-radius: 0.5rem;
+  background-color: var(--color-acento);
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-fondo);
   place-items: center;
   display: grid;
 }
 
 .acceso-boton-etiqueta-email {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
-  background-color: #ffffff0d;
+  border-color: var(--color-borde);
+  background-color: #ffffff05;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.75rem;
@@ -231,32 +232,32 @@
 
 .acceso-boton-etiqueta-email:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-boton-etiqueta-email:hover {
-  background-color: #c4b4ff1a;
+  background-color: #a5c49c1a;
 }
 
 .acceso-selector-especialidad {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .acceso-selector-especialidad:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-cuadricula-cuentas-demo {
@@ -266,7 +267,7 @@
 
 .acceso-dato-destacado-etiqueta {
   font-size: .75rem;
-  color: #e2e8f0;
+  color: var(--color-texto);
   display: block;
 }
 
@@ -274,7 +275,7 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
@@ -285,7 +286,7 @@
   height: 2rem;
   transform: translateY(-50%);
   border-radius: .5rem;
-  color: #45556c;
+  color: #9ba793;
   place-items: center;
   display: grid;
   position: absolute;
@@ -293,16 +294,16 @@
 
 .acceso-boton-ocultar-contrasena:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-boton-ocultar-contrasena:hover {
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .acceso-dato-destacado-potion-lab {
   letter-spacing: .025em;
-  color: #fff;
+  color: var(--color-texto);
   font-family: Cinzel,Georgia,serif;
   display: block;
 }
@@ -311,7 +312,7 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
@@ -329,7 +330,7 @@
 }
 
 .acceso-texto-pociones-definitivas {
-  color: #a2f4fd;
+  color: #c3d8b9;
   display: block;
 }
 
@@ -337,8 +338,8 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   width: 100%;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -346,22 +347,22 @@
   padding-bottom: 0.875rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
 }
 
 .acceso-boton-entra-a-tu-laboratorio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .acceso-boton-entra-a-tu-laboratorio:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .acceso-seccion-potion-lab-libera-tu {
   border-right-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-right-width: 1px;
   flex-direction: column;
   justify-content: space-between;
@@ -388,7 +389,7 @@
 
 .acceso-texto-libera-tu-mago-interior {
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .acceso-contenedor-flexible-potion-lab {
@@ -413,7 +414,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #c4b4ff;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -422,11 +423,11 @@
 }
 
 .acceso-contenedor-map-sea-bienvenido-mago {
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   padding: 1.5rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .acceso-etiqueta-campo-avatar-url-opcional {
@@ -436,7 +437,7 @@
 .acceso-contenedor-cuentas-de-prueba-acceso {
   margin-top: 1.75rem;
   border-top-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-top-width: 1px;
   padding-top: 1.5rem;
 }
@@ -449,7 +450,7 @@
   margin-top: 0.5rem;
   font-size: .875rem;
   line-height: 1.5rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .acceso-descripcion-cuentas-de-prueba-acceso {
@@ -458,7 +459,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #45556c;
+  color: #9ba793;
   text-transform: uppercase;
 }
 
@@ -468,7 +469,7 @@
   line-height: 1.12;
   font-weight: 600;
   letter-spacing: -.025em;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .acceso-titulo-seccion-abre-tu-portal-magico {
@@ -476,7 +477,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .acceso-etiqueta-campo-nombre-de-usuario-user {
@@ -488,7 +489,7 @@
   max-width: 36rem;
   font-size: 1rem;
   line-height: 2rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .acceso-formulario-correo-mail-contrasena-lock {
@@ -520,14 +521,14 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
   display: flex;
 }
 
 .acceso-descripcion-proyecto-academico-ingenieria {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
   position: relative;
 }
 

@@ -33,7 +33,7 @@ function GrimorioPage({ grimorio, gremios }) {
             const gremio = gremios.find((item) => item.id === pocion.gremioId);
             return (
               <article className="grimorio-tarjeta-star-rareza-rareza-nombre" key={pocion.id}>
-                <p className="grimorio-texto-star-rareza-rareza">Rareza {pocion.rareza}</p>
+                <p className="grimorio-texto-star-rareza-rareza">Rareza <strong>{pocion.rareza}</strong></p>
                 <div className="grimorio-contenedor-nombre-efecto">
                   <p className="grimorio-descripcion">{gremio?.nombre}</p>
                   <h2 className="grimorio-titulo-seccion-nombre">{pocion.nombre}</h2>

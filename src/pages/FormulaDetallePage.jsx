@@ -65,21 +65,33 @@ function FormulaDetallePage({
       </Link>
 
       <section className="formula-detalle-seccion-nombre-pocion-efecto-deseado">
-        <InsigniaEstado estado={formula.estado} />
-        <h1 className="formula-detalle-titulo-principal-nombre-pocion">
-          {formula.nombrePocion}
-        </h1>
-        <p className="formula-detalle-descripcion-efecto-deseado">
-          {formula.efectoDeseado}
-        </p>
-        <p className="formula-detalle-valor-dato">
-          Gremio: {gremio.nombre} · Autor:{" "}
-          {creador?.nombreCompleto ?? "Desconocido"}
-        </p>
-        <p className="formula-detalle-valor-dato-fecha">
-          Dificultad {formula.dificultad} · Cierre{" "}
-          {formatearFecha(formula.fechaCierre, true)}
-        </p>
+        <div className="formula-detalle-presentacion">
+          <InsigniaEstado estado={formula.estado} />
+          <h1 className="formula-detalle-titulo-principal-nombre-pocion">
+            {formula.nombrePocion}
+          </h1>
+          <p className="formula-detalle-descripcion-efecto-deseado">
+            {formula.efectoDeseado}
+          </p>
+        </div>
+        <dl className="formula-detalle-ficha">
+          <div>
+            <dt>Gremio</dt>
+            <dd>{gremio.nombre}</dd>
+          </div>
+          <div>
+            <dt>Autor</dt>
+            <dd>{creador?.nombreCompleto ?? "Desconocido"}</dd>
+          </div>
+          <div>
+            <dt>Dificultad</dt>
+            <dd>{formula.dificultad}</dd>
+          </div>
+          <div>
+            <dt>Cierre</dt>
+            <dd>{formatearFecha(formula.fechaCierre, true)}</dd>
+          </div>
+        </dl>
 
         {/* Boton para abrir la votacion con renderizado condicional */}
         <div className="formula-detalle-contenedor-flexible">

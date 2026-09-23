@@ -1,29 +1,29 @@
 
 .gremios-campo {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .gremios-campo:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-imagen {
   width: 7rem;
   height: 7rem;
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   object-fit: cover;
   margin-left: auto;
   margin-right: auto;
@@ -32,10 +32,10 @@
 .grimorio-insignia {
   width: 3rem;
   height: 3rem;
-  border-radius: 1rem;
-  background-color: #8d54ff;
+  border-radius: 0.5rem;
+  background-color: var(--color-acento);
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-fondo);
   place-items: center;
   display: grid;
 }
@@ -43,110 +43,110 @@
 .gremios-area-texto {
   min-height: 6rem;
   resize: vertical;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .gremios-area-texto:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-campo-lema {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .gremios-campo-lema:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-texto-lema {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .perfil-campo-email {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .perfil-campo-email:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-icono-award {
-  color: #ffd236;
+  color: var(--color-acento);
   margin-left: auto;
   margin-right: auto;
 }
 
 .ranking-detalle-tu {
   margin-left: 0.5rem;
-  color: #c4b4ff;
+  color: var(--color-verde);
 }
 
 .gremios-error-union {
-  border-radius: .75rem;
-  background-color: #ffa2ae14;
+  border-radius: 0.375rem;
+  background-color: #dfaaa014;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .perfil-texto-puntos {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .ranking-icono-award {
   font-size: 1.5rem;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .gremios-boton-filtro {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
@@ -157,22 +157,22 @@
 
 .gremios-boton-filtro:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-icono-search {
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
 .grimorio-descripcion {
-  font-size: .75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: .05em;
-  color: #c4b4ff;
+  letter-spacing: 0.06em;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -183,12 +183,12 @@
   padding-bottom: 1rem;
   text-align: center;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-texto-puntos {
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formulas-icono-filter {
@@ -196,7 +196,7 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
@@ -204,14 +204,14 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
 .gremio-detalle-imagen {
   width: 5rem;
   height: 5rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   object-fit: cover;
 }
 
@@ -219,27 +219,27 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: #45556c;
+  color: #9ba793;
   position: absolute;
 }
 
 .ranking-podio-primero {
-  border-color: #ffd23633;
-  background-color: #461901;
+  border-color: #c8ac7533;
+  background-color: #3d3323;
 }
 
 .ranking-podio-segundo {
-  border-color: #cad5e233;
-  background-color: #0f172b;
+  border-color: #d4d9cd33;
+  background-color: var(--color-fondo);
 }
 
 .ranking-podio-tercero {
-  border-color: #ffb96d33;
-  background-color: #441306;
+  border-color: #c8ac7533;
+  background-color: #422c25;
 }
 
 .ranking-tarjeta-podio {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border-style: solid;
   padding: 1.5rem;
   border-width: 1px;
@@ -248,24 +248,24 @@
 }
 
 .gremios-campo-opcional {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .gremios-campo-opcional:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-cuadricula-map {
@@ -274,7 +274,7 @@
 }
 
 .perfil-mensaje-exitoso {
-  color: #5ee9b5;
+  color: var(--color-verde);
 }
 
 .ranking-celda-posicion {
@@ -282,6 +282,9 @@
   padding-right: 1.25rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  font-family: Cinzel, Georgia, serif;
+  color: var(--color-acento);
+  font-size: 1rem;
 }
 
 .ranking-cuadricula-map {
@@ -290,7 +293,7 @@
 }
 
 .ranking-posicion-podio {
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .resumen-cuadricula-map {
@@ -304,17 +307,17 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #90a1b9;
+  color: var(--color-secundario);
   display: flex;
 }
 
 .resumen-enlace-gremios:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .resumen-enlace-gremios:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formulas-cuadricula-map {
@@ -325,7 +328,7 @@
 .gremio-detalle-insignia {
   width: 5rem;
   height: 5rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   font-size: 1.875rem;
   flex-shrink: 0;
   place-items: center;
@@ -346,29 +349,29 @@
 }
 
 .perfil-campo-avatar-url {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .perfil-campo-avatar-url:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-detalle-opcional {
   font-weight: 400;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .perfil-mensaje-guardado {
@@ -380,12 +383,12 @@
   right: 1rem;
   font-size: 2.25rem;
   font-weight: 900;
-  color: #ffffff0d;
+  color: #ffffff05;
   position: absolute;
 }
 
 .ranking-posicion-normal {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .resumen-enlace-formulas {
@@ -394,17 +397,17 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #90a1b9;
+  color: var(--color-secundario);
   display: none;
 }
 
 .resumen-enlace-formulas:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .resumen-enlace-formulas:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .resumen-enlace-grimorio {
@@ -412,10 +415,10 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   display: flex;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -423,21 +426,21 @@
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .resumen-enlace-grimorio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .resumen-enlace-grimorio:hover {
-  background-color: #ffffff0d;
-  color: #fff;
+  background-color: #ffffff05;
+  color: var(--color-texto);
 }
 
 .perfil-icono-trending-up {
-  color: #5ee9b5;
+  color: var(--color-verde);
   margin-left: auto;
   margin-right: auto;
 }
@@ -447,7 +450,7 @@
   left: -0.25rem;
   width: 0.5rem;
   height: 0.5rem;
-  background-color: #c4b4ff;
+  background-color: var(--color-verde);
   border-radius: 9999px;
   position: absolute;
 }
@@ -458,21 +461,21 @@
 }
 
 .gremios-descripcion-error {
-  border-radius: .75rem;
-  background-color: #ffa2ae14;
+  border-radius: 0.375rem;
+  background-color: #dfaaa014;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .gremios-texto-descripcion {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
@@ -480,28 +483,29 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .grimorio-valor-dato-fecha {
-  margin-top: .25rem;
+  margin-top: 0.25rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
+  line-height: 1.7;
 }
 
 .nueva-formula-icono-check {
-  color: #53eafd;
+  color: var(--color-verde);
 }
 
 .perfil-insignia-iniciales {
   width: 7rem;
   height: 7rem;
-  border-radius: 1.5rem;
-  background-color: #8d54ff;
+  border-radius: 0.75rem;
+  background-color: var(--color-acento);
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   place-items: center;
   margin-left: auto;
   margin-right: auto;
@@ -512,32 +516,32 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .formula-detalle-icono-user {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-valor-dato {
   margin-top: .25rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .gremio-detalle-descripcion {
-  margin-top: 1rem;
-  max-width: 42rem;
+  margin-top: 0.75rem;
+  max-width: 46rem;
   font-size: .875rem;
-  line-height: 1.5rem;
-  color: #62748e;
+  line-height: 1.7;
+  color: var(--color-secundario);
 }
 
 .gremios-boton-crear-gremio {
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   width: 100%;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -545,25 +549,25 @@
   padding-bottom: 0.875rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
 }
 
 .gremios-boton-crear-gremio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-boton-crear-gremio:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .perfil-mensaje-informativo {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .perfil-texto-participacion {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .ranking-celda-rareza-total {
@@ -572,7 +576,7 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   text-align: center;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .ranking-fila-clasificacion {
@@ -590,40 +594,40 @@
 .ranking-insignia-iniciales {
   width: 3rem;
   height: 3rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background-color: #0003;
   place-items: center;
   display: grid;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-participacion-baja {
-  color: #ffa2ae;
+  color: var(--color-error);
 }
 
 .resumen-insignia-book-open {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: .75rem;
-  background-color: #ffd2361a;
+  border-radius: 0.375rem;
+  background-color: #c8ac751a;
   place-items: center;
   display: grid;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .resumen-insignia-pad-start {
   width: 2rem;
   height: 2rem;
   border-radius: .5rem;
-  background-color: #c4b4ff1a;
+  background-color: #a5c49c1a;
   flex-shrink: 0;
   place-items: center;
   display: grid;
   font-size: .75rem;
   font-weight: 700;
-  color: #ddd6ff;
+  color: #c3d8b9;
 }
 
 .resumen-lista-vertical-map {
@@ -635,7 +639,7 @@
 }
 
 .formula-detalle-icono-clock {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .gremio-detalle-franja-color {
@@ -647,8 +651,8 @@
 }
 
 .gremios-boton-filtro-activo {
-  background-color: #53eafd33;
-  color: #a2f4fd;
+  background-color: #a5c49c33;
+  color: #c3d8b9;
 }
 
 .gremios-etiqueta-campo-lema {
@@ -656,11 +660,11 @@
 }
 
 .grimorio-descripcion-efecto {
-  margin-top: 0.75rem;
+  margin-top: 0.875rem;
   -webkit-line-clamp: 2;
-  font-size: .75rem;
-  line-height: 1.25rem;
-  color: #62748e;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-secundario);
   -webkit-box-orient: vertical;
   display: -webkit-box;
   overflow: hidden;
@@ -669,13 +673,13 @@
 .nueva-formula-insignia-info {
   width: 3.5rem;
   height: 3.5rem;
-  border-radius: 1rem;
-  background-color: #ffd2361a;
+  border-radius: 0.5rem;
+  background-color: #c8ac751a;
   place-items: center;
   margin-left: auto;
   margin-right: auto;
   display: grid;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .ranking-celda-participacion {
@@ -687,24 +691,29 @@
 }
 
 .ranking-fila-usuario-activo {
-  background-color: #c4b4ff0e;
+  background-color: #a5c49c10;
+  box-shadow: inset 3px 0 var(--color-acento);
 }
 
 .formula-detalle-texto-rareza {
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .gremios-texto-buscar-gremios {
-  clip-path: inset(50%);
-  white-space: nowrap;
+  clip-path: none;
+  white-space: normal;
   border-width: 0;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+  width: auto;
+  height: auto;
+  margin: 0 0 0.5rem;
   padding: 0;
-  position: absolute;
-  overflow: hidden;
+  position: static;
+  overflow: visible;
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-secundario);
 }
 
 .nueva-formula-cuadricula-map {
@@ -714,91 +723,91 @@
 
 .nueva-formula-enlace-gremios {
   margin-top: 1.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: inline-flex;
 }
 
 .nueva-formula-enlace-gremios:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-campo-nombre-completo {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .perfil-campo-nombre-completo:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-dato-destacado-puntos {
   margin-top: 0.5rem;
   font-size: 1.125rem;
-  color: #fff;
+  color: var(--color-texto);
   display: block;
 }
 
 .perfil-selector-especialidad {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .perfil-selector-especialidad:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .ranking-avatar-clasificacion {
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: .75rem;
-  background-color: #ffffff0d;
+  border-radius: 0.375rem;
+  background-color: #ffffff05;
   place-items: center;
   display: grid;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .ranking-detalle-especialidad {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .ranking-icono-alert-triangle {
   margin-right: 0.5rem;
-  color: #ffd236;
+  color: var(--color-acento);
   display: inline;
 }
 
@@ -806,7 +815,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #c4b4ff;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -819,32 +828,32 @@
   margin-top: 1.25rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #c4b4ff;
+  color: var(--color-verde);
   display: inline-flex;
 }
 
 .gremios-boton-filtro-inactivo {
-  background-color: #ffffff0d;
-  color: #90a1b9;
+  background-color: #ffffff05;
+  color: var(--color-secundario);
 }
 
 .gremios-boton-filtro-inactivo:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-texto-url-del-emblema {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .nueva-formula-enlace-cancelar {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
@@ -852,17 +861,17 @@
   text-align: center;
   font-size: .75rem;
   font-weight: 700;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .nueva-formula-enlace-cancelar:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-enlace-cancelar:hover {
-  background-color: #ffffff0d;
-  color: #fff;
+  background-color: #ffffff05;
+  color: var(--color-texto);
 }
 
 .nueva-formula-enlace-formulas {
@@ -871,25 +880,25 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
   display: inline-flex;
 }
 
 .nueva-formula-enlace-formulas:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-enlace-formulas:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-insignia-layers {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
-  color: #fff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
+  color: var(--color-fondo);
   place-items: center;
   display: grid;
 }
@@ -897,19 +906,19 @@
 .pagina-no-encontrada-insignia {
   width: 4rem;
   height: 4rem;
-  border-radius: 1rem;
-  background-color: #ffa2ae1a;
+  border-radius: 0.5rem;
+  background-color: #dfaaa01a;
   place-items: center;
   margin-left: auto;
   margin-right: auto;
   display: grid;
   font-size: 1.875rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .ranking-dato-destacado-puntos {
   font-size: 1.875rem;
-  color: #fff;
+  color: var(--color-texto);
   display: block;
 }
 
@@ -933,32 +942,32 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .resumen-enlace-formulas-nueva {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
 }
 
 .resumen-enlace-formulas-nueva:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .resumen-enlace-formulas-nueva:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .resumen-titulo-tarjeta-nombre {
@@ -966,7 +975,7 @@
   font-size: .75rem;
   line-height: 1.25rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-texto);
   -webkit-box-orient: vertical;
   display: -webkit-box;
   overflow: hidden;
@@ -975,81 +984,85 @@
 .formula-detalle-enlace-gremios {
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-enlace-gremios:hover {
-  color: #ddd6ff;
+  color: #c3d8b9;
 }
 
 .formula-detalle-icono-activity {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-icono-calendar {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-titulo-tarjeta {
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .formulas-enlace-formulas-nueva {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
 }
 
 .formulas-enlace-formulas-nueva:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formulas-enlace-formulas-nueva:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .formulas-texto-buscar-formulas {
-  clip-path: inset(50%);
-  white-space: nowrap;
+  clip-path: none;
+  white-space: normal;
   border-width: 0;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+  width: auto;
+  height: auto;
+  margin: 0 0 0.5rem;
   padding: 0;
-  position: absolute;
-  overflow: hidden;
+  position: static;
+  overflow: visible;
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-secundario);
 }
 
 .gremio-detalle-enlace-formulas {
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .gremio-detalle-enlace-formulas:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremio-detalle-enlace-formulas:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-boton-validar-y-unirme {
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   width: 100%;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -1057,33 +1070,33 @@
   padding-bottom: 0.875rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
 }
 
 .gremios-boton-validar-y-unirme:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-boton-validar-y-unirme:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .grimorio-titulo-seccion-nombre {
-  margin-top: 0.5rem;
-  -webkit-line-clamp: 3;
+  margin-top: 0.625rem;
+  -webkit-line-clamp: unset;
   font-family: Cinzel,Georgia,serif;
   font-size: 1.125rem;
-  line-height: 1.75rem;
+  line-height: 1.6;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
   -webkit-box-orient: vertical;
-  display: -webkit-box;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
 }
 
 .ranking-participacion-adecuada {
-  color: #5ee9b5;
+  color: var(--color-verde);
 }
 
 .resumen-cuadricula-mis-gremios {
@@ -1095,7 +1108,7 @@
   margin-top: 1.25rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #c4b4ff;
+  color: var(--color-verde);
   display: inline-flex;
 }
 
@@ -1103,8 +1116,8 @@
   margin-top: 1.5rem;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #ffffff14;
+  border-radius: 0.375rem;
+  background-color: var(--color-borde);
   display: inline-flex;
   position: relative;
   padding-left: 1rem;
@@ -1113,12 +1126,12 @@
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-enlace-grimorio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formula-detalle-enlace-grimorio:hover {
@@ -1136,7 +1149,7 @@
 .gremio-detalle-descripcion-lema {
   margin-top: 0.5rem;
   font-size: .875rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
   font-style: italic;
 }
 
@@ -1149,34 +1162,34 @@
 .gremios-boton-plus-crear-gremio {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
 }
 
 .gremios-boton-plus-crear-gremio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-boton-plus-crear-gremio:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .gremios-campo-codigo-invitacion {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 1rem;
@@ -1186,47 +1199,47 @@
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #fff;
+  color: var(--color-texto);
   text-transform: uppercase;
   outline: none;
 }
 
 .gremios-campo-codigo-invitacion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-texto-nombre-del-gremio {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
 .nueva-formula-descripcion-error {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffa2ae26;
-  background-color: #ffa2ae14;
+  border-color: #dfaaa026;
+  background-color: #dfaaa014;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .nueva-formula-detalle-length-50 {
   font-weight: 400;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .perfil-descripcion-especialidad {
   margin-top: .25rem;
   font-size: .75rem;
-  color: #c4b4ff;
+  color: var(--color-verde);
 }
 
 .ranking-indicador-participacion {
@@ -1247,87 +1260,87 @@
   margin-top: .25rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .gremios-selector-publico-privado {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-selector-publico-privado:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .grimorio-nombre-dato-destilacion {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .nueva-formula-campo-fecha-cierre {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   color-scheme: dark;
   outline: none;
 }
 
 .nueva-formula-campo-fecha-cierre:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-detalle-length-200 {
   font-weight: 400;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .nueva-formula-selector-gremio-id {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-selector-gremio-id:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-tarjeta-nombre-map {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
-  background-color: #ffffff0d;
+  border-color: var(--color-borde);
+  background-color: #ffffff05;
   padding: 1rem;
 }
 
@@ -1335,7 +1348,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #62748e;
+  color: var(--color-secundario);
   text-transform: uppercase;
 }
 
@@ -1372,113 +1385,120 @@
 }
 
 .gremios-campo-buscar-por-nombre-o {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #00000026;
+  background-color: #11171266;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-right: 1rem;
-  padding-left: 2.75rem;
+  padding-left: 1rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .gremios-campo-buscar-por-nombre-o:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-campo-buscar-por-nombre-o::placeholder {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .grimorio-contenedor-nombre-efecto {
   margin-top: 1.25rem;
+  flex: 1;
+  margin-bottom: 1.5rem;
 }
 
 .grimorio-texto-star-rareza-rareza {
   align-items: center;
   gap: 0.375rem;
-  background-color: #ffd2361a;
-  border-radius: 9999px;
+  background-color: transparent;
+  border-radius: 0;
   display: flex;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
   padding-top: .25rem;
   padding-bottom: .25rem;
-  font-size: .75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #fee685;
+  color: #ddc28c;
+  padding: 0 0 0.875rem;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-borde);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .nueva-formula-campo-nombre-pocion {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .nueva-formula-campo-nombre-pocion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-selector-dificultad {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-selector-dificultad:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-boton-save-guardar-cambios {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
 }
 
 .perfil-boton-save-guardar-cambios:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .perfil-boton-save-guardar-cambios:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .perfil-texto-image-url-del-avatar {
@@ -1487,7 +1507,7 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: flex;
 }
 
@@ -1497,7 +1517,7 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: flex;
 }
 
@@ -1506,7 +1526,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-titulo-columna-alquimista {
@@ -1519,18 +1539,20 @@
 .resumen-descripcion-rareza-rareza {
   margin-top: .25rem;
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-descripcion-efecto {
   margin-top: 0.75rem;
   font-size: .875rem;
   line-height: 1.5rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-lista-vertical-map {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
 }
 
 .formula-detalle-lista-vertical-map > * + * {
@@ -1542,7 +1564,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-etiqueta-campo-descripcion {
@@ -1551,7 +1573,7 @@
 
 .ranking-elemento-gi-laurels-trophy {
   font-size: 1.875rem;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .resumen-titulo-seccion-tus-gremios {
@@ -1559,31 +1581,34 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-contenedor-flexible {
   gap: 0.75rem;
   flex-wrap: wrap;
   display: flex;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-borde);
+  justify-content: flex-end;
 }
 
 .formula-detalle-descripcion-detalle {
   margin-top: .25rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-elemento-time-fecha {
   margin-top: 0.5rem;
   font-size: .75rem;
-  color: #314158;
+  color: var(--color-secundario);
   display: block;
 }
 
 .formula-detalle-panel-rareza-rareza {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background-color: #0003;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -1593,21 +1618,22 @@
 }
 
 .grimorio-valor-dato-dificultad-real {
-  margin-top: .25rem;
+  margin-top: 0.25rem;
   font-weight: 700;
-  color: #a2f4fd;
+  color: var(--color-texto);
+  font-size: 1rem;
 }
 
 .nueva-formula-titulo-tarjeta-nombre {
   font-size: .75rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-texto);
 }
 
 .perfil-dato-destacado-participacion {
   margin-top: 0.5rem;
   font-size: 1.125rem;
-  color: #fff;
+  color: var(--color-texto);
   display: block;
 }
 
@@ -1617,34 +1643,38 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
   display: inline-flex;
 }
 
 .gremio-detalle-enlace-volver-gremios:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremio-detalle-enlace-volver-gremios:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .grimorio-nombre-dato-dificultad-real {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .grimorio-texto-buscar-en-el-grimorio {
-  clip-path: inset(50%);
-  white-space: nowrap;
+  clip-path: none;
+  white-space: normal;
   border-width: 0;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+  width: auto;
+  height: auto;
+  margin: 0 0 0.5rem;
   padding: 0;
-  position: absolute;
-  overflow: hidden;
+  position: static;
+  overflow: visible;
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-secundario);
 }
 
 .nueva-formula-enlace-volver-formulas {
@@ -1653,17 +1683,17 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
   display: inline-flex;
 }
 
 .nueva-formula-enlace-volver-formulas:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-enlace-volver-formulas:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-titulo-columna-participacion {
@@ -1677,13 +1707,13 @@
 .formula-detalle-dato-destacado-rareza {
   margin-top: .25rem;
   font-size: 1.5rem;
-  color: #fee685;
+  color: #ddc28c;
   display: block;
 }
 
 .formula-detalle-texto-dificultad-real {
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-titulo-seccion-nombre {
@@ -1691,7 +1721,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .perfil-titulo-seccion-nombre-completo {
@@ -1699,7 +1729,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-enlace-volver-formulas {
@@ -1708,52 +1738,52 @@
   border-radius: .5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #62748e;
+  color: var(--color-secundario);
   display: inline-flex;
 }
 
 .formula-detalle-enlace-volver-formulas:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formula-detalle-enlace-volver-formulas:hover {
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-nombre-dato-creada-por {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-nombre-dato-dificultad {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formulas-campo-buscar-formula-o-efecto {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #00000026;
+  background-color: #11171266;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-right: 1rem;
-  padding-left: 2.75rem;
+  padding-left: 1rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .formulas-campo-buscar-formula-o-efecto:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formulas-campo-buscar-formula-o-efecto::placeholder {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .gremio-detalle-titulo-principal-nombre {
@@ -1761,7 +1791,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-etiqueta-campo-url-del-emblema {
@@ -1772,7 +1802,7 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
@@ -1780,7 +1810,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -1794,7 +1824,7 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: flex;
 }
 
@@ -1807,15 +1837,15 @@
 }
 
 .ranking-dato-destacado-nombre-completo {
-  font-size: .75rem;
-  color: #e2e8f0;
+  font-size: 0.875rem;
+  color: var(--color-texto);
   display: block;
 }
 
 .ranking-texto-target-precision-catador {
   align-items: center;
   gap: .25rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
   display: inline-flex;
 }
 
@@ -1823,49 +1853,49 @@
   margin-top: .25rem;
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formulas-selector-todos-los-estados-map {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .formulas-selector-todos-los-estados-map:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formulas-selector-todos-los-gremios-map {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #0f172b;
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .formulas-selector-todos-los-gremios-map:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremios-texto-lock-codigo-de-invitacion {
@@ -1874,83 +1904,83 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: flex;
 }
 
 .grimorio-campo-buscar-por-combinacion-o {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #00000026;
+  background-color: #11171266;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-right: 1rem;
-  padding-left: 2.75rem;
+  padding-left: 1rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .grimorio-campo-buscar-por-combinacion-o:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .grimorio-campo-buscar-por-combinacion-o::placeholder {
-  color: #45556c;
+  color: #9ba793;
 }
 
 .grimorio-selector-todos-los-gremios-map {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
-  background-color: #0f172b;
+  border-color: var(--color-borde);
+  background-color: var(--color-fondo);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .grimorio-selector-todos-los-gremios-map:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-area-texto-efecto-deseado {
   min-height: 7rem;
   resize: vertical;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   width: 100%;
-  background-color: #ffffff0d;
+  background-color: #ffffff05;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .875rem;
-  color: #fff;
+  color: var(--color-texto);
   outline: none;
 }
 
 .nueva-formula-area-texto-efecto-deseado:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-texto-nombre-de-la-pocion {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   justify-content: space-between;
   display: flex;
 }
@@ -1960,7 +1990,7 @@
 }
 
 .resumen-tarjeta-pad-start-nombre-rareza {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
   border-color: #ffffff12;
@@ -1971,49 +2001,51 @@
 .formula-detalle-boton-destilar-resultado {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: flex;
+  padding: 0.75rem 1.125rem;
 }
 
 .formula-detalle-boton-destilar-resultado:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formula-detalle-boton-destilar-resultado:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .formula-detalle-boton-zap-abrir-votacion {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #00d2ef;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #020618;
+  color: var(--color-fondo);
   display: flex;
+  padding: 0.75rem 1.125rem;
 }
 
 .formula-detalle-boton-zap-abrir-votacion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formula-detalle-boton-zap-abrir-votacion:hover {
-  background-color: #53eafd;
+  background-color: var(--color-verde);
 }
 
 .gremios-etiqueta-campo-nombre-del-gremio {
@@ -2022,27 +2054,27 @@
 
 .nueva-formula-seccion-info-aun-no-puedes {
   margin-top: 2rem;
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   padding: 2rem;
   text-align: center;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .nueva-formula-seccion-layers-datos-de-la {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .nueva-formula-texto-dificultad-propuesta {
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: block;
 }
 
@@ -2050,17 +2082,17 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #c4b4ff;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .gremio-detalle-descripcion-gremio-publico {
   align-items: center;
   gap: 0.5rem;
-  font-size: .75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: .05em;
-  color: #62748e;
+  letter-spacing: 0.1em;
+  color: var(--color-acento);
   text-transform: uppercase;
   display: flex;
 }
@@ -2071,19 +2103,19 @@
 
 .grimorio-cuadricula-buscar-en-el-grimorio {
   gap: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.75rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   display: grid;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .nueva-formula-descripcion-nueva-propuesta {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -2091,7 +2123,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
   display: flex;
 }
 
@@ -2103,35 +2135,40 @@
 }
 
 .resumen-cuadricula-indicadores-personales {
-  gap: 1rem;
+  gap: 1.25rem 2rem;
   display: grid;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--color-borde);
+  border-bottom: 1px solid var(--color-borde);
+  background-color: #a5c49c05;
 }
 
 .formula-detalle-boton-lock-cerrar-votacion {
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffd23640;
+  border-color: #c8ac7540;
   display: flex;
-  background-color: #ffd2361a;
+  background-color: #c8ac751a;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fef3c6;
+  color: #e4cea4;
+  padding: 0.75rem 1.125rem;
 }
 
 .formula-detalle-boton-lock-cerrar-votacion:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .formula-detalle-boton-lock-cerrar-votacion:hover {
-  background-color: #ffd23633;
+  background-color: #c8ac7533;
 }
 
 .formula-detalle-contenedor-flexible-nombre {
@@ -2142,29 +2179,30 @@
 }
 
 .formula-detalle-descripcion-efecto-deseado {
-  margin-top: 1rem;
+  margin-top: 0.875rem;
   font-size: .875rem;
-  line-height: 1.75rem;
-  color: #90a1b9;
+  line-height: 1.75;
+  color: var(--color-secundario);
+  max-width: 36rem;
 }
 
 .formula-detalle-nombre-dato-disponibilidad {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-valor-dato-tiempo-restante {
   margin-top: .25rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .gremio-detalle-descripcion-mesa-de-trabajo {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #c4b4ff;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
@@ -2172,37 +2210,42 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .grimorio-tarjeta-star-rareza-rareza-nombre {
-  border-radius: 1rem;
-  padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  border-radius: 0.125rem 0.625rem 0.625rem 0.125rem;
+  padding: 1.5rem 1.5rem 1.25rem 1.75rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
+  border-left: 3px solid #8c7950;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
 }
 
 .nueva-formula-boton-guardar-como-propuesta {
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
 }
 
 .nueva-formula-boton-guardar-como-propuesta:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .nueva-formula-boton-guardar-como-propuesta:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .pagina-no-encontrada-descripcion-error-404 {
@@ -2210,7 +2253,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #45556c;
+  color: #9ba793;
   text-transform: uppercase;
 }
 
@@ -2226,63 +2269,67 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-descripcion-clasificacion-completa {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #c4b4ff;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .formula-detalle-dato-destacado-especialidad {
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .formula-detalle-descripcion-el-veto-de-esta {
   margin-top: 1rem;
-  border-radius: .75rem;
-  background-color: #ffa2ae1a;
+  border-radius: 0.375rem;
+  background-color: #dfaaa01a;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #ffccd3;
+  color: #e7b4a9;
 }
 
 .formula-detalle-nombre-dato-fecha-de-cierre {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .gremio-detalle-enlace-formulas-nueva-gremio {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   flex-shrink: 0;
   display: flex;
+  width: fit-content;
+  margin-top: 1.5rem;
+  align-self: center;
+  white-space: nowrap;
 }
 
 .gremio-detalle-enlace-formulas-nueva-gremio:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .gremio-detalle-enlace-formulas-nueva-gremio:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .nueva-formula-formulario-layers-datos-de-la > * + * {
@@ -2293,31 +2340,39 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .formula-detalle-tarjeta-titulo-detalle-fecha {
   border-left-style: solid;
-  border-color: #ffffff1a;
+  border-color: var(--color-borde);
   border-left-width: 1px;
   position: relative;
   padding-left: 1rem;
+  background-color: transparent;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-borde);
+  padding: 1rem 0;
 }
 
 .gremio-detalle-seccion-gremio-publico-nombre {
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
   padding: 1.5rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
+  border-top: 3px solid #63734d;
 }
 
 .gremios-etiqueta-campo-buscar-gremios-search {
   flex: 1;
   position: relative;
+  display: block;
+  max-width: 36rem;
 }
 
 .gremios-formulario-lock-codigo-de-invitacion > * + * {
@@ -2336,7 +2391,7 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   display: flex;
 }
 
@@ -2349,7 +2404,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-informacion-principal-formula {
@@ -2358,17 +2413,19 @@
 
 .gremios-seccion-buscar-gremios-search-mostrar {
   gap: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.75rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   flex-direction: column;
   display: flex;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .grimorio-etiqueta-campo-buscar-en-el-grimorio {
   position: relative;
+  display: block;
+  max-width: 36rem;
 }
 
 .grimorio-lista-vertical-buscar-en-el-grimorio > * + * {
@@ -2379,7 +2436,7 @@
   margin-bottom: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
   justify-content: space-between;
   display: flex;
 }
@@ -2389,50 +2446,55 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
+  padding: 1.25rem;
+  margin: 0;
 }
 
 .resumen-descripcion-prioridad-del-laboratorio {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #53eafd;
+  color: var(--color-verde);
   text-transform: uppercase;
 }
 
 .formula-detalle-dato-destacado-dificultad-real {
   margin-top: .25rem;
   font-size: 1.5rem;
-  color: #a2f4fd;
+  color: #c3d8b9;
   display: block;
 }
 
 .formula-detalle-descripcion-aun-no-hay-eventos {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
 }
 
 .formula-detalle-descripcion-tu-voto-vale-doble {
   margin-top: 0.5rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-titulo-principal-nombre-pocion {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   font-family: Cinzel,Georgia,serif;
   font-size: 1.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
+  line-height: 1.3;
 }
 
 .formulas-etiqueta-campo-buscar-formulas-search {
   position: relative;
+  display: block;
+  max-width: 36rem;
 }
 
 .gremio-detalle-texto-controles-de-gran-maestre {
-  background-color: #ffd2361a;
+  background-color: #c8ac751a;
   border-radius: 9999px;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -2440,7 +2502,7 @@
   padding-bottom: .25rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fee685;
+  color: #ddc28c;
 }
 
 .gremio-detalle-titulo-seccion-miembros-y-roles {
@@ -2448,20 +2510,23 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
+  padding: 1.25rem 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .nueva-formula-descripcion-todos-los-campos-son {
   margin-top: .25rem;
   font-size: .75rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .perfil-cuadricula-award-puntos-puntos-trending {
   margin-top: 1.5rem;
   gap: 0.75rem;
   border-top-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-top-width: 1px;
   grid-template-columns: repeat(2,minmax(0,1fr));
   display: grid;
@@ -2469,60 +2534,60 @@
 }
 
 .ranking-descripcion-alert-triangle-quien-tenga {
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffd2361f;
-  background-color: #ffd2360d;
+  border-color: #c8ac751f;
+  background-color: #c8ac750d;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-descripcion-la-votacion-no-esta {
   margin-top: 1.25rem;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #ffd23626;
-  background-color: #ffd2360f;
+  border-color: #c8ac7526;
+  background-color: #c8ac750f;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #fef3c6;
+  color: #e4cea4;
 }
 
 .formula-detalle-panel-shield-catador-oficial-tu {
   margin-top: 1rem;
-  border-radius: .75rem;
+  border-radius: 0.375rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #53eafd26;
-  background-color: #53eafd0f;
+  border-color: #a5c49c26;
+  background-color: #a5c49c0f;
   padding: 1rem;
 }
 
 .formula-detalle-seccion-mesa-de-votacion-decide {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .gremio-detalle-seccion-sala-del-gremio-miembros {
-  border-radius: 1rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  border-radius: 0.5rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   overflow: hidden;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .grimorio-contenedor-flexible-star-rareza-rareza {
@@ -2537,14 +2602,14 @@
   max-width: 42rem;
   font-size: .875rem;
   line-height: 1.75rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .perfil-descripcion-actualiza-los-datos-visibles {
   margin-top: 0.75rem;
   font-size: .875rem;
   line-height: 1.75rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .perfil-etiqueta-campo-mail-correo-universitario {
@@ -2573,7 +2638,7 @@
   margin-top: .25rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #cad5e2;
+  color: #d4d9cd;
 }
 
 .gremios-etiqueta-campo-lock-codigo-de-invitacion {
@@ -2597,65 +2662,65 @@
 .nueva-formula-titulo-seccion-datos-de-la-formula {
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .pagina-no-encontrada-enlace-arrow-left-volver-al {
   margin-top: 1.75rem;
   align-items: center;
   gap: 0.5rem;
-  border-radius: .75rem;
-  background-color: #8d54ff;
+  border-radius: 0.375rem;
+  background-color: var(--color-acento);
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fondo);
   display: inline-flex;
 }
 
 .pagina-no-encontrada-enlace-arrow-left-volver-al:focus {
   outline-offset: 2px;
-  outline: 2px solid #55d9e8;
+  outline: 2px solid var(--color-acento);
 }
 
 .pagina-no-encontrada-enlace-arrow-left-volver-al:hover {
-  background-color: #a685ff;
+  background-color: #d9bd89;
 }
 
 .perfil-descripcion-la-autenticacion-sigue-siendo {
   margin-top: 0.5rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-descripcion-registro-de-auditoria {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #62748e;
+  color: var(--color-secundario);
   text-transform: uppercase;
 }
 
 .formula-detalle-seccion-registro-de-auditoria-map {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .formulas-cuadricula-buscar-formulas-search-filter {
   gap: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.75rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   display: grid;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .formulas-etiqueta-campo-filter-filtrar-por-estado {
@@ -2671,13 +2736,13 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-titulo-seccion-categorias-oficiales {
   font-size: .875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-cuadricula-mesa-de-votacion-decide {
@@ -2690,7 +2755,7 @@
   gap: 0.5rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #a2f4fd;
+  color: #c3d8b9;
   display: flex;
 }
 
@@ -2712,7 +2777,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .formula-detalle-contenedor-flexible-user-creada-por {
@@ -2725,7 +2790,7 @@
   margin-top: .25rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .nueva-formula-etiqueta-campo-gremio-responsable-map {
@@ -2734,17 +2799,17 @@
 
 .pagina-no-encontrada-seccion-error-404-esta-formula {
   max-width: 42rem;
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 4rem;
   padding-bottom: 4rem;
   text-align: center;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .perfil-lista-vertical-identidad-alquimica-mi-perfil {
@@ -2767,27 +2832,31 @@
   margin-top: 1.75rem;
   gap: 0.75rem;
   border-top-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-top-width: 1px;
   display: grid;
   padding-top: 1.5rem;
 }
 
 .formula-detalle-seccion-formula-no-encontrada-volver {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 2rem;
   text-align: center;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .formula-detalle-seccion-nombre-pocion-efecto-deseado {
-  border-radius: 1.5rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  border-radius: 0.5rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   overflow: hidden;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
+  padding: 1.75rem;
+  border-top: 3px solid var(--color-acento);
+  display: grid;
+  gap: 1.5rem;
 }
 
 .formula-detalle-titulo-seccion-decide-la-composicion {
@@ -2795,13 +2864,13 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremio-detalle-titulo-principal-gremio-no-encontrado {
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .gremios-lista-vertical-buscar-gremios-search-mostrar > * + * {
@@ -2809,10 +2878,10 @@
 }
 
 .grimorio-lista-datos-dificultad-real-dificultad-real {
-  margin-top: 1.25rem;
+  margin-top: auto;
   gap: 0.75rem;
   border-top-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-top-width: 1px;
   grid-template-columns: repeat(2,minmax(0,1fr));
   display: grid;
@@ -2825,7 +2894,7 @@
   align-items: center;
   gap: 0.75rem;
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   display: flex;
   padding-bottom: 1.25rem;
@@ -2835,7 +2904,7 @@
   margin-top: 0.75rem;
   font-size: .875rem;
   line-height: 1.5rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .perfil-cuadricula-nombre-completo-especialidad-award {
@@ -2856,24 +2925,25 @@
 
 .ranking-fila-tabla-posicion-alquimista-puntos-rareza {
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
-  font-size: .75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #45556c;
+  color: var(--color-secundario);
   text-transform: uppercase;
+  background-color: #11171266;
 }
 
 .formula-detalle-descripcion-especialidad-especialidad {
   margin-top: 0.75rem;
   font-size: .75rem;
   line-height: 1.25rem;
-  color: #62748e;
+  color: var(--color-secundario);
 }
 
 .formula-detalle-panel-dificultad-real-dificultad-real {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background-color: #0003;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -2883,8 +2953,8 @@
 }
 
 .formula-detalle-texto-length-3-categorias-completadas {
-  background-color: #ffffff0d;
-  border-radius: 9999px;
+  background-color: transparent;
+  border-radius: 0;
   width: fit-content;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -2892,7 +2962,9 @@
   padding-bottom: 0.375rem;
   font-size: .75rem;
   font-weight: 700;
-  color: #90a1b9;
+  color: var(--color-secundario);
+  padding: 0;
+  margin-top: 0.375rem;
 }
 
 .formulas-lista-vertical-buscar-formulas-search-filter > * + * {
@@ -2900,12 +2972,12 @@
 }
 
 .gremio-detalle-contenedor-gremio-no-encontrado-volver {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 2rem;
   text-align: center;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .nueva-formula-etiqueta-campo-calendar-fecha-de-cierre {
@@ -2916,7 +2988,7 @@
   margin-top: 0.75rem;
   font-size: .875rem;
   line-height: 1.5rem;
-  color: #90a1b9;
+  color: var(--color-secundario);
 }
 
 .resumen-cuadricula-prioridad-del-laboratorio-formulas {
@@ -2926,23 +2998,23 @@
 
 .formula-detalle-contenedor-nombre-nombre-pocion-efecto {
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   padding: 1.5rem;
 }
 
 .formula-detalle-seccion-tu-influencia-rol-especialidad {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .formula-detalle-titulo-principal-formula-no-encontrada {
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-cuadricula-gremio-responsable-map-nombre {
@@ -2959,7 +3031,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .resumen-titulo-seccion-formulas-que-requieren-atencion {
@@ -2967,7 +3039,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .nueva-formula-etiqueta-campo-dificultad-propuesta-facil {
@@ -2975,44 +3047,73 @@
 }
 
 .nueva-formula-seccion-categorias-oficiales-cada-formula {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .perfil-contenedor-informacion-personal-la-autenticacion {
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   padding-bottom: 1.25rem;
 }
 
 .perfil-formulario-informacion-personal-la-autenticacion {
-  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-radius: 0.5rem;
   padding: 1.5rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
+}
+
+.perfil-avatar {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 0.375rem;
+  background-color: var(--color-superficie);
+  color: var(--color-acento);
+  font-weight: 700;
+}
+
+.perfil-formulario-informacion-personal-la-autenticacion > button {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.perfil-lista-vertical-identidad-alquimica-mi-perfil > header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.perfil-lista-vertical-identidad-alquimica-mi-perfil > header p {
+  margin-top: 0.5rem;
 }
 
 .perfil-panel-lateral-nombre-completo-especialidad-award {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   height: fit-content;
   padding: 1.5rem;
   text-align: center;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .formula-detalle-seccion-check-circle-resultado-destilado {
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   border-style: solid;
   border-width: 1px;
-  border-color: #c4b4ff33;
-  background-color: #2f0d68;
+  border-color: #a5c49c33;
+  background-color: #303f2e;
   padding: 1.5rem;
 }
 
@@ -3023,11 +3124,11 @@
 }
 
 .resumen-panel-lateral-grimorio-ultimas-destilaciones-book {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.25rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 8px 20px #00000040;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  box-shadow: none;
 }
 
 .formula-detalle-cuadricula-dificultad-real-dificultad-real {
@@ -3055,7 +3156,7 @@
 .formula-detalle-contenedor-flexible-mesa-de-votacion-decide {
   gap: 1rem;
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   flex-direction: column;
   display: flex;
@@ -3072,7 +3173,7 @@
 
 .gremio-detalle-contenedor-flexible-sala-del-gremio-miembros {
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   justify-content: space-between;
   align-items: center;
@@ -3095,7 +3196,7 @@
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .05em;
-  color: #fee685;
+  color: #ddc28c;
   text-transform: uppercase;
   display: flex;
 }
@@ -3109,7 +3210,7 @@
   font-family: Cinzel,Georgia,serif;
   font-size: 1.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-texto);
 }
 
 .ranking-lista-vertical-map-clasificacion-completa-alquimistas > * + * {
@@ -3117,11 +3218,11 @@
 }
 
 .ranking-seccion-clasificacion-completa-alquimistas-destacados {
-  border-radius: 1rem;
-  background: #12152ceb;
-  border: 1px solid #ffffff1a;
+  border-radius: 0.5rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   overflow: hidden;
-  box-shadow: 0 8px 20px #00000040;
+  box-shadow: none;
 }
 
 .resumen-contenedor-flexible-prioridad-del-laboratorio-formulas {
@@ -3143,7 +3244,7 @@
   align-items: stretch;
   gap: 0.75rem;
   border-top-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-top-width: 1px;
   flex-direction: column;
   display: flex;
@@ -3164,7 +3265,7 @@
 
 .formulas-contenedor-flexible-length-formulas-encontradas-ordenadas {
   font-size: .75rem;
-  color: #45556c;
+  color: #9ba793;
   justify-content: space-between;
   align-items: center;
   display: flex;
@@ -3196,7 +3297,7 @@
 
 .ranking-contenedor-flexible-clasificacion-completa-alquimistas-destacados {
   border-bottom-style: solid;
-  border-color: #ffffff14;
+  border-color: var(--color-borde);
   border-bottom-width: 1px;
   justify-content: space-between;
   align-items: center;
@@ -3207,7 +3308,77 @@
   padding-bottom: 1.25rem;
 }
 
+/* Los mismos datos, agrupados como una ficha de laboratorio. */
+.formula-detalle-presentacion { min-width: 0; }
+.formula-detalle-ficha {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center; gap: 1.25rem 1.5rem;
+}
+.formula-detalle-ficha dt {
+  color: var(--color-secundario); font-size: 0.6875rem;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.375rem;
+}
+.formula-detalle-ficha dd { color: var(--color-texto); font-size: 0.875rem; line-height: 1.6; }
+.formula-detalle-contenedor-flexible:empty { display: none; }
+.gremio-detalle-identidad { display: flex; align-items: flex-start; gap: 1.25rem; min-width: 0; }
+.gremio-detalle-presentacion { min-width: 0; }
+.gremio-detalle-emblema {
+  flex-shrink: 0; width: 4.5rem; height: 4.5rem; display: grid; place-items: center;
+  background: #2c3a2c; color: var(--color-acento); border: 1px solid #63734d;
+  border-radius: 0.625rem 0.125rem; overflow: hidden;
+  font: 2rem Cinzel, Georgia, serif;
+}
+.gremio-detalle-emblema img { width: 100%; height: 100%; object-fit: contain; }
+.ranking-columna-perfil { width: 5rem; padding: 0.75rem; text-align: center; }
+.ranking-avatar {
+  display: grid; place-items: center; width: 2.5rem; height: 2.5rem; margin: auto;
+  border-radius: 50%; background: #2c3a2c; color: var(--color-verde);
+  border: 1px solid #63734d; overflow: hidden; font-weight: 700;
+}
+.ranking-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.ranking-tabla-posicion-alquimista-puntos-rareza { font-variant-numeric: tabular-nums; }
+.ranking-tabla-posicion-alquimista-puntos-rareza tbody tr { border-top: 1px solid #3b483d80; }
+.ranking-tabla-posicion-alquimista-puntos-rareza tbody tr:hover { background-color: #a5c49c0a; }
+.grimorio-texto-star-rareza-rareza strong { font: 600 1.75rem Cinzel, Georgia, serif; letter-spacing: 0; }
+.resumen-cuadricula-indicadores-personales p { color: var(--color-secundario); font-size: 0.8125rem; }
+.resumen-cuadricula-indicadores-personales strong { display: block; margin-top: 0.375rem; font-size: 1.5rem; font-weight: 600; color: var(--color-acento); }
+.gremios-formulario-nombre-del-gremio-lema {
+  padding: 1.5rem; border: 1px solid var(--color-borde); border-radius: 0.5rem;
+  background-color: var(--color-superficie);
+}
+.gremios-formulario-nombre-del-gremio-lema > h2 { font: 600 1rem Cinzel, Georgia, serif; color: var(--color-texto); }
+.gremios-formulario-lock-codigo-de-invitacion {
+  padding: 1.5rem; border: 1px solid var(--color-borde); border-radius: 0.5rem;
+  background-color: var(--color-superficie);
+}
+.gremios-formulario-lock-codigo-de-invitacion > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.gremios-formulario-lock-codigo-de-invitacion > button + button { margin-left: 0.75rem; border: 1px solid var(--color-borde); border-radius: 0.375rem; }
+
+
 @media (min-width: 1024px) {
+  .formula-detalle-seccion-nombre-pocion-efecto-deseado {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    padding: 2rem;
+    column-gap: 2rem;
+  }
+  .formula-detalle-ficha { border-left: 1px solid var(--color-borde); padding-left: 2rem; }
+  .formula-detalle-contenedor-flexible { grid-column: 1 / -1; }
+  .gremio-detalle-seccion-gremio-publico-nombre { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .gremio-detalle-enlace-formulas-nueva-gremio { margin-top: 0; }
+  .gremios-formulario-nombre-del-gremio-lema { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 8rem auto; gap: 1rem; align-items: end; }
+  .gremios-formulario-nombre-del-gremio-lema > * + * { margin-top: 0; }
+  .gremios-formulario-nombre-del-gremio-lema > h2,
+  .gremios-formulario-nombre-del-gremio-lema > .gremios-descripcion-error { grid-column: 1 / -1; }
+
   .formula-detalle-lista-datos-user-creada-por-activity {
     grid-template-columns: repeat(4,minmax(0,1fr));
   }
