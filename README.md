@@ -1,10 +1,10 @@
 <div align="center">
 
-# **Potion Lab**
-
+# **Potion Lab - David Botero & Simon Alvarez**
+  
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge\&logo=vite\&logoColor=white)
-![MongoDB](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge\&logo=reactrouter\&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JS-F7DF1E?style=for-the-badge\&logo=javascript\&logoColor=black)
 ![CSS](https://img.shields.io/badge/css-%23663399.svg?style=for-the-badge\&logo=css\&logoColor=white)
 [![HTML](https://img.shields.io/badge/HTML-E34F26?logo=html5\&logoColor=white\&style=for-the-badge)](https://developer.mozilla.org/es/docs/Web/HTML)
