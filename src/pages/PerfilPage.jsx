@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { ESPECIALIDADES } from "../data/seedData";
+import useUsuario from "../hooks/useUsuario";
 
-function PerfilPage({ usuario, onSaveProfile }) {
+function PerfilPage() {
+  const { usuarioActivo: usuario, guardarPerfil } = useUsuario();
   const [formulario, setFormulario] = useState(usuario);
 
   function manejarCambio(evento) {
@@ -11,7 +13,7 @@ function PerfilPage({ usuario, onSaveProfile }) {
 
   function manejarEnvio(evento) {
     evento.preventDefault();
-    onSaveProfile(formulario);
+    guardarPerfil(formulario);
   }
 
   return (

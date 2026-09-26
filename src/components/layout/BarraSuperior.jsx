@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
-import UsuarioContext from "../../context/UsuarioContext";
+import useUsuario from "../../hooks/useUsuario";
 
 
-function BarraSuperior({ onLogout }) {
+function BarraSuperior() {
 
   // Para obtener los datos del usuario compartidos por UsuarioContext.
-  const usuario = useContext(UsuarioContext);
+  const { usuarioActivo: usuario, cerrarSesion } = useUsuario();
 
   return (
     <header className="barra-superior-encabezado-potion-lab-laboratorio-conectado">
@@ -32,10 +31,10 @@ function BarraSuperior({ onLogout }) {
             </span>
           </Link>
 
-          {/* Ejecuta la funcion en App.jsx que BarraSuperior recibe para cerrar la sesion */}
+          {/* Ejecuta la funcion en App.jsx que UsuarioContext comparte para cerrar la sesion */}
           <button
             className="barra-superior-boton-cerrar-sesion"
-            onClick={onLogout} 
+            onClick={cerrarSesion}
             title="Cerrar sesión"
             type="button"
           >

@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import EncabezadoPagina from "../components/common/EncabezadoPagina";
 import TarjetaFormula from "../components/formula/TarjetaFormula";
 import TarjetaGremio from "../components/gremio/TarjetaGremio";
+import useUsuario from "../hooks/useUsuario";
 
 // Es el panel principal de la App y lo primero que se ve al entrar a tu cuenta
 // Se encarga de: recibir y filtrar datos --> calcular indicadores --> mostrar los accesos mediante las tarjetas
-function ResumenPage({ usuario, gremios, formulas, votos, usuarios }) {
+function ResumenPage({ gremios, formulas, votos, usuarios }) {
+  const { usuarioActivo: usuario } = useUsuario();
+
   // Almacena los gremios donde aparece el usuario conectado.
 
   const misGremios = gremios.filter((gremio) =>

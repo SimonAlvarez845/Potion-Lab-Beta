@@ -805,7 +805,7 @@ function App() {
     mostrarAviso("La poción fue destilada y añadida al grimorio.");
   }
 
-  // Es la función que PerfilPage.jsx recibe como onSaveProfile.
+  // Es la función que PerfilPage.jsx obtiene de UsuarioContext.
   function guardarPerfil(datos) {
     const email = datos.email.trim().toLowerCase();
 
@@ -858,12 +858,14 @@ function App() {
   }
 
   // Uso del Context:
-  // Implica que unicamente los componentes que consuman UsuarioContext podran acceder a usuarioActivo
+  // Comparte usuarioActivo, cerrarSesion y guardarPerfil con los componentes que consuman UsuarioContext.
   return (
-    <UsuarioContext.Provider value={usuarioActivo}>
+    <UsuarioContext.Provider
+      value={{ usuarioActivo, cerrarSesion, guardarPerfil }}
+    >
       <Routes>
-        {/* LayoutPrincipal es el Home Page de la pagina y por ende todos sus hijos lo comparten */}
-        <Route element={<LayoutPrincipal onLogout={cerrarSesion} />}>
+        {/* LayoutPrincipal --> Home Page de la pagina*/}
+        <Route element={<LayoutPrincipal />}>
           <Route
             index
             element={
@@ -871,7 +873,6 @@ function App() {
                 formulas={formulas}
                 gremios={gremios}
                 grimorio={grimorio}
-                usuario={usuarioActivo}
                 usuarios={usuarios}
                 votos={votos}
               />
@@ -952,15 +953,7 @@ function App() {
               <RankingPage usuarioActivo={usuarioActivo} usuarios={usuarios} />
             }
           />
-          <Route
-            path="perfil"
-            element={
-              <PerfilPage
-                onSaveProfile={guardarPerfil}
-                usuario={usuarioActivo}
-              />
-            }
-          />
+          <Route path="perfil" element={<PerfilPage />} />
           <Route
             path="*"
             element={
