@@ -3,9 +3,15 @@ const express = require("express");
 // funcion Body: API diseñada para validar exclusivamente el cuerpo de la petición HTTP entrante, es decir, req.body
 const { body } = require("express-validator");
 
-// Imports 
-const { register, login } = require("../controllers/authControllers");
+const autenticar = require("../middleware/autenticar");
 const validarCampos = require("../middleware/validarCampos");
+
+// Importamos los controllers relacionados con el perfil del usuario
+const {
+  obtenerPerfil,
+  actualizarPerfil,
+} = require("../controllers/usuarioControllers");
+
 const { ESPECIALIDADES } = require("../config/catalogo");
 
 // Crea el router
@@ -23,14 +29,15 @@ const router = express.Router();
   .isLength(): permite definir el tamaño que debe tener el texto.
   .isIn(_): el valor debe estar dentro de _.
   .isURL(...): el formato de la URL del avatar proporcionado debe ser aceptable.
-  .notEmpty(): el campo no puede estar vacío.
 */
 
-// Reglas que deben cumplir los datos enviados al registrar un usuario.
-const validarRegistro = [
+// Reglas que deben cumplir los datos enviados al actualizar el perfil.
+const validarActualizacionPerfil = [
   body()
     .isObject({ strict: true })
-    .withMessage("Envía un objeto JSON"),
+    .withMessage("Envía un objeto JSON")
+    .custom((datos) => Object.keys(datos).length > 0)
+    .withMessage("Debes enviar al menos un campo para actualizar"),
 
   body("nombre")
     .optional()
@@ -50,25 +57,15 @@ const validarRegistro = [
     .isLength({ min: 2, max: 50 })
     .withMessage("El nombre completo debe tener entre 2 y 50 caracteres"),
 
-  body()
-    .custom((datos) => Boolean(datos?.nombre || datos?.nombreCompleto))
-    .withMessage("El nombre es obligatorio: usa nombre o nombreCompleto"),
-
   body("email")
+    .optional()
     .isString()
     .withMessage("El email debe ser texto")
     .bail()
     .trim()
     .isEmail()
-    .withMessage("El email no es valido")
+    .withMessage("El email no es válido")
     .toLowerCase(),
-
-  body("password")
-    .isString()
-    .withMessage("La contraseña debe ser texto")
-    .bail()
-    .isLength({ min: 6 })
-    .withMessage("La contraseña debe tener minimo 6 caracteres"),
 
   body("especialidad")
     .optional()
@@ -89,33 +86,18 @@ const validarRegistro = [
     .withMessage("El avatar debe ser una URL HTTP o HTTPS valida"),
 ];
 
-// Reglas que deben cumplir los datos enviados al iniciar sesión.
-const validarLogin = [
-  body()
-    .isObject({ strict: true })
-    .withMessage("Envía un objeto JSON"),
+// Todas ruta dentro de la pagina requiere un JWT valido.
+router.use(autenticar);
 
-  body("email")
-    .isString()
-    .withMessage("El email debe ser texto")
-    .bail()
-    .trim()
-    .isEmail()
-    .withMessage("El email no es válido")
-    .toLowerCase(),
+// GET /me — obtiene el perfil del usuario autenticado
+router.get("/me", obtenerPerfil);
 
-  body("password")
-    .isString()
-    .withMessage("La contraseña debe ser texto")
-    .bail()
-    .notEmpty()
-    .withMessage("La contraseña es obligatoria"),
-];
-
-// POST /register — crea una cuenta y devuelve el usuario con su JWT
-router.post("/register", validarRegistro, validarCampos, register);
-
-// POST /login — verifica las credenciales y devuelve el usuario con su JWT
-router.post("/login", validarLogin, validarCampos, login);
+// PATCH /me — actualiza parcialmente el perfil del usuario autenticado
+router.patch(
+  "/me",
+  validarActualizacionPerfil,
+  validarCampos,
+  actualizarPerfil,
+);
 
 module.exports = router;

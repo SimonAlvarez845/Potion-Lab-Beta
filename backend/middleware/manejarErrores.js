@@ -2,21 +2,42 @@
 
 // NOTE: formato para que Express reconozca Error Handlers(error, request, response, next)
 
-// es la central de clasificacion de errores
-// expresamos los posibles errores en formato claro, JSON y con su respectivo codigo HTTP
-function manejarErrores(error, req, res, next) {
-  // para ayudar al programador, muestra el error en consola
-  console.error("Error:", error.message);
+// Middleware central de errores: recibe los errores que llegan desde Routes, otros Middlewares, Services o Mongoose y los convierte en respuestas .JSON con su respectivo codigo HTTP.
 
-  // Caso 1: Error de Validacion de Mongoose
+// NOTE: Express reconoce un middleware de errores por sus 4 parámetros:
+// (error, request, response, next).
+
+function manejarErrores(error, req, res, next) {
+  // Para ayudar al programador mostramos el tipo/código del error en consola.
+  // No imprimimos valores recibidos porque una validación podría incluir info sensible (claves).
+  console.error(
+    "Error:",
+    error.name || "Error",
+    error.status || error.code || 500,
+  );
+
+  // Caso 1: el cuerpo enviado no contiene un JSON válido.
+  if (error.type === "entity.parse.failed") {
+    return res
+      .status(400)
+      .json({ ok: false, mensaje: "El cuerpo debe ser JSON válido" });
+  }
+  // Caso 2: MongoDB detectó un valor duplicado en un campo unique (Email Repetido).
+  if (error.code === 11000) {
+    return res
+      .status(409)
+      .json({ ok: false, mensaje: "El email ya está registrado" });
+  }
+
+  // Caso 3: los datos no cumplen las validaciones definidas en Mongoose.
   if (error.name === "ValidationError") {
     return res.status(400).json({
       ok: false,
-      mensaje: error.message,
+      mensaje: "Los datos del usuario no son válidos",
     });
   }
 
-  // Caso 2: ID Invalido
+  // Caso 4: Mongoose no puede convertir un valor al tipo esperado (ID invalido).
   if (error.name === "CastError") {
     return res.status(400).json({
       ok: false,
@@ -24,21 +45,19 @@ function manejarErrores(error, req, res, next) {
     });
   }
 
-  // Caso 3: Cualquier Otro Error
-
-  // Si el error no tiene estado, use 500 por defecto
+  // Caso 5: cualquier otro error. Si el error no trae un codigo HTTP, usamos 500 por defecto.
   const status = error.status || 500;
 
   let mensaje;
 
-  // se penso asi para que muestre el motivo de errores conocidos pero oculte los detalles de errores internos mas complejos
+  // Mostramos el motivo de errores conocidos, pero aca es donde realmente ocultamos los detalles de errores internos del servidor.
   if (status === 500) {
     mensaje = "Error interno del servidor, intente luego";
   } else {
     mensaje = error.message;
   }
 
-  // Seleccione y devuelva uno de los casos
+  // Devuelve error usando codigo HTTP y mensaje custom (garantizando que todo error este manejado y clasificado de forma custom).
   return res.status(status).json({
     ok: false,
     mensaje,

@@ -10,8 +10,9 @@ const cors = require("cors");
 // Conectamos el servidor con nuestra base de datos.
 const conectarBaseDatos = require("./config/database");
 
-// Cargamos las rutas relacionadas con registro y login.
+// Cargamos las rutas de autenticación y de gestión del perfil del usuario.
 const authRoutes = require("./routes/auth");
+const usuarioRoutes = require("./routes/usuarios");
 
 // Convierte los errores del backend en respuestas JSON entendibles.
 const manejarErrores = require("./middleware/manejarErrores");
@@ -22,13 +23,13 @@ const app = express();
 // Si existe un puerto en process.env lo usamos. Si no existe, usamos el 3000.
 const PORT = process.env.PORT || 3000;
 
-// Permitimos recibir requests desde nuestro frontend.
+// Permitimos peticiones desde otros puntos como nuestro frontend de React.
 app.use(cors());
 
 // Convertimos el JSON recibido en un objeto de JavaScript.
 app.use(express.json());
 
-// Ruta de prueba para comprobar que la API esté funcionando (con Postman).
+// Ruta de prueba para comprobar que la API esté funcionando.
 app.get("/api/salud", (req, res) => {
   res.status(200).json({
     ok: true,
@@ -36,13 +37,22 @@ app.get("/api/salud", (req, res) => {
   });
 });
 
-// Todas las rutas de autenticación empiezan con /api/auth. ej) /api/auth/register
+// Todas las rutas de autenticación empiezan con /api/auth.
+// Ej: /api/auth/register o /api/auth/login.
 app.use("/api/auth", authRoutes);
 
-// Va despues de las rutas para recibir cualquier error que ocurra en ellas.
+// Todas las rutas del perfil empiezan con /api/usuarios.
+// Ej: /api/usuarios/me.
+app.use("/api/usuarios", usuarioRoutes);
+
+// Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
 app.use(manejarErrores);
 
 const iniciarServidor = async () => {
+  // Verificamos que exista la clave necesaria para crear los JWT.
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET no está configurado");
+  }
   // Primero intentamos conectarnos a MongoDB.
   await conectarBaseDatos();
 
@@ -53,5 +63,14 @@ const iniciarServidor = async () => {
   });
 };
 
-// Una vez el proceso de conexión inicie correctamente se intenta encender el servidor.
-iniciarServidor();
+// El if: solo iniciamos el servidor si este index fue ejecutado directamente.
+// Si un test importa "app", evitamos encender el servidor automáticamente.
+if (require.main === module) {
+  iniciarServidor().catch((error) => {
+    console.error("No se pudo iniciar el servidor:", error.message);
+    process.exitCode = 1;
+  });
+}
+
+// Exportamos la app para poder reutilizarla desde futuros tests.
+module.exports = app;
