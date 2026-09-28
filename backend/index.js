@@ -14,6 +14,7 @@ const conectarBaseDatos = require("./config/database");
 const authRoutes = require("./routes/auth");
 const usuarioRoutes = require("./routes/usuarios");
 const gremioRoutes = require("./routes/gremios");
+const formulaRoutes = require("./routes/formulas");
 
 // Convierte los errores del backend en respuestas JSON entendibles.
 const manejarErrores = require("./middleware/manejarErrores");
@@ -48,6 +49,8 @@ app.use("/api/usuarios", usuarioRoutes);
 
 // Comunidades, ingreso y administración de sus roles internos.
 app.use("/api/gremios", gremioRoutes);
+// Propuestas alquímicas y sus operaciones de votación.
+app.use("/api/formulas", formulaRoutes);
 
 // Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
 app.use(manejarErrores);

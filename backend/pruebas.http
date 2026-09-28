@@ -210,3 +210,32 @@ Authorization: Bearer {{tokenMiembro}}
 # DELETE {{baseUrl}}/api/gremios/{{gremioId}}/miembros/{{miembroId}}
 # Authorization: Bearer {{tokenMiembro}}
 # Esperado: 200; intentar retirar al Gran Maestre da 403.
+
+### ETAPA 3 — Fórmulas (cambia el cierre por una fecha futura, máximo siete días)
+@formulaId = {{formulaDemo.response.body.$.formula.id}}
+@fechaCierre = 2026-09-30T23:00:00-05:00
+
+### Crear como Gran Maestre: 201. Campos de control adicionales no se aplican.
+# @name formulaDemo
+POST {{baseUrl}}/api/formulas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"gremioId":"{{gremioId}}","nombrePocion":"Luz de demostración","efectoDeseado":"Iluminar el laboratorio","dificultad":2,"fechaCierre":"{{fechaCierre}}"}
+
+### Repetir la petición anterior sin cambios: 409
+### Consultar/listar: 200
+GET {{baseUrl}}/api/formulas?gremioId={{gremioId}}
+Authorization: Bearer {{token}}
+
+### Detalle con catálogo e historial
+GET {{baseUrl}}/api/formulas/{{formulaId}}
+Authorization: Bearer {{token}}
+
+### Catador no puede abrir: 403
+POST {{baseUrl}}/api/formulas/{{formulaId}}/abrir
+Authorization: Bearer {{tokenMiembro}}
+
+### GM abre: 200; repetir: 409
+POST {{baseUrl}}/api/formulas/{{formulaId}}/abrir
+Authorization: Bearer {{token}}
