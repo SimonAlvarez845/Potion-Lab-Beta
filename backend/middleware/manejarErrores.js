@@ -24,16 +24,26 @@ function manejarErrores(error, req, res, next) {
   }
   // Caso 2: MongoDB detectó un valor duplicado en un campo unique (Email Repetido).
   if (error.code === 11000) {
+    // Los nuevos modelos también tienen índices únicos; no todo duplicado es un email.
+    const campo = Object.keys(error.keyPattern || {})[0];
+    const mensaje = campo === "nombreNormalizado" ? "Ya existe un gremio con ese nombre"
+      : campo === "codigoInvitacion" ? "Código de invitación repetido; vuelve a intentar"
+      : campo === "email" ? "El email ya está registrado" : "El registro ya existe";
     return res
       .status(409)
-      .json({ ok: false, mensaje: "El email ya está registrado" });
+      .json({ ok: false, mensaje });
+  }
+
+  // Otro guardado cambió el documento: recargar evita sobrescribir miembros o votos.
+  if (error.name === "VersionError") {
+    return res.status(409).json({ ok: false, mensaje: "El registro cambió; recarga e intenta de nuevo" });
   }
 
   // Caso 3: los datos no cumplen las validaciones definidas en Mongoose.
   if (error.name === "ValidationError") {
     return res.status(400).json({
       ok: false,
-      mensaje: "Los datos del usuario no son válidos",
+      mensaje: "Los datos enviados no son válidos",
     });
   }
 

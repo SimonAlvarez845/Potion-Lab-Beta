@@ -13,6 +13,7 @@ const conectarBaseDatos = require("./config/database");
 // Cargamos las rutas de autenticación y de gestión del perfil del usuario.
 const authRoutes = require("./routes/auth");
 const usuarioRoutes = require("./routes/usuarios");
+const gremioRoutes = require("./routes/gremios");
 
 // Convierte los errores del backend en respuestas JSON entendibles.
 const manejarErrores = require("./middleware/manejarErrores");
@@ -44,6 +45,9 @@ app.use("/api/auth", authRoutes);
 // Todas las rutas del perfil empiezan con /api/usuarios.
 // Ej: /api/usuarios/me.
 app.use("/api/usuarios", usuarioRoutes);
+
+// Comunidades, ingreso y administración de sus roles internos.
+app.use("/api/gremios", gremioRoutes);
 
 // Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
 app.use(manejarErrores);
