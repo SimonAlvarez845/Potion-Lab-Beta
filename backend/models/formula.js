@@ -8,6 +8,17 @@ const eventoSchema = new mongoose.Schema({
   fecha: { type: Date, default: Date.now }, titulo: String, detalle: String,
   usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario" },
 });
+// Cada usuario ocupa una posición por categoría. Se conserva el peso emitido, no el rol futuro.
+const votoSchema = new mongoose.Schema({
+  usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario", required: true },
+  categoriaId: String, opcionId: String, peso: Number, fechaPrimerVoto: Date, fecha: Date,
+}, { _id: false });
+const vetoSchema = new mongoose.Schema({
+  usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario" },
+  categoriaId: String, opcionId: String, fecha: Date,
+}, { _id: false });
+// Guardar el ganador evita repetir el azar al consultar una fórmula cerrada.
+const ganadorSchema = new mongoose.Schema({ categoriaId: String, opcion: opcionSchema, metodo: String }, { _id: false });
 
 const formulaSchema = new mongoose.Schema({
   gremioId: { type: mongoose.Schema.Types.ObjectId, ref: "Gremio", required: true, index: true },
@@ -21,6 +32,9 @@ const formulaSchema = new mongoose.Schema({
   fechaAperturaVotacion: Date,
   fechaCierreEfectivo: Date,
   categorias: { type: [categoriaSchema], default: () => structuredClone(CATEGORIAS) },
+  votos: [votoSchema],
+  veto: { type: vetoSchema, default: null },
+  ganadores: [ganadorSchema],
   auditoria: [eventoSchema],
 }, { timestamps: { createdAt: "fechaCreacion", updatedAt: "updatedAt" }, optimisticConcurrency: true });
 

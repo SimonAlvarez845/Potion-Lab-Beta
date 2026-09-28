@@ -239,3 +239,61 @@ Authorization: Bearer {{tokenMiembro}}
 ### GM abre: 200; repetir: 409
 POST {{baseUrl}}/api/formulas/{{formulaId}}/abrir
 Authorization: Bearer {{token}}
+
+### ETAPA 4 — Votos y veto (fórmula abierta)
+### Voto Catador: 200, peso según especialidad y cargo
+PUT {{baseUrl}}/api/formulas/{{formulaId}}/voto
+Authorization: Bearer {{tokenMiembro}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"mandragora"}
+
+### Revotar reemplaza el voto anterior, no lo duplica
+PUT {{baseUrl}}/api/formulas/{{formulaId}}/voto
+Authorization: Bearer {{tokenMiembro}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"polvo-estelar"}
+
+### Opción desconocida: 400
+PUT {{baseUrl}}/api/formulas/{{formulaId}}/voto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"inventada"}
+
+### GM no puede vetar: 403
+POST {{baseUrl}}/api/formulas/{{formulaId}}/veto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"mandragora"}
+
+### Catador veta: 200; repetir: 409
+POST {{baseUrl}}/api/formulas/{{formulaId}}/veto
+Authorization: Bearer {{tokenMiembro}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"mandragora"}
+
+### Votar opción vetada: 409
+PUT {{baseUrl}}/api/formulas/{{formulaId}}/voto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"categoriaId":"ingrediente","opcionId":"mandragora"}
+
+### Catador no cierra: 403
+POST {{baseUrl}}/api/formulas/{{formulaId}}/cerrar
+Authorization: Bearer {{tokenMiembro}}
+
+### GM cierra: 200. Categorías sin votos desempatan al azar y guardan la decisión.
+POST {{baseUrl}}/api/formulas/{{formulaId}}/cerrar
+Authorization: Bearer {{token}}
+
+### Después del cierre: voto rechazado (409)
+PUT {{baseUrl}}/api/formulas/{{formulaId}}/voto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"categoriaId":"frasco","opcionId":"cristal-lunar"}

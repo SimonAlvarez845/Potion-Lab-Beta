@@ -1,6 +1,7 @@
 const Formula = require("../models/formula");
 const { obtenerGremio } = require("./gremioService");
 const { exigirRol } = require("../utils/roles");
+const { calcularResultados } = require("./resultadosService");
 
 // Comparte la búsqueda entre consultas, votos y destilación sin repetir el caso 404.
 async function obtenerFormula(id) {
@@ -11,12 +12,24 @@ async function obtenerFormula(id) {
 
 // Convierte referencias a strings y presenta los eventos con el formato que muestra React.
 function presentarFormula(formula) {
+  // React agrupa votos por usuario y categoría; Mongo los guarda dentro de la fórmula.
+  const votos = {};
+  for (const voto of formula.votos) {
+    const usuarioId = String(voto.usuarioId);
+    if (!votos[usuarioId]) votos[usuarioId] = {};
+    votos[usuarioId][voto.categoriaId] = { opcionId: voto.opcionId, peso: voto.peso, fecha: voto.fecha };
+  }
   return {
     id: String(formula._id), gremioId: String(formula.gremioId), creadaPorId: String(formula.creadaPorId),
     nombrePocion: formula.nombrePocion, efectoDeseado: formula.efectoDeseado, dificultad: formula.dificultad,
     estado: formula.estado, fechaCreacion: formula.fechaCreacion, fechaCierre: formula.fechaCierre,
     fechaAperturaVotacion: formula.fechaAperturaVotacion, fechaCierreEfectivo: formula.fechaCierreEfectivo,
-    categorias: formula.categorias, veto: null,
+    categorias: formula.categorias, votos,
+    veto: formula.veto ? { categoriaId: formula.veto.categoriaId, opcionId: formula.veto.opcionId,
+      usuarioId: String(formula.veto.usuarioId), fecha: formula.veto.fecha } : null,
+    resultados: formula.categorias.map((categoria) => ({ categoriaId: categoria.id,
+      opciones: calcularResultados(categoria, formula.votos, formula.veto) })),
+    ganadores: formula.ganadores,
     auditoria: formula.auditoria.map((e) => ({ id: String(e._id), formulaId: String(formula._id),
       fecha: e.fecha, titulo: e.titulo, detalle: e.detalle, ...(e.usuarioId ? { usuarioId: String(e.usuarioId) } : {}) })),
   };
