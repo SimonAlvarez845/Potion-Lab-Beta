@@ -1,61 +1,159 @@
 @baseUrl = http://localhost:3000
+@emailBasico = etapa1.basico@potionlab.test
+@emailAmpliado = etapa1.ampliado@potionlab.test
+@emailEditado = etapa1.editado@potionlab.test
+@token = {{login.response.body.$.token}}
 
+# REST Client: Ctrl+Alt+R. Desde backend: npm start.
+# Usa una base MongoDB de pruebas configurada en .env; estas peticiones crean usuarios.
+# Cambia los tres correos si ya existen. Ejecuta en orden; el login 6 guarda el token.
+# En todas las respuestas revisa que no se devuelva password ni su hash.
+# Usuario: id string, nombre = nombreCompleto; sin _id ni __v.
+# Seguridad automatizada sin MongoDB: node --test tests/authPerfilSinMongo.test.js
 
-## Extension Utilizada: REST Client
-### Oprima Ctrl+Alt+R sobre cada prueba para verificar su funcionamiento
-
-### PRUEBAS DEL REGISTRO 
-  
-### PRUEBA 1: comprobar que la API funciona
+### 1. Salud -> 200
 GET {{baseUrl}}/api/salud
-Accept: application/json
 
-### PRUEBA 2: registrar un usuario
+### 2. Registro anterior -> 201; Herbalista, participación 100 y otras estadísticas 0
 POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-  "nombre": "Simon Prueba",
-  "email": "aprendiz2@potionlab.com",
+  "nombre": "Aprendiz Etapa Uno",
+  "email": "{{emailBasico}}",
   "password": "Potion123"
 }
 
-### PRUEBA 3: registro sin nombre
+### 3. Registro ampliado -> 201; usuario seguro y token
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombreCompleto": "Catadora Etapa Uno",
+  "email": "{{emailAmpliado}}",
+  "password": "Potion123",
+  "especialidad": "Catador",
+  "avatarUrl": "https://example.com/avatar.png"
+}
+
+### 4. Email repetido con espacios -> 409
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Duplicado",
+  "email": "  {{emailBasico}}  ",
+  "password": "Potion123"
+}
+
+### 5. Datos inválidos -> 400
+# También prueba email/password vacíos: deben seguir rechazándose.
 POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
   "nombre": "",
-  "email": "nombrevacio@potionlab.com",
-  "password": "123456"
-}
-
-### PRUEBA 4: registro con email invalido
-POST {{baseUrl}}/api/auth/register
-Content-Type: application/json
-
-{
-  "nombre": "Simon Prueba",
   "email": "correo-invalido",
-  "password": "123456"
+  "password": "12345",
+  "especialidad": "Mago"
 }
 
-### PRUEBA 5: contraseña super corta
-POST {{baseUrl}}/api/auth/register
+### 6. Login correcto -> 200; guarda el token
+# @name login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "nombre": "Simon Prueba",
-  "email": "passwordcorta@potionlab.com",
-  "password": "12345"
-}
-
-### PRUEBA 6: registro con email repetido
-POST {{baseUrl}}/api/auth/register
-Content-Type: application/json
-
-{
-  "nombre": "Otro Usuario",
-  "email": "aprendiz2@potionlab.com",
+  "email": "  {{emailBasico}}  ",
   "password": "Potion123"
+}
+
+### 7. Contraseña incorrecta -> 401
+# Repite con un email inexistente: debe responder 401 con el mismo mensaje.
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{emailBasico}}",
+  "password": "Incorrecta123"
+}
+
+### 8. Mi perfil -> 200
+# Repite después de editar y de los rechazos: los cambios válidos persisten.
+GET {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+
+### 9. Sin token -> 401
+GET {{baseUrl}}/api/usuarios/me
+
+### 10. Token alterado -> 401
+# El vencimiento y el usuario inexistente se comprueban en la prueba automatizada.
+GET {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}alterado
+
+### 11. Edición propia -> 200; mismo id y ambos nombres actualizados
+# avatarUrl vacío elimina el avatar. nombre también se acepta como alias.
+# Enviar nombre y nombreCompleto diferentes, o un cuerpo vacío, debe dar 400.
+PATCH {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombreCompleto": "Aprendiz Actualizado",
+  "email": "  {{emailEditado}}  ",
+  "especialidad": "Runista",
+  "avatarUrl": ""
+}
+
+### 12. Login con email nuevo -> 200; contraseña conservada
+# Repite con el email anterior: debe dar 401.
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{emailEditado}}",
+  "password": "Potion123"
+}
+
+### 13. Email de otro usuario -> 409; conserva el anterior
+PATCH {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "email": "{{emailAmpliado}}"
+}
+
+### 14. Cambiar role -> 400; tampoco guarda nombre
+# Añadir role al registro de un usuario nuevo también debe dar 400.
+PATCH {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombreCompleto": "No debe guardarse",
+  "role": "admin"
+}
+
+### 15. Cambiar estadísticas -> 400
+PATCH {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "puntos": 999,
+  "rarezaTotal": 999,
+  "participacion": 100,
+  "precisionCatador": 100
+}
+
+### 16. Identidad y contraseña protegidas -> 400
+# Prueba cada campo por separado. gremios, createdAt y __v tampoco son editables.
+PATCH {{baseUrl}}/api/usuarios/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "000000000000000000000001",
+  "password": "OtraPassword123"
 }
