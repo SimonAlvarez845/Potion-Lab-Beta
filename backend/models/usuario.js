@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { ESPECIALIDADES } = require("../config/catalogo");
 
-// Primer (basado en lo que hicimos en clase)
-
 /* TABLA DE MONGOOSE
 required: hace obligatorio un campo.
  unique: crea un índice para impedir valores repetidos.

@@ -1,6 +1,19 @@
 const mongoose = require("mongoose");
 
-// La membresía pertenece al gremio; el mismo usuario puede tener otro rol en otro gremio.
+/* TABLA DE MONGOOSE
+ required: hace obligatorio un campo.
+ unique: crea un índice para impedir valores repetidos.
+ select: false: excluye el campo de las consultas por defecto.
+ enum: limita el valor a una lista de opciones permitidas.
+ default: establece un valor inicial si no se proporciona uno.
+ min / max: establecen los límites permitidos para un número.
+ pre("save"): ejecuta una acción antes de guardar el documento.
+ comparePassword(): permite comprobar la contraseña durante el inicio de sesión.
+ timestamps: crea automáticamente createdAt y updatedAt.
+ ref: indica a que modelo pertenece el ObjectId que estoy guardando.
+*/
+
+// La membresía pertenece al gremio. Un mismo usuario puede tener otro rol en otro gremio.
 const miembroSchema = new mongoose.Schema(
   {
     usuarioId: {
@@ -21,6 +34,7 @@ const miembroSchema = new mongoose.Schema(
     fechaIngreso: { type: Date, default: Date.now },
   },
   { _id: false },
+  // Evite que Mongoose genere un _id adicional para cada miembro dentro del array.
 );
 
 const gremioSchema = new mongoose.Schema(
@@ -43,8 +57,6 @@ const gremioSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    // Dos administradores no pueden guardar cambios sobre una misma versión antigua.
-    optimisticConcurrency: true,
   },
 );
 
