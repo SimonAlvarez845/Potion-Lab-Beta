@@ -1,7 +1,7 @@
 const usuarioService = require("../services/usuarioService");
-// permite que el Controller acceda a las funciones del Service (authService.funcion)
+// Permite que el Controller acceda a las funciones del Service (authService.funcion)
 
-// Recibe el usuario autenticado de req.usuario,
+// Recibe el usuario autenticado de req.body,
 // delega la consulta al service y responde con su perfil.
 const obtenerPerfil = (req, res) => {
   const usuario = usuarioService.obtenerPerfil(req.usuario);

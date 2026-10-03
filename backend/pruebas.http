@@ -3,6 +3,10 @@
 @emailAmpliado = etapa1.ampliado@potionlab.test
 @emailEditado = etapa1.editado@potionlab.test
 @token = {{login.response.body.$.token}}
+@gremioId = {{gremioDemo.response.body.$.gremio.id}}
+@codigo = {{gremioDemo.response.body.$.gremio.codigoInvitacion}}
+@tokenMiembro = {{loginMiembro.response.body.$.token}}
+@miembroId = {{loginMiembro.response.body.$.usuario.id}}
 
 # REST Client: Ctrl+Alt+R. Desde backend: npm start.
 # Usa una base MongoDB de pruebas configurada en .env; estas peticiones crean usuarios.
@@ -157,3 +161,52 @@ Content-Type: application/json
   "id": "000000000000000000000001",
   "password": "OtraPassword123"
 }
+
+### GREMIOS — crear privado (201); conserva id y código para el recorrido
+# @name gremioDemo
+POST {{baseUrl}}/api/gremios
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"nombre":"Orden Demo API","lema":"Aprender haciendo","tipo":"privado"}
+
+### Consultar directorio (200); repetir con ?mios=true
+GET {{baseUrl}}/api/gremios
+Authorization: Bearer {{token}}
+
+### Entrar con la segunda cuenta creada en la prueba 3
+# @name loginMiembro
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{"email":"{{emailAmpliado}}","password":"Potion123"}
+
+### Incorporar Aprendiz (200); código incorrecto 403, repetición 409
+POST {{baseUrl}}/api/gremios/{{gremioId}}/miembros
+Authorization: Bearer {{tokenMiembro}}
+Content-Type: application/json
+
+{"codigo":"{{codigo}}"}
+
+### Ascender a sénior (200); con tokenMiembro debe dar 403
+PATCH {{baseUrl}}/api/gremios/{{gremioId}}/miembros/{{miembroId}}/rol
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"rol":"Alquimista sénior"}
+
+### Nombrar Catador (200); reemplaza a cualquiera anterior
+PUT {{baseUrl}}/api/gremios/{{gremioId}}/catador
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"usuarioId":"{{miembroId}}"}
+
+### Consultar miembros (200); el Catador no debe recibir codigoInvitacion
+GET {{baseUrl}}/api/gremios/{{gremioId}}
+Authorization: Bearer {{tokenMiembro}}
+
+# Salida: ejecutar AL TERMINAR el recorrido de votación para conservar al Catador.
+# DELETE {{baseUrl}}/api/gremios/{{gremioId}}/miembros/{{miembroId}}
+# Authorization: Bearer {{tokenMiembro}}
+# Esperado: 200; intentar retirar al Gran Maestre da 403.

@@ -10,9 +10,10 @@ const cors = require("cors");
 // Conectamos el servidor con nuestra base de datos.
 const conectarBaseDatos = require("./config/database");
 
-// Cargamos las rutas de autenticación y de gestión del perfil del usuario.
+// Cargamos las rutas de autenticación, gestión de perfil de usuario y gremios
 const authRoutes = require("./routes/auth");
 const usuarioRoutes = require("./routes/usuarios");
+const gremioRoutes = require("./routes/gremios");
 
 // Convierte los errores del backend en respuestas JSON entendibles.
 const manejarErrores = require("./middleware/manejarErrores");
@@ -37,13 +38,19 @@ app.get("/api/salud", (req, res) => {
   });
 });
 
-// Todas las rutas de autenticación empiezan con /api/auth.
+// Toda ruta de cada seccion debe comenzar como la de su respectivo Ej)
+
+// Todas las rutas de autenticación
 // Ej: /api/auth/register o /api/auth/login.
 app.use("/api/auth", authRoutes);
 
-// Todas las rutas del perfil empiezan con /api/usuarios.
+// Rutas del perfil
 // Ej: /api/usuarios/me.
 app.use("/api/usuarios", usuarioRoutes);
+
+// Rutas para crear, consultar y administrar gremios.
+// Ej: /api/gremios/:id.
+app.use("/api/gremios", gremioRoutes);
 
 // Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
 app.use(manejarErrores);
