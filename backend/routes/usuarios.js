@@ -1,6 +1,9 @@
 const express = require("express");
 
-// funcion Body: API diseñada para validar exclusivamente el cuerpo de la petición HTTP entrante, es decir, req.body
+/* F(X)'S DE VALIDACION:
+  body indica que datos envío la peticion HTTP.
+  body(): valida los datos de req.body. Usualmente en POST, PUT y PATCH.
+*/
 const { body } = require("express-validator");
 
 const autenticar = require("../middleware/autenticar");
@@ -29,6 +32,8 @@ const router = express.Router();
   .isLength(): permite definir el tamaño que debe tener el texto.
   .isIn(_): el valor debe estar dentro de _.
   .isURL(...): el formato de la URL del avatar proporcionado debe ser aceptable.
+  .notEmpty(): el campo no puede estar vacío.
+  .if(): aplica una validacion/es si se cumple una condición.
 */
 
 // Reglas que deben cumplir los datos enviados al actualizar el perfil.
@@ -86,7 +91,7 @@ const validarActualizacionPerfil = [
     .withMessage("El avatar debe ser una URL HTTP o HTTPS valida"),
 ];
 
-// Todas ruta dentro de la pagina requiere un JWT valido.
+// Todas ruta de usuarios requieren un JWT.
 router.use(autenticar);
 
 // GET /me — obtiene el perfil del usuario autenticado
