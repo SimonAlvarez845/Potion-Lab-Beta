@@ -1,9 +1,11 @@
 const express = require("express");
 
-// funcion Body: API diseñada para validar exclusivamente el cuerpo de la petición HTTP entrante, es decir, req.body
+/* F(X)'S DE VALIDACION:
+  body indica que datos envío la peticion HTTP.
+  body(): valida los datos de req.body. Usualmente en POST, PUT y PATCH.
+*/
 const { body } = require("express-validator");
 
-// Imports 
 const { register, login } = require("../controllers/authControllers");
 const validarCampos = require("../middleware/validarCampos");
 const { ESPECIALIDADES } = require("../config/catalogo");
@@ -24,13 +26,12 @@ const router = express.Router();
   .isIn(_): el valor debe estar dentro de _.
   .isURL(...): el formato de la URL del avatar proporcionado debe ser aceptable.
   .notEmpty(): el campo no puede estar vacío.
+  .if(): aplica una validacion/es si se cumple una condición.
 */
 
 // Reglas que deben cumplir los datos enviados al registrar un usuario.
 const validarRegistro = [
-  body()
-    .isObject({ strict: true })
-    .withMessage("Envía un objeto JSON"),
+  body().isObject({ strict: true }).withMessage("Envía un objeto JSON"),
 
   body("nombre")
     .optional()
@@ -91,9 +92,7 @@ const validarRegistro = [
 
 // Reglas que deben cumplir los datos enviados al iniciar sesión.
 const validarLogin = [
-  body()
-    .isObject({ strict: true })
-    .withMessage("Envía un objeto JSON"),
+  body().isObject({ strict: true }).withMessage("Envía un objeto JSON"),
 
   body("email")
     .isString()

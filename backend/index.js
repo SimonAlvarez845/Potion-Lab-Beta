@@ -49,6 +49,7 @@ app.use("/api/usuarios", usuarioRoutes);
 
 // Comunidades, ingreso y administración de sus roles internos.
 app.use("/api/gremios", gremioRoutes);
+
 // Propuestas alquímicas y sus operaciones de votación.
 app.use("/api/formulas", formulaRoutes);
 
