@@ -1,11 +1,34 @@
-const router = require("express").Router();
+const express = require("express");
+
+// Crea el router
+const router = express.Router();
+
+/* F(X)'S DE VALIDACION:
+  body indica que datos envío la peticion HTTP.
+  params indica sobre que recurso trabajo la peticion HTTP.
+  query indica que filtros u opciones aplico la peticion HTTP.
+
+  body(): valida los datos de req.body. Usualmente en POST, PUT y PATCH.
+  param(): valida los datos de la URL (req.params). Usualmente en GET, PATCH, DELETE.
+  query(): valida los filtros de la URL (req.query). Usualmente en GET.
+*/
 const { body, param, query } = require("express-validator");
+
 const autenticar = require("../middleware/autenticar");
 const validarCampos = require("../middleware/validarCampos");
 const controller = require("../controllers/formulaControllers");
+
+// Todas las rutas de fórmulas requieren un JWT.
 router.use(autenticar);
 
-// GET /api/formulas — catálogo filtrable por gremio, estado y texto.
+/* VALIDACIONES ADICIONALES:
+  .isMongoId(): comprueba que el id tenga el formato de MongoDB.
+  .isInt(): comprueba que el valor sea un entero dentro del rango permitido.
+  .toInt(): convierte el valor validado en un entero.
+  .isISO8601(): comprueba que la fecha tenga un formato válido (este se busco)
+*/
+
+// GET /api/formulas — consulta las fórmulas y permite filtrar por gremio, estado o texto.
 router.get(
   "/",
   [
@@ -18,7 +41,9 @@ router.get(
   validarCampos,
   controller.listar,
 );
-// POST /api/formulas — crea una propuesta; categorías, estado y autor los fija el servidor.
+
+// POST /api/formulas — valida los datos de la propuesta antes de crearla.
+// El autor, el estado y las categorías los establece el servidor.
 router.post(
   "/",
   [
@@ -35,9 +60,14 @@ router.post(
   validarCampos,
   controller.crear,
 );
+
+// Capa de seguridad: validamos el id antes de consultar una fórmula en MongoDB.
 router.use("/:id", param("id").isMongoId(), validarCampos);
-// GET /api/formulas/:id — consulta la propuesta y su historial.
+
+// GET /api/formulas/:id — consulta una fórmula y su historial.
 router.get("/:id", controller.obtener);
-// POST /api/formulas/:id/abrir — inicia la votación una sola vez.
+
+// POST /api/formulas/:id/abrir — abre la votación de una propuesta.
 router.post("/:id/abrir", controller.abrir);
+
 module.exports = router;

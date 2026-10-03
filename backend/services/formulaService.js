@@ -2,18 +2,21 @@ const Formula = require("../models/formula");
 const { obtenerGremio } = require("./gremioService");
 const { exigirRol } = require("../utils/roles");
 
-// Comparte la búsqueda entre consultas, votos y destilación sin repetir el caso 404.
+// Busca una fórmula por su ID y lanza un error si no existe.
 async function obtenerFormula(id) {
   const formula = await Formula.findById(id);
+
   if (!formula) {
     const error = new Error("La fórmula no existe");
     error.status = 404;
     throw error;
   }
+
   return formula;
 }
 
-// Convierte referencias a strings y presenta los eventos con el formato que muestra React.
+// Prepara los datos de la fórmula para enviarlos a React.
+// Convierte los ObjectId a texto y organiza su historial.
 function presentarFormula(formula) {
   return {
     id: String(formula._id),
@@ -40,13 +43,18 @@ function presentarFormula(formula) {
   };
 }
 
-// La interfaz permite hasta el final del séptimo día: usamos la zona del proyecto, Bogotá (UTC-5).
+// Comprueba que el cierre sea futuro y esté dentro de los próximos 7 días.
+// Usamos UTC-5 y permitimos cerrar hasta las 11:59 p. m. del último día.
+// Esto lo busque y se creo a partir de la logica del frontend.
 function validarFechaCierre(fecha) {
   const ahora = Date.now();
   const limiteLocal = new Date(ahora - 5 * 60 * 60 * 1000);
+
   limiteLocal.setUTCDate(limiteLocal.getUTCDate() + 7);
   limiteLocal.setUTCHours(23, 59, 59, 999);
+
   const cierre = new Date(fecha).getTime();
+
   if (
     !Number.isFinite(cierre) ||
     cierre <= ahora ||
@@ -60,10 +68,12 @@ function validarFechaCierre(fecha) {
   }
 }
 
-// Solo GM/sénior con participación suficiente crean propuestas; el servidor decide autor y categorías.
+// Solo el Gran Maestre o un Alquimista sénior con al menos 30% de participación puede crear una propuesta.
 async function crear(usuario, datos) {
   const gremio = await obtenerGremio(datos.gremioId);
+
   exigirRol(gremio, usuario._id, ["Gran Maestre", "Alquimista sénior"]);
+
   if (usuario.participacion < 30) {
     const error = new Error(
       "Necesitas al menos 30% de participación para proponer",
@@ -71,7 +81,9 @@ async function crear(usuario, datos) {
     error.status = 403;
     throw error;
   }
+
   validarFechaCierre(datos.fechaCierre);
+
   const formula = await Formula.create({
     gremioId: gremio._id,
     creadaPorId: usuario._id,
@@ -82,21 +94,34 @@ async function crear(usuario, datos) {
     auditoria: [
       {
         titulo: "Propuesta creada",
-        detalle: `${usuario.nombre} registró la fórmula base.`,
+        detalle: `${usuario.nombre} registro la formula base.`,
         usuarioId: usuario._id,
       },
     ],
   });
+
   return presentarFormula(formula);
 }
 
-// Filtra por relaciones y estado; la búsqueda textual no interpreta expresiones regulares del cliente.
+// Aquí sí aplicamos los filtros validados en routes. MongoDB filtra por gremio y estado, nosotros buscamos manualmente coincidencias de texto.
 async function listar(filtros) {
   const consulta = {};
-  if (filtros.gremioId) consulta.gremioId = filtros.gremioId;
-  if (filtros.estado) consulta.estado = filtros.estado;
-  const formulas = await Formula.find(consulta).sort({ fechaCreacion: -1 });
+
+  if (filtros.gremioId) {
+    consulta.gremioId = filtros.gremioId;
+  }
+
+  if (filtros.estado) {
+    consulta.estado = filtros.estado;
+  }
+
+  // orden descendente
+  const formulas = await Formula.find(consulta).sort({
+    fechaCreacion: -1,
+  });
+
   const texto = (filtros.q || "").toLowerCase();
+
   return formulas
     .filter((f) =>
       `${f.nombrePocion} ${f.efectoDeseado}`.toLowerCase().includes(texto),
@@ -104,24 +129,30 @@ async function listar(filtros) {
     .map(presentarFormula);
 }
 
-// Abrir solo admite proposal -> voting y nunca revive una propuesta con plazo vencido.
+// Solo el Gran Maestre o un Alquimista sénior puede abrir la votación. La formula debe seguir como propuesta y no tener el plazo vencido.
 async function abrir(id, usuario) {
   const formula = await obtenerFormula(id);
   const gremio = await obtenerGremio(formula.gremioId);
+
   exigirRol(gremio, usuario._id, ["Gran Maestre", "Alquimista sénior"]);
+
   if (formula.estado !== "proposal" || formula.fechaCierre <= new Date()) {
     const error = new Error("Solo se abre una propuesta con plazo vigente");
     error.status = 409;
     throw error;
   }
+
   formula.estado = "voting";
   formula.fechaAperturaVotacion = new Date();
+
   formula.auditoria.push({
     titulo: "Votación abierta",
     detalle: `${usuario.nombre} abrió la votación.`,
     usuarioId: usuario._id,
   });
+
   await formula.save();
+
   return presentarFormula(formula);
 }
 

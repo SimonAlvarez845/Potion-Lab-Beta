@@ -10,7 +10,7 @@ const cors = require("cors");
 // Conectamos el servidor con nuestra base de datos.
 const conectarBaseDatos = require("./config/database");
 
-// Cargamos las rutas de autenticación, gestión de perfil de usuario y gremios
+// Cargamos las rutas de autenticación, gestión de perfil de usuario, gremios y formulas
 const authRoutes = require("./routes/auth");
 const usuarioRoutes = require("./routes/usuarios");
 const gremioRoutes = require("./routes/gremios");
@@ -53,7 +53,8 @@ app.use("/api/usuarios", usuarioRoutes);
 // Ej: /api/gremios/:id.
 app.use("/api/gremios", gremioRoutes);
 
-// Propuestas alquímicas y sus operaciones de votación.
+// Rutas para crear, consultar y abrir la votación de las fórmulas.
+// Ej: /api/formulas/:id/abrir.
 app.use("/api/formulas", formulaRoutes);
 
 // Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
