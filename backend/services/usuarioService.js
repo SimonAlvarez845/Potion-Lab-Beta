@@ -65,7 +65,7 @@ async function actualizarPerfil(usuario, datos) {
     usuario.especialidad = datos.especialidad;
   if (datos.avatarUrl !== undefined) usuario.avatarUrl = datos.avatarUrl;
 
-// Guardamos los cambios en MongoDB mediante Mongoose.
+  // Guardamos los cambios en MongoDB mediante Mongoose.
   await usuario.save();
 
   return presentarUsuario(usuario);
