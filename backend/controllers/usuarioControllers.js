@@ -3,8 +3,8 @@ const usuarioService = require("../services/usuarioService");
 
 // Recibe el usuario autenticado de req.body,
 // delega la consulta al service y responde con su perfil.
-const obtenerPerfil = (req, res) => {
-  const usuario = usuarioService.obtenerPerfil(req.usuario);
+const obtenerPerfil = async (req, res) => {
+  const usuario = await usuarioService.obtenerPerfil(req.usuario);
   res.status(200).json({ usuario });
 };
 
@@ -17,4 +17,19 @@ const actualizarPerfil = async (req, res) => {
     .json({ mensaje: "Perfil actualizado correctamente", usuario });
 };
 
-module.exports = { obtenerPerfil, actualizarPerfil };
+async function listar(req, res) {
+  const usuarios = await usuarioService.listarUsuarios(req.query.gremioId, req.usuario._id);
+  res.json({ usuarios });
+}
+
+async function ranking(req, res) {
+  const usuarios = await usuarioService.listarUsuarios(req.query.gremioId, req.usuario._id, true);
+  res.json({ usuarios });
+}
+
+async function rankingGremio(req, res) {
+  const usuarios = await usuarioService.listarUsuarios(req.params.id, req.usuario._id, true);
+  res.json({ usuarios });
+}
+
+module.exports = { obtenerPerfil, actualizarPerfil, listar, ranking, rankingGremio };

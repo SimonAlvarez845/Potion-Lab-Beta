@@ -67,7 +67,6 @@ function manejarErrores(error, req, res, next) {
   } else {
     mensaje = error.message;
   }
-
   // Devuelve error usando codigo HTTP y mensaje custom (garantizando que todo error este manejado y clasificado de forma custom).
   return res.status(status).json({
     ok: false,

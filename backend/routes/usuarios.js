@@ -4,15 +4,18 @@ const express = require("express");
   body indica que datos envío la peticion HTTP.
   body(): valida los datos de req.body. Usualmente en POST, PUT y PATCH.
 */
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 
 const autenticar = require("../middleware/autenticar");
 const validarCampos = require("../middleware/validarCampos");
+const actualizarPlazos = require("../middleware/actualizarPlazos");
 
 // Importamos los controllers relacionados con el perfil del usuario
 const {
   obtenerPerfil,
   actualizarPerfil,
+  listar,
+  ranking,
 } = require("../controllers/usuarioControllers");
 
 const { ESPECIALIDADES } = require("../config/catalogo");
@@ -97,6 +100,9 @@ const validarActualizacionPerfil = [
 
 // Todas ruta de usuarios requieren un JWT.
 router.use(autenticar);
+router.use(actualizarPlazos);
+router.get("/", query("gremioId").optional().isMongoId(), validarCampos, listar);
+router.get("/ranking", query("gremioId").optional().isMongoId(), validarCampos, ranking);
 
 // GET /me — obtiene el perfil del usuario autenticado
 router.get("/me", obtenerPerfil);

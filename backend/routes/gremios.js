@@ -17,9 +17,12 @@ const { body, param, query } = require("express-validator");
 const autenticar = require("../middleware/autenticar");
 const validarCampos = require("../middleware/validarCampos");
 const controller = require("../controllers/gremioControllers");
+const actualizarPlazos = require("../middleware/actualizarPlazos");
+const usuarioController = require("../controllers/usuarioControllers");
 
 // Todas las rutas de gremios requieren un JWT.
 router.use(autenticar);
+router.use(actualizarPlazos);
 
 /* TABLA DE VALIDACIONES:
   .trim(): elimina espacios al principio y final.
@@ -84,6 +87,7 @@ router.use("/:id", param("id").isMongoId(), validarCampos);
 
 // GET /api/gremios/:id — consulta miembros y datos del gremio.
 router.get("/:id", controller.obtener);
+router.get("/:id/ranking", usuarioController.rankingGremio);
 
 // POST /api/gremios/:id/miembros —  permite unirse a un gremio comprobando el código de invitación en caso de ser privado.
 router.post(

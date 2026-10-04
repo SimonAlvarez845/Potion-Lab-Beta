@@ -10,11 +10,15 @@ const cors = require("cors");
 // Conectamos el servidor con nuestra base de datos.
 const conectarBaseDatos = require("./config/database");
 
-// Cargamos las rutas de autenticación, gestión de perfil de usuario, gremios y formulas
+// Cargamos rutas de autenticación, gestión de perfil de usuario, gremios, formulas y grimorio
 const authRoutes = require("./routes/auth");
 const usuarioRoutes = require("./routes/usuarios");
 const gremioRoutes = require("./routes/gremios");
 const formulaRoutes = require("./routes/formulas");
+const grimorioRoutes = require("./routes/grimorio");
+
+// F(x)'s para revisar los plazos de las votaciones y ejecutar los procesos pendientes.
+const { actualizarPlazos, iniciarPlazos } = require("./services/plazosService");
 
 // Convierte los errores del backend en respuestas JSON entendibles.
 const manejarErrores = require("./middleware/manejarErrores");
@@ -57,6 +61,10 @@ app.use("/api/gremios", gremioRoutes);
 // Ej: /api/formulas/:id/abrir.
 app.use("/api/formulas", formulaRoutes);
 
+// Rutas para consultar las pociones que ya fueron destiladas.
+// Ej: /api/grimorio.
+app.use("/api/grimorio", grimorioRoutes);
+
 // Va después de las rutas para capturar y responder a los errores que lleguen hasta este punto.
 app.use(manejarErrores);
 
@@ -67,6 +75,12 @@ const iniciarServidor = async () => {
   }
   // Primero intentamos conectarnos a MongoDB.
   await conectarBaseDatos();
+
+  // Revisamos los plazos pendientes al iniciar el servidor.
+  await actualizarPlazos();
+
+  // Iniciamos una revisión periódica para cerrar votaciones.
+  iniciarPlazos();
 
   // listen solo se ejecuta cuando la conexion funciona.
   // Así evitamos tener una API encendida sin DB.

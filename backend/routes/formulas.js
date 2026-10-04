@@ -18,9 +18,12 @@ const autenticar = require("../middleware/autenticar");
 const validarCampos = require("../middleware/validarCampos");
 const controller = require("../controllers/formulaControllers");
 const votacion = require("../controllers/votacionControllers");
+const destilacion = require("../controllers/destilacionControllers");
+const actualizarPlazos = require("../middleware/actualizarPlazos");
 
 // Todas las rutas de fórmulas requieren un JWT.
 router.use(autenticar);
+router.use(actualizarPlazos);
 
 /* TABLA DE VALIDACIONES:
   .trim(): elimina espacios al principio y final.
@@ -90,6 +93,7 @@ router.put(
   [
     body("categoriaId").isString().notEmpty(),
     body("opcionId").isString().notEmpty(),
+    body("dificultad").optional().isInt({ min: 1, max: 4 }).toInt(),
   ],
   validarCampos,
   votacion.votar,
@@ -108,5 +112,6 @@ router.post(
 
 // POST /api/formulas/:id/cerrar — cierra la votación y guarda los desempates.
 router.post("/:id/cerrar", votacion.cerrar);
+router.post("/:id/destilar", destilacion.destilar);
 
 module.exports = router;
