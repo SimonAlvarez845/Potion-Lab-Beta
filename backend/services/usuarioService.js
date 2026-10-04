@@ -1,8 +1,11 @@
 // Service de usuario: prepara la información que enviamos al frontend
 // y controla qué datos puede modificar el usuario de su propio perfil.
 
+const Usuario = require("../models/usuario");
+const { obtenerEstadisticas } = require("./estadisticasService");
+
 // Recibe el usuario completo de Mongo y construye el objeto que queremos enviar al frontend, evitando exponer campos como password y _id
-function presentarUsuario(usuario) {
+function presentarUsuario(usuario, estadisticas = {}) {
   // _id es un ObjectId de Mongo
   return {
     id: usuario._id.toString(),
@@ -13,18 +16,21 @@ function presentarUsuario(usuario) {
     especialidad: usuario.especialidad,
     avatarUrl: usuario.avatarUrl,
     role: usuario.role,
-    participacion: usuario.participacion,
-    precisionCatador: usuario.precisionCatador,
+    participacion: estadisticas.participacion ?? 100,
+    precisionCatador: estadisticas.precisionCatador ?? 0,
     // FALTA
-    puntos: 0,
-    rarezaTotal: 0,
+    puntos: estadisticas.puntos ?? 0,
+    rarezaTotal: estadisticas.rarezaTotal ?? 0,
+    restriccionFormulasHasta: usuario.restriccionFormulasHasta || null,
   };
 }
 
 // Devuelve el perfil autenticado usando el mismo formato seguro
 // que utilizamos para enviar usuarios al frontend.
-function obtenerPerfil(usuario) {
-  return presentarUsuario(usuario);
+async function obtenerPerfil(usuario) {
+  const estadisticas = await obtenerEstadisticas();
+  const actualizado = await Usuario.findById(usuario._id);
+  return presentarUsuario(actualizado, estadisticas[String(usuario._id)]);
 }
 
 // Actualiza únicamente los campos del perfil que el usuario tiene permitido modificar.
@@ -68,7 +74,31 @@ async function actualizarPerfil(usuario, datos) {
   // Guardamos los cambios en MongoDB mediante Mongoose.
   await usuario.save();
 
-  return presentarUsuario(usuario);
+  return obtenerPerfil(usuario);
 }
 
-module.exports = { presentarUsuario, obtenerPerfil, actualizarPerfil };
+async function listarUsuarios(gremioId, actorId, ordenar = false) {
+  let consulta = {};
+  if (gremioId) {
+    const { obtenerGremio } = require("./gremioService");
+    const { exigirRol } = require("../utils/roles");
+    const gremio = await obtenerGremio(gremioId);
+    exigirRol(gremio, actorId, ["Gran Maestre", "Alquimista sénior", "Catador oficial", "Aprendiz"]);
+    consulta = { _id: { $in: gremio.miembros.map((m) => m.usuarioId) } };
+  }
+  const usuarios = await Usuario.find(consulta)
+    .select("nombre especialidad avatarUrl participacion precisionCatador restriccionFormulasHasta");
+  const estadisticas = await obtenerEstadisticas(gremioId);
+  const lista = usuarios.map((usuario) => {
+    const perfil = presentarUsuario(usuario, estadisticas[String(usuario._id)]);
+    delete perfil.email;
+    delete perfil.role;
+    return perfil;
+  });
+  if (ordenar) {
+    lista.sort((a, b) => b.puntos - a.puntos || b.rarezaTotal - a.rarezaTotal || a.id.localeCompare(b.id));
+  }
+  return lista;
+}
+
+module.exports = { presentarUsuario, obtenerPerfil, actualizarPerfil, listarUsuarios };

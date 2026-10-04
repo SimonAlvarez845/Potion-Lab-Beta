@@ -129,6 +129,10 @@ async function cambiarRol(id, actorId, miembroId, rol) {
     throw error;
   }
 
+  if (rol === "Catador oficial" && miembro.rol === rol) {
+    return presentarGremio(gremio, actorId);
+  }
+
   // Nombrar un Catador reemplaza al anterior, quien vuelve a Aprendiz.
   if (rol === "Catador oficial") {
     gremio.miembros.forEach((m) => {
@@ -138,6 +142,10 @@ async function cambiarRol(id, actorId, miembroId, rol) {
 
   // Asignamos el nuevo rol al rol que tiene actualmente el miembro dentro del gremio.
   miembro.rol = rol;
+
+  if (rol === "Catador oficial") {
+    miembro.fechaNombramientoCatador = new Date();
+  }
 
   await gremio.save();
 

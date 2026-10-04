@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/usuario");
-const { presentarUsuario } = require("./usuarioService");
+const { presentarUsuario, obtenerPerfil } = require("./usuarioService");
 
 // Service de Autenticación: contiene la lógica de negocio
 // necesaria para registrar usuarios e iniciar sesión.
@@ -102,7 +102,9 @@ async function iniciarSesion({ email, password }) {
     throw error;
   }
 
-  return { usuario: presentarUsuario(usuario), token: generateToken(usuario) };
+  const { actualizarPlazos } = require("./plazosService");
+  await actualizarPlazos();
+  return { usuario: await obtenerPerfil(usuario), token: generateToken(usuario) };
 }
 
 module.exports = {
