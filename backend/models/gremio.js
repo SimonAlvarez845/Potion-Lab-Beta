@@ -32,6 +32,7 @@ const miembroSchema = new mongoose.Schema(
       required: true,
     },
     fechaIngreso: { type: Date, default: Date.now },
+    fechaNombramientoCatador: Date,
   },
   { _id: false },
   // Evite que Mongoose genere un _id adicional para cada miembro dentro del array.

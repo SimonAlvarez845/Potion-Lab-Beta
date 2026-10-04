@@ -59,6 +59,8 @@ const votoSchema = new mongoose.Schema(
     categoriaId: String,
     opcionId: String,
     peso: Number,
+    dificultad: { type: Number, min: 1, max: 4 },
+    esCatador: Boolean,
     fechaPrimerVoto: Date,
     fecha: Date,
   },
@@ -134,6 +136,30 @@ const formulaSchema = new mongoose.Schema(
     fechaCierre: { type: Date, required: true },
     fechaAperturaVotacion: Date,
     fechaCierreEfectivo: Date,
+    participantes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Usuario" }],
+    catadorId: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario" },
+    fechaInicioCatador: Date,
+    fechaNombramientoCatador: Date,
+    catadorEvaluado: { type: Boolean, default: false },
+    sancionCatadorPendiente: { type: Boolean, default: false },
+
+    // Guardamos el resultado de la destilación dentro de la formula, sin crear otro modelo.
+    pocion: {
+      type: new mongoose.Schema(
+        {
+          nombre: String,
+          efecto: String,
+          dificultadReal: Number,
+          rareza: Number,
+          fechaDestilacion: Date,
+          decisiones: [
+            { categoriaId: String, opcion: String, metodo: String, _id: false },
+          ],
+        },
+        { _id: false },
+      ),
+      default: null,
+    },
 
     // Cada fórmula recibe su propia copia de las categorías del catálogo. default las agrega y structuredClone evita modificar el catalogo original (esto lo busque).
     categorias: {

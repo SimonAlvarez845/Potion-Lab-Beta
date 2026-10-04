@@ -58,6 +58,7 @@ const usuarioSchema = new mongoose.Schema(
     avatarUrl: { type: String, trim: true, default: "" },
     participacion: { type: Number, min: 0, max: 100, default: 100 },
     precisionCatador: { type: Number, min: 0, max: 100, default: 0 },
+    restriccionFormulasHasta: Date,
   },
   {
     timestamps: true,
