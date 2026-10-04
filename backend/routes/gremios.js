@@ -35,6 +35,10 @@ router.use(autenticar);
   .isURL(...): el formato de la URL del avatar proporcionado debe ser aceptable.
   .notEmpty(): el campo no puede estar vacío.
   .if(): aplica una validacion/es si se cumple una condición.
+  .isMongoId(): comprueba que el id tenga el formato de MongoDB.
+  .isInt(): comprueba que el valor sea un entero dentro del rango permitido.
+  .toInt(): convierte el valor validado en un entero.
+  .isISO8601(): comprueba que la fecha tenga un formato válido (este se busco)
 */
 
 // GET /api/gremios — obtiene todos los gremios o los del usuario, permitiendo filtrar por nombre o lema.
