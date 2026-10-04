@@ -78,7 +78,7 @@ const vetoSchema = new mongoose.Schema(
   { _id: false },
 );
 
-// Guardar el ganador evita repetir el azar al consultar una fórmula cerrada.
+// Guardar el ganador evita repetir el azar al consultar una formula cerrada.
 const ganadorSchema = new mongoose.Schema(
   {
     categoriaId: String,
@@ -141,11 +141,10 @@ const formulaSchema = new mongoose.Schema(
       default: () => structuredClone(CATEGORIAS),
     },
 
-    // Votos, veto y ganadores agregados en la fase 4.
+    // Guardamos los demas datos de interes de una formula
     votos: [votoSchema],
     veto: { type: vetoSchema, default: null },
     ganadores: [ganadorSchema],
-
     auditoria: [eventoSchema],
   },
   {
