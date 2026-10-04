@@ -20,6 +20,7 @@
 * [🧩 Lógica de votación](#-lógica-de-votación)
 * [🗺️ Rutas](#️-rutas)
 * [▶️ Instalación y uso](#️-instalación-y-uso)
+* [📖 Documentación de la API con Swagger](#-documentación-de-la-api-con-swagger)
 
 ---
 
@@ -27,7 +28,7 @@
 
 > SPA construida en un mundo de alquimia caótica, donde los aprendices necesitan un lugar para colaborar en la creación de pociones, votar ingredientes y decidir qué fórmula es la más poderosa. Actualmente usan grupos de WhatsApp donde las opiniones se pierden y nadie recuerda quién propuso qué. La plataforma debe organizar la locura creativa y producir un resultado confiable: la poción definitiva.
 
-Potion Lab corre 100% del lado del cliente: no hay backend, todo el estado de usuarios, gremios, fórmulas y sesiones vive en `localStorage`. El foco del proyecto no fue solo "que funcione", sino separar con claridad **lógica** (funciones) de **presentación** (componentes), y modelar un sistema de votación con reglas de negocio reales en vez de un simple tracker, una App entera capaz de coordinar el flujo completo de estos gremios alquímicos.
+Potion Lab cuenta con un frontend desarrollado con React y Vite y una API REST en Node.js y Express que utiliza MongoDB Atlas para almacenar los datos y JWT para autenticar las peticiones. El proyecto separa la interfaz, las rutas, los controladores, los servicios y los modelos de datos.
 
 ---
 
@@ -42,7 +43,7 @@ Potion Lab corre 100% del lado del cliente: no hay backend, todo el estado de us
 | ⚖️ Desempate en cascada    | Catador Oficial → Gran Maestre → azar determinista              | Done     |
 | 📚 Grimorio                | Registro histórico inmutable de pociones aprobadas              | Done     |
 | 🏆 Ranking                 | Clasificación de alquimistas y gremios destacados               | Done     |
-| 💾 Persistencia reactiva   | Hook propio sobre `localStorage` con lectura perezosa           | Done     |
+| 💾 Persistencia            | API REST y MongoDB Atlas; existen utilidades locales en el frontend | Done |
 
 ---
 
@@ -96,18 +97,76 @@ El corazón del sistema es un motor de cómputo aislado en `src/utils/`, dividid
 
 ## ▶️ Instalación y uso
 
+### Requisitos previos
+
+- Node.js **22.12 o superior** y npm.
+- Un clúster de **MongoDB Atlas** activo y accesible desde la IP del equipo.
+- Credenciales propias para MongoDB. **Nunca publiques el archivo `.env` ni los tokens JWT.**
+
+### 1. Descargar el proyecto
+
 ```bash
 git clone https://github.com/SimonAlvarez845/Potion-Lab-Beta.git
 cd Potion-Lab-Beta
-
-npm install
-npm run dev
-
-npm run lint
-npm run build
 ```
 
-Requisito previo: **Node.js Version 22.12** o superior.
+### 2. Configurar el backend
+
+En una terminal, entra a `backend` e instala sus dependencias:
+
+```bash
+cd backend
+npm install
+```
+
+Copia `backend/.env.example` como `backend/.env` y sustituye los valores de ejemplo:
+
+```dotenv
+PORT=3000
+FRONTEND_URL=http://localhost:5173
+MONGODB_URI=mongodb+srv://USUARIO:CLAVE@CLUSTER.mongodb.net/potion_lab
+JWT_SECRET=CAMBIAR_POR_UN_SECRETO_LARGO_Y_PRIVADO
+```
+
+`MONGODB_URI` se obtiene desde MongoDB Atlas, en **Connect → Drivers**. Autoriza tu IP en **Network Access** y verifica que el clúster esté activo. La contraseña real debe permanecer exclusivamente en el `.env` local.
+
+Inicia el servidor:
+
+```bash
+npm run dev
+```
+
+También puedes utilizar `npm start` para ejecutarlo sin Nodemon. Espera los mensajes de conexión a la base de datos y de inicio del servidor. Comprueba la API en [http://localhost:3000/api/salud](http://localhost:3000/api/salud).
+
+### 3. Iniciar el frontend
+
+Abre **otra terminal** desde la raíz del proyecto:
+
+```bash
+npm install
+npm run dev
+```
+
+El frontend de Vite suele estar disponible en [http://localhost:5173](http://localhost:5173). Los comandos `npm run lint` y `npm run build` permiten comprobar el código y generar la compilación de producción del frontend.
+
+> **Nota:** iniciar el frontend y el backend no implica que estén integrados entre sí. Comprueba el estado de la conexión frontend–API antes de evaluar flujos completos desde la interfaz.
+
+## 📖 Documentación de la API con Swagger
+
+Con el **backend encendido**, abre:
+
+- **Swagger UI:** [http://localhost:3000/api/docs/](http://localhost:3000/api/docs/)
+- **OpenAPI JSON:** [http://localhost:3000/api/openapi.json](http://localhost:3000/api/openapi.json)
+
+Swagger documenta las **24 operaciones** de la API en los módulos de sistema, autenticación, usuarios, gremios, fórmulas, votaciones, destilación y grimorio.
+
+Para probar rutas protegidas, ejecuta primero `POST /api/auth/register` o `POST /api/auth/login`. Copia el `token` devuelto y pulsa **Authorize** en Swagger; pega el token JWT sin añadir manualmente la palabra `Bearer`. Después utiliza **Try it out → Execute** en la ruta deseada.
+
+**Precaución:** las operaciones `POST`, `PUT`, `PATCH` y `DELETE` pueden modificar datos reales en MongoDB. Para una evaluación académica se recomienda una base de datos y usuarios de demostración, independientes de los datos que quieras conservar.
+
+La documentación adicional del backend está en [backend/docs/README.md](backend/docs/README.md).
+
+---
 
 <div align="center">
 
