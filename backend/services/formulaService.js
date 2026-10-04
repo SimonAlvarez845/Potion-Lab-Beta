@@ -1,6 +1,7 @@
 const Formula = require("../models/formula");
 const { obtenerGremio } = require("./gremioService");
 const { exigirRol } = require("../utils/roles");
+const { calcularResultados } = require("./resultadosService");
 
 // Busca una fórmula por su ID y lanza un error si no existe.
 async function obtenerFormula(id) {
@@ -18,6 +19,23 @@ async function obtenerFormula(id) {
 // Prepara los datos de la fórmula para enviarlos a React.
 // Convierte los ObjectId a texto y organiza su historial.
 function presentarFormula(formula) {
+  // React agrupa votos por usuario y categoría pero aqui guardamos absolutamente todos los detalles dentro de la formula para no complicar tanto la logica.
+  const votos = {};
+
+  for (const voto of formula.votos) {
+    const usuarioId = String(voto.usuarioId);
+
+    if (!votos[usuarioId]) {
+      votos[usuarioId] = {};
+    }
+
+    votos[usuarioId][voto.categoriaId] = {
+      opcionId: voto.opcionId,
+      peso: voto.peso,
+      fecha: voto.fecha,
+    };
+  }
+
   return {
     id: String(formula._id),
     gremioId: String(formula.gremioId),
@@ -31,7 +49,24 @@ function presentarFormula(formula) {
     fechaAperturaVotacion: formula.fechaAperturaVotacion,
     fechaCierreEfectivo: formula.fechaCierreEfectivo,
     categorias: formula.categorias,
-    veto: null,
+    votos,
+
+    veto: formula.veto
+      ? {
+          categoriaId: formula.veto.categoriaId,
+          opcionId: formula.veto.opcionId,
+          usuarioId: String(formula.veto.usuarioId),
+          fecha: formula.veto.fecha,
+        }
+      : null,
+
+    resultados: formula.categorias.map((categoria) => ({
+      categoriaId: categoria.id,
+      opciones: calcularResultados(categoria, formula.votos, formula.veto),
+    })),
+
+    ganadores: formula.ganadores,
+
     auditoria: formula.auditoria.map((e) => ({
       id: String(e._id),
       formulaId: String(formula._id),

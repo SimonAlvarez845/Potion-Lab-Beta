@@ -48,6 +48,46 @@ const eventoSchema = new mongoose.Schema({
   },
 });
 
+// Cada usuario ocupa una posición por categoría. Se conserva el peso emitido, no el rol futuro.
+const votoSchema = new mongoose.Schema(
+  {
+    usuarioId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
+      required: true,
+    },
+    categoriaId: String,
+    opcionId: String,
+    peso: Number,
+    fechaPrimerVoto: Date,
+    fecha: Date,
+  },
+  { _id: false },
+);
+
+const vetoSchema = new mongoose.Schema(
+  {
+    usuarioId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
+    },
+    categoriaId: String,
+    opcionId: String,
+    fecha: Date,
+  },
+  { _id: false },
+);
+
+// Guardar el ganador evita repetir el azar al consultar una formula cerrada.
+const ganadorSchema = new mongoose.Schema(
+  {
+    categoriaId: String,
+    opcion: opcionSchema,
+    metodo: String,
+  },
+  { _id: false },
+);
+
 const formulaSchema = new mongoose.Schema(
   {
     gremioId: {
@@ -101,6 +141,10 @@ const formulaSchema = new mongoose.Schema(
       default: () => structuredClone(CATEGORIAS),
     },
 
+    // Guardamos los demas datos de interes de una formula
+    votos: [votoSchema],
+    veto: { type: vetoSchema, default: null },
+    ganadores: [ganadorSchema],
     auditoria: [eventoSchema],
   },
   {
