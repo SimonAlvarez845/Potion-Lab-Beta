@@ -3,6 +3,8 @@ const { obtenerFormula, presentarFormula } = require("./formulaService");
 const { obtenerGremio } = require("./gremioService");
 const { obtenerRol, exigirRol } = require("../utils/roles");
 const { obtenerPesoVoto, calcularGanadores } = require("./resultadosService");
+const { aplicarDestilacion } = require("./destilacionService");
+const { actualizarSanciones } = require("./estadisticasService");
 
 // Comprueba que la votación siga abierta, dentro del plazo y que la opción exista.
 function comprobarOpcion(formula, categoriaId, opcionId) {
@@ -96,6 +98,8 @@ async function votar(id, usuario, datos) {
     // Conservamos la fecha del primer voto aunque el usuario cambie su elección.
     fechaPrimerVoto: anterior?.fechaPrimerVoto || new Date(),
     fecha: new Date(),
+    dificultad: datos.dificultad ?? anterior?.dificultad ?? formula.dificultad,
+    esCatador: obtenerRol(gremio, usuario._id) === "Catador oficial",
   };
 
   // Si ya voto, cambia su elección. Si no, agrega el nuevo voto.
@@ -168,7 +172,9 @@ async function cerrar(id, usuario) {
     usuarioId: usuario._id,
   });
 
+  aplicarDestilacion(formula);
   await formula.save();
+  await actualizarSanciones(gremio._id);
 
   return presentarFormula(formula);
 }

@@ -32,6 +32,7 @@ function presentarFormula(formula) {
     votos[usuarioId][voto.categoriaId] = {
       opcionId: voto.opcionId,
       peso: voto.peso,
+      dificultad: voto.dificultad,
       fecha: voto.fecha,
     };
   }
@@ -66,6 +67,14 @@ function presentarFormula(formula) {
     })),
 
     ganadores: formula.ganadores,
+    pocion: formula.pocion
+      ? {
+          ...formula.pocion.toObject(),
+          id: String(formula._id),
+          formulaId: String(formula._id),
+          gremioId: String(formula.gremioId),
+        }
+      : null,
 
     auditoria: formula.auditoria.map((e) => ({
       id: String(e._id),
@@ -93,7 +102,7 @@ function validarFechaCierre(fecha) {
   if (
     !Number.isFinite(cierre) ||
     cierre <= ahora ||
-    cierre > limiteLocal.getTime() + 5 * 60 * 60 * 1000
+    cierre > ahora + 7 * 24 * 60 * 60 * 1000
   ) {
     const error = new Error(
       "El cierre debe ser futuro y estar entre hoy y los próximos siete días",
@@ -109,9 +118,11 @@ async function crear(usuario, datos) {
 
   exigirRol(gremio, usuario._id, ["Gran Maestre", "Alquimista sénior"]);
 
-  if (usuario.participacion < 30) {
+  const Usuario = require("../models/usuario");
+  const perfil = await Usuario.findById(usuario._id);
+  if (perfil.restriccionFormulasHasta > new Date()) {
     const error = new Error(
-      "Necesitas al menos 30% de participación para proponer",
+      "No puedes proponer durante los siete días de sanción por baja participación",
     );
     error.status = 403;
     throw error;
@@ -179,6 +190,13 @@ async function abrir(id, usuario) {
 
   formula.estado = "voting";
   formula.fechaAperturaVotacion = new Date();
+  formula.participantes = gremio.miembros.map((m) => m.usuarioId);
+  const catador = gremio.miembros.find((m) => m.rol === "Catador oficial");
+  if (catador) {
+    formula.catadorId = catador.usuarioId;
+    formula.fechaInicioCatador = formula.fechaAperturaVotacion;
+    formula.fechaNombramientoCatador = catador.fechaNombramientoCatador;
+  }
 
   formula.auditoria.push({
     titulo: "Votación abierta",
