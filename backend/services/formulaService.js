@@ -19,7 +19,7 @@ async function obtenerFormula(id) {
 // Prepara los datos de la fórmula para enviarlos a React.
 // Convierte los ObjectId a texto y organiza su historial.
 function presentarFormula(formula) {
-  // React agrupa votos por usuario y categoría; Mongo los guarda dentro de la fórmula.
+  // React agrupa votos por usuario y categoría pero aqui guardamos absolutamente todos los detalles dentro de la formula para no complicar tanto la logica.
   const votos = {};
 
   for (const voto of formula.votos) {
