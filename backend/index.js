@@ -7,6 +7,15 @@ const express = require("express");
 // CORS permite que React y Express se comuniquen.
 const cors = require("cors");
 
+// HTTP permite compartir un mismo servidor entre Express y Socket.IO.
+const http = require("http");
+
+// Importamos el servidor de Socket.IO.
+const { Server } = require("socket.io");
+
+// Importamos la función que registrará los eventos.
+const registrarSockets = require("./sockets");
+
 // Conectamos el servidor con nuestra base de datos.
 const conectarBaseDatos = require("./config/database");
 
@@ -16,6 +25,20 @@ const usuarioRoutes = require("./routes/usuarios");
 const gremioRoutes = require("./routes/gremios");
 const formulaRoutes = require("./routes/formulas");
 const grimorioRoutes = require("./routes/grimorio");
+
+// Creamos el servidor HTTP utilizando nuestra aplicación Express.
+const server = http.createServer(app);
+
+// Configuramos Socket.IO sobre el mismo servidor.
+const io = new Server(server, {
+  cors: {
+    origin: [process.env.CORS_ORIGIN, "http://localhost:5173"].filter(Boolean),
+    methods: ["GET", "POST"],
+  },
+});
+
+// Registramos los eventos de Socket.IO.
+registrarSockets(io);
 
 // F(x)'s para revisar los plazos de las votaciones y ejecutar los procesos pendientes.
 const { actualizarPlazos, iniciarPlazos } = require("./services/plazosService");
@@ -87,7 +110,7 @@ const iniciarServidor = async () => {
 
   // listen solo se ejecuta cuando la conexion funciona.
   // Así evitamos tener una API encendida sin DB.
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
   });
 };

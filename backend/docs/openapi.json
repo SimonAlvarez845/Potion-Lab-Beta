@@ -3,7 +3,7 @@
   "info": {
     "title": "Potion Lab — API REST",
     "version": "1.0.0",
-    "description": "Documentación de las rutas reales del backend Express. Para probar rutas protegidas: ejecutar /api/auth/login o /api/auth/register, copiar el token y pulsar Authorize. Algunas acciones requieren un rol específico en el gremio y un estado válido de la fórmula. Las operaciones con escritura modifican la base de datos."
+    "description": "Documentación de las rutas reales del backend Express. Para probar rutas protegidas: ejecutar /api/auth/login o /api/auth/register, copiar el token y pulsar Authorize. Algunas acciones requieren un rol específico en el gremio y un estado valido de la formula. Las operaciones con escritura modifican la base de datos."
   },
   "servers": [
     {
