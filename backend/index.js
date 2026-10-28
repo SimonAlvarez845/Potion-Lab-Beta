@@ -26,6 +26,15 @@ const gremioRoutes = require("./routes/gremios");
 const formulaRoutes = require("./routes/formulas");
 const grimorioRoutes = require("./routes/grimorio");
 
+// F(x)'s para revisar los plazos de las votaciones y ejecutar los procesos pendientes.
+const { actualizarPlazos, iniciarPlazos } = require("./services/plazosService");
+
+// Convierte los errores del backend en respuestas JSON entendibles.
+const manejarErrores = require("./middleware/manejarErrores");
+
+// Este "app" representa nuestro servidor.
+const app = express();
+
 // Creamos el servidor HTTP utilizando nuestra aplicación Express.
 const server = http.createServer(app);
 
@@ -39,15 +48,6 @@ const io = new Server(server, {
 
 // Registramos los eventos de Socket.IO.
 registrarSockets(io);
-
-// F(x)'s para revisar los plazos de las votaciones y ejecutar los procesos pendientes.
-const { actualizarPlazos, iniciarPlazos } = require("./services/plazosService");
-
-// Convierte los errores del backend en respuestas JSON entendibles.
-const manejarErrores = require("./middleware/manejarErrores");
-
-// Este "app" representa nuestro servidor.
-const app = express();
 
 // Si existe un puerto en process.env lo usamos. Si no existe, usamos el 3000.
 const PORT = process.env.PORT || 3000;
@@ -99,6 +99,7 @@ const iniciarServidor = async () => {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET no está configurado");
   }
+
   // Primero intentamos conectarnos a MongoDB.
   await conectarBaseDatos();
 
