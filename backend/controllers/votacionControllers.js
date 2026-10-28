@@ -4,9 +4,20 @@ const servicio = require("../services/votacionService");
 // Recibe el id de la fórmula de req.params, el usuario autenticado de req.usuario y la categoría y opción elegidas de req.body. Delega el registro del voto al service y devuelve la fórmula actualizada.
 async function votar(req, res, next) {
   try {
-    res.json({
-      formula: await servicio.votar(req.params.id, req.usuario, req.body),
+    // Guardamos el voto en MongoDB usando el Service.
+    const formula = await servicio.votar(req.params.id, req.usuario, req.body);
+
+    // Recuperamos la instancia de Socket.IO compartida en index.js del backend
+    const io = req.app.get("io");
+
+    // Notificamos a los clientes solamente despues de guardar el voto.
+    io.emit("votacion:actualizada", {
+      formulaId: formula.id,
+      resultados: formula.resultados,
     });
+
+    // Respondemos a la HTTP request con la formula actualizada.
+    res.json({ formula });
   } catch (error) {
     next(error);
   }

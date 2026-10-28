@@ -49,6 +49,9 @@ const io = new Server(server, {
 // Registramos los eventos de Socket.IO.
 registrarSockets(io);
 
+// Compartimos Socket.IO con los controllers.
+app.set("io", io);
+
 // Si existe un puerto en process.env lo usamos. Si no existe, usamos el 3000.
 const PORT = process.env.PORT || 3000;
 
