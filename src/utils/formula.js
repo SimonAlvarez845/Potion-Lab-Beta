@@ -1,11 +1,5 @@
 import { calcularGanador } from "./voting";
 
-export const TRANSICIONES_VALIDAS = {
-  proposal: "voting",
-  voting: "closed",
-  closed: "distilled",
-};
-
 // Toma una formula cerrada y los resultados de voting para construir una pocion
 export function crearPocionDesdeFormula(formula, votosFormula, gremio) {
   // Calcula el ganador de cada categoria usando los votos

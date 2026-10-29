@@ -15,8 +15,11 @@ function FormulaDetallePage({
   auditoria,
   onVote,
   onVeto,
-  onTransition,
   onDistill,
+  onOpenVoting,
+  onCloseVoting,
+  cargando,
+  error,
 }) {
   // Obtiene el id desde el link y lo almacena
   const { formulaId } = useParams();
@@ -24,6 +27,15 @@ function FormulaDetallePage({
   // Busca y almacena la formula
   const formula = formulas.find((item) => item.id === formulaId);
 
+  // Espera la consulta de MongoDB antes de buscar la formula.
+  if (cargando) {
+    return <p>Cargando detalle de la formula...</p>;
+  }
+
+  // Distingue un error del servidor de una formula que no existe.
+  if (error) {
+    return <p role="alert">{error}</p>;
+  }
   if (!formula) {
     return (
       <section className="formula-detalle-seccion-formula-no-encontrada-volver">
@@ -43,20 +55,29 @@ function FormulaDetallePage({
   const catadorOficial = esCatadorOficial(gremio, usuario.id);
   const puedeGestionar = ["Gran Maestre", "Alquimista sénior"].includes(rol);
   const puedeVotar = formula.estado === "voting" && rol !== "Visitante";
+  // AJUSTE TEMPORAL de permisos para votar.
+  console.log("DIAGNÓSTICO VOTACIÓN:", {
+    estado: formula.estado,
+    usuarioId: usuario.id,
+    gremioId: formula.gremioId,
+    gremioEncontrado: Boolean(gremio),
+    rol,
+    puedeVotar,
+  });
   const puedeVetar = formula.estado === "voting" && catadorOficial;
 
-  // Todos los votos de esta formula se usan para calcular los resultados generales.
-  const votosTodos = votos[formula.id] ?? {};
+  // Todos los votos de una formula y la pocion destilada vienen incluidos en las respuestas de MongoDB.
+  const votosTodos = formula.votos ?? {};
+
+  const pocion = formula.pocion;
 
   // Solo los votos del usuario conectado se usan para saber que opciones y categorias eligio/completo
   const votosUsuario = votosTodos[usuario.id] ?? {};
 
-  const pocion = grimorio.find((item) => item.formulaId === formula.id);
-
-  // Solo quiero los eventos relacionados con esa formula ordenados de mas reciente a mas antiguo.
-  const eventos = auditoria
-    .filter((evento) => evento.formulaId === formula.id)
-    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  // Solo quiero los eventos relacionados con esa formula ordenados de mas reciente a mas antiguo. Dicha auditoria ya viene asociada a la formula desde MongoDB.
+  const eventos = [...(formula.auditoria ?? [])].sort(
+    (a, b) => new Date(b.fecha) - new Date(a.fecha),
+  );
 
   return (
     <div className="formula-detalle-lista-vertical-arrow-left-volver-a">
@@ -77,7 +98,7 @@ function FormulaDetallePage({
         <dl className="formula-detalle-ficha">
           <div>
             <dt>Gremio</dt>
-            <dd>{gremio.nombre}</dd>
+            <dd>{gremio?.nombre ?? "Cargando Gremio..."}</dd>
           </div>
           <div>
             <dt>Autor</dt>
@@ -98,7 +119,7 @@ function FormulaDetallePage({
           {formula.estado === "proposal" && puedeGestionar && (
             <button
               className="formula-detalle-boton-zap-abrir-votacion"
-              onClick={() => onTransition(formula.id, "voting")}
+              onClick={() => onOpenVoting(formula.id)}
               type="button"
             >
               Abrir votación
@@ -109,7 +130,7 @@ function FormulaDetallePage({
           {formula.estado === "voting" && puedeGestionar && (
             <button
               className="formula-detalle-boton-lock-cerrar-votacion"
-              onClick={() => onTransition(formula.id, "closed")}
+              onClick={() => onCloseVoting(formula.id)}
               type="button"
             >
               Cerrar votación

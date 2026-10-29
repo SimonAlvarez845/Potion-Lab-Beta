@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { Link, Route, Routes } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import EstadoVacio from "./components/common/EstadoVacio";
 import LayoutPrincipal from "./components/layout/LayoutPrincipal";
 
 import UsuarioContext from "./context/UsuarioContext";
+import { SocketContext } from "./context/SocketContext";
 
 import {
   iniciarSesionAPI,
@@ -23,6 +24,15 @@ import {
   nombrarCatadorAPI,
   retirarMiembroAPI,
 } from "./services/gremioService";
+import {
+  obtenerFormulasAPI,
+  obtenerFormulaAPI,
+  crearFormulaAPI,
+  abrirVotacionAPI,
+  votarFormulaAPI,
+  cerrarVotacionAPI,
+  destilarFormulaAPI,
+} from "./services/formulaService";
 
 import {
   AUDITORIA_INICIAL,
@@ -43,7 +53,7 @@ import NuevaFormulaPage from "./pages/NuevaFormulaPage";
 import PerfilPage from "./pages/PerfilPage";
 import RankingPage from "./pages/RankingPage";
 import ResumenPage from "./pages/ResumenPage";
-import { crearPocionDesdeFormula, TRANSICIONES_VALIDAS } from "./utils/formula";
+import { crearPocionDesdeFormula } from "./utils/formula";
 import { esCatadorOficial, obtenerRol, puedeCrearFormula } from "./utils/roles";
 import { obtenerPesoVoto } from "./utils/voting";
 
@@ -55,6 +65,9 @@ import { obtenerPesoVoto } from "./utils/voting";
 function App() {
   // Obtenemos todos los estados guardados en MongoDB
   const [usuarios, setUsuarios] = useState([]);
+
+  // Obtenemos el Socket de nuestro Context (se usa en algunos useEffect como el de formulas)
+  const { socket } = useContext(SocketContext);
 
   const [cuentas, setCuentas] = useLocalStorage(
     "potionlab-v2-cuentas",
@@ -195,8 +208,87 @@ function App() {
     FORMULAS_INICIALES,
   );
 
+  // Formulas reales obtenidas desde MongoDB.
+  const [formulasAPI, setFormulasAPI] = useState([]);
+
+  // Estado de la consulta al Backend.
+  const [cargandoFormulas, setCargandoFormulas] = useState(true);
+
+  // Error de la consulta de formulas.
+  const [errorFormulas, setErrorFormulas] = useState("");
+
+  // Carga las formulas cuando hay una sesión activa.
+  useEffect(() => {
+    if (!usuarioActivo?.id) {
+      setFormulasAPI([]);
+      setCargandoFormulas(false);
+      return;
+    }
+
+    let activo = true;
+
+    async function cargarFormulas() {
+      setCargandoFormulas(true);
+      setErrorFormulas("");
+
+      try {
+        const datos = await obtenerFormulasAPI();
+
+        if (activo) {
+          setFormulasAPI(datos);
+        }
+      } catch (error) {
+        if (activo) {
+          setErrorFormulas(
+            error.response?.data?.mensaje ||
+              "No fue posible cargar las formulas.",
+          );
+        }
+      } finally {
+        if (activo) {
+          setCargandoFormulas(false);
+        }
+      }
+    }
+
+    cargarFormulas();
+
+    return () => {
+      activo = false;
+    };
+  }, [usuarioActivo?.id]);
+
   // necesitamos guardar una memoria de como estaban las formulas antes para uno de los useEffect()
   const formulasAnterioresRef = useRef(formulas);
+
+  // Escucha los votos de otros usuarios y sincroniza la formula desde MongoDB.
+  useEffect(() => {
+    if (!usuarioActivo?.id) return;
+
+    async function actualizarVotacion({ formulaId }) {
+      try {
+        //  Consultamos la versión mas reciente de la formula.
+        const formulaActualizada = await obtenerFormulaAPI(formulaId);
+
+        // Actualizamos unicamente la formula que recibio votos.
+        setFormulasAPI((anteriores) =>
+          anteriores.map((formula) =>
+            formula.id === formulaId ? formulaActualizada : formula,
+          ),
+        );
+      } catch (error) {
+        console.error("No se pudo sincronizar la votación:", error);
+      }
+    }
+
+    // Registramos el evento mediante Socket.IO.
+    socket.on("votacion:actualizada", actualizarVotacion);
+
+    // Eliminamos el listener para evitar que se ejecute mas de una vez.
+    return () => {
+      socket.off("votacion:actualizada", actualizarVotacion);
+    };
+  }, [socket, usuarioActivo?.id]);
 
   const [votos, setVotos] = useLocalStorage(
     "potionlab-v2-votos",
@@ -547,81 +639,123 @@ function App() {
     }
   }
 
-  // los datos vienen del form de creacion de formula
+  // los datos vienen del form de creacion de formula desde el backend, ahi se validan los permisos y se guarda la formula en MongoDB
   // Es la funcion que NuevaFormulaPage.jsx recibe como OnCreateFormula
-  function crearFormula(datos) {
-    const gremio = gremios.find((item) => item.id === datos.gremioId);
+  async function crearFormula(datos) {
+    try {
+      const nuevaFormula = await crearFormulaAPI({
+        gremioId: datos.gremioId,
+        nombrePocion: datos.nombrePocion.trim(),
+        efectoDeseado: datos.efectoDeseado.trim(),
+        dificultad: Number(datos.dificultad),
+        fechaCierre: datos.fechaCierre,
+      });
 
-    // Validacion
-    if (!gremio || !puedeCrearFormula(gremio, usuarioActivo)) {
+      // Actualiza la lista de formulas sin recargar la pagina.
+      setFormulasAPI((anteriores) => [nuevaFormula, ...anteriores]);
+
+      mostrarAviso("La fórmula fue guardada como propuesta.");
+
+      return { ok: true, formulaId: nuevaFormula.id };
+    } catch (error) {
       return {
         ok: false,
         mensaje:
-          "Tu rol o nivel de participación no permiten crear esta fórmula.",
+          error.response?.data?.mensaje || "No fue posible crear esta formula.",
       };
     }
+  }
 
-    // Evita guardar dos veces la misma formula propuesta por un mismo usuario repetido. Un doble submit no debe dar mas puntos
-    if (
-      formulas.some(
-        (formula) =>
-          formula.creadaPorId === usuarioActivo.id &&
-          formula.gremioId === datos.gremioId &&
-          formula.nombrePocion === datos.nombrePocion.trim() &&
-          formula.efectoDeseado === datos.efectoDeseado.trim() &&
-          formula.dificultad === datos.dificultad &&
-          formula.fechaCierre === datos.fechaCierre,
-      )
-    ) {
-      return { ok: false, mensaje: "Esta fórmula ya fue creada." };
+  // Abre una votacion y actualiza la formula usando la respuesta de MongoDB.
+  async function abrirVotacion(formulaId) {
+    try {
+      const formulaActualizada = await abrirVotacionAPI(formulaId);
+
+      //  Reemplaza la formula anterior por su versión actualizada.
+      setFormulasAPI((anteriores) =>
+        anteriores.map((formula) =>
+          formula.id === formulaId ? formulaActualizada : formula,
+        ),
+      );
+
+      mostrarAviso("La votación fue abierta correctamente.");
+
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible abrir la votación.",
+      );
+
+      return { ok: false };
     }
+  }
 
-    // Creacion del objeto
-    const id = `f-${Date.now()}`;
-    const nuevaFormula = {
-      id,
-      gremioId: datos.gremioId,
-      nombrePocion: datos.nombrePocion.trim(),
-      efectoDeseado: datos.efectoDeseado.trim(),
-      dificultad: datos.dificultad,
-      estado: "proposal",
-      creadaPorId: usuarioActivo.id,
-      fechaCreacion: new Date().toISOString(),
-      fechaCierre: datos.fechaCierre,
-      categorias: datos.categorias,
-      veto: null, // nadie ha usado el veto todavia
-    };
+  // Guarda el voto en MongoDB y actualiza la formula mostrada.
+  async function votarFormula(formulaId, categoriaId, opcionId) {
+    try {
+      // Enviamos al Backend la categoría y la opción elegidas.
+      const formulaActualizada = await votarFormulaAPI(formulaId, {
+        categoriaId,
+        opcionId,
+      });
 
-    // Agregacion del estado (al principio) y lo guardamos en LocalStorage
-    setFormulas((anteriores) => [nuevaFormula, ...anteriores]);
-    // Un creador debe ganar 10 puntos una sola vez al guardar una nueva formula.
+      // Sustituimos la fórmula anterior por la respuesta del servidor.
+      // Esto con el fin de actualizar los votos y resultados sin recargar la pagina.
+      setFormulasAPI((anteriores) =>
+        anteriores.map((formula) =>
+          formula.id === formulaId ? formulaActualizada : formula,
+        ),
+      );
 
-    // modifica el usuario en la lista de los 12 usuarios (actualizando efectivamente el ranking)
-    setUsuarios((anteriores) =>
-      anteriores.map((usuario) =>
-        usuario.id === usuarioActivo.id
-          ? { ...usuario, puntos: usuario.puntos + 10 }
-          : usuario,
-      ),
-    );
+      return { ok: true };
+    } catch (error) {
+      // Mostramos la validacion o permisos del Backend.
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible registrar el voto.",
+      );
 
-    // modifica los puntos del usuario cuya sesion este iniciada
-    setUsuarioActivo((anterior) => ({
-      ...anterior,
-      puntos: anterior.puntos + 10,
-    }));
-    setAuditoria((anterior) => [
-      {
-        id: `a-${Date.now()}`,
-        formulaId: id,
-        fecha: new Date().toISOString(),
-        titulo: "Propuesta creada",
-        detalle: `${usuarioActivo.nombreCompleto} registró la fórmula base.`,
-      },
-      ...anterior,
-    ]);
-    mostrarAviso("La fórmula fue guardada como propuesta.");
-    return { ok: true, formulaId: id };
+      return { ok: false };
+    }
+  }
+
+  // Cierra la votación en MongoDB y actualiza la formula en React.
+  async function cerrarVotacion(formulaId) {
+    try {
+      const formulaActualizada = await cerrarVotacionAPI(formulaId);
+
+      setFormulasAPI((anteriores) =>
+        anteriores.map((formula) =>
+          formula.id === formulaId ? formulaActualizada : formula,
+        ),
+      );
+
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible cerrar la votación.",
+      );
+      return { ok: false };
+    }
+  }
+
+  // Destila la formula en MongoDB y actualiza su estado en React.
+  async function destilarFormulaMongoDB(formulaId) {
+    try {
+      const formulaActualizada = await destilarFormulaAPI(formulaId);
+
+      setFormulasAPI((anteriores) =>
+        anteriores.map((formula) =>
+          formula.id === formulaId ? formulaActualizada : formula,
+        ),
+      );
+
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible destilar la fórmula.",
+      );
+      return { ok: false };
+    }
   }
 
   // Es la funcion que FormulaDetallePage.jsx recibe como onVote
@@ -714,59 +848,6 @@ function App() {
     mostrarAviso(
       "Veto aplicado. Solo puedes usar esta acción una vez por fórmula.",
     );
-  }
-
-  // Es la función que FormulaDetallePage.jsx recibe como onTransition.
-  function cambiarEstado(formulaId, nuevoEstado) {
-    // Busca la formula
-    const formula = formulas.find((item) => item.id === formulaId);
-
-    // Busca el gremio de esa formula
-    const gremio = gremios.find((item) => item.id === formula?.gremioId);
-
-    // Busca el rol del usuario en ese gremio
-    const rol = obtenerRol(gremio, usuarioActivo.id);
-
-    // Validacion (tenga en cuenta el ciclo y sus transiciones:
-    // proposal --> voting ---> closed ---> distilled)
-    // no puedo pasar de proposal a closed sin haber votado
-    // y que solo dos roles pueden cambiar el estado
-    if (
-      !formula ||
-      TRANSICIONES_VALIDAS[formula.estado] !== nuevoEstado ||
-      !["Gran Maestre", "Alquimista sénior"].includes(rol)
-    ) {
-      return;
-    }
-
-    // Actualizacion del estado de estado
-    setFormulas((anteriores) =>
-      anteriores.map((item) =>
-        item.id === formulaId
-          ? {
-              ...item,
-              estado: nuevoEstado,
-              ...(nuevoEstado === "voting"
-                ? { fechaAperturaVotacion: new Date().toISOString() }
-                : {}),
-            }
-          : item,
-      ),
-    );
-    // siempre hay que indicarle al usuario
-    const titulo =
-      nuevoEstado === "voting" ? "Votación abierta" : "Votación cerrada";
-    setAuditoria((anterior) => [
-      {
-        id: `a-${Date.now()}`,
-        formulaId,
-        fecha: new Date().toISOString(),
-        titulo,
-        detalle: `${usuarioActivo.nombreCompleto} cambio el estado de la fórmula.`,
-      },
-      ...anterior,
-    ]);
-    mostrarAviso(titulo);
   }
 
   // Es la función que FormulaDetallePage.jsx recibe como onDistill.
@@ -954,11 +1035,13 @@ function App() {
             path="formulas"
             element={
               <FormulasPage
-                formulas={formulas}
-                gremios={gremios}
+                formulas={formulasAPI}
+                gremios={gremiosAPI}
                 usuarios={usuarios}
-                votos={votos}
                 usuario={usuarioActivo}
+                votos={votos}
+                cargando={cargandoFormulas}
+                error={errorFormulas}
               />
             }
           />
@@ -966,7 +1049,7 @@ function App() {
             path="formulas/nueva"
             element={
               <NuevaFormulaPage
-                gremios={gremios}
+                gremios={gremiosAPI}
                 onCreateFormula={crearFormula}
                 usuario={usuarioActivo}
               />
@@ -977,16 +1060,19 @@ function App() {
             element={
               <FormulaDetallePage
                 auditoria={auditoria}
-                formulas={formulas}
-                gremios={gremios}
+                formulas={formulasAPI}
+                gremios={gremiosAPI}
                 grimorio={grimorio}
-                onDistill={destilarFormula}
-                onTransition={cambiarEstado}
+                onDistill={destilarFormulaMongoDB}
                 onVeto={vetarOpcion}
-                onVote={votar}
+                onVote={votarFormula}
+                onOpenVoting={abrirVotacion}
+                onCloseVoting={cerrarVotacion}
                 usuario={usuarioActivo}
                 usuarios={usuarios}
                 votos={votos}
+                cargando={cargandoFormulas}
+                error={errorFormulas}
               />
             }
           />
