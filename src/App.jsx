@@ -6,7 +6,13 @@ import Aviso from "./components/common/Aviso";
 import EstadoVacio from "./components/common/EstadoVacio";
 import LayoutPrincipal from "./components/layout/LayoutPrincipal";
 import UsuarioContext from "./context/UsuarioContext";
-import { iniciarSesionAPI, obtenerMiPerfilAPI } from "./services/authService";
+import {
+  iniciarSesionAPI,
+  obtenerMiPerfilAPI,
+  registrarUsuarioAPI,
+} from "./services/authService";
+import { obtenerUsuariosAPI } from "./services/usuarioService";
+
 import {
   AUDITORIA_INICIAL,
   CUENTAS_DEMO,
@@ -36,11 +42,9 @@ import { obtenerPesoVoto } from "./utils/voting";
 // Contiene la logica del negocio y las operaciones principales (crear gremios, formulas, votar,etc)
 
 function App() {
-  // Obtenemos todos los estados guardados en local storage
-  const [usuarios, setUsuarios] = useLocalStorage(
-    "potionlab-v2-usuarios",
-    USUARIOS_DEMO,
-  );
+  // Obtenemos todos los estados guardados en MongoDB
+  const [usuarios, setUsuarios] = useState([]);
+
   const [cuentas, setCuentas] = useLocalStorage(
     "potionlab-v2-cuentas",
     CUENTAS_DEMO,
@@ -84,6 +88,23 @@ function App() {
 
   // estado que evita mostrar el login mientras verificamos un token guardado.
   const [verificandoSesion, setVerificandoSesion] = useState(true);
+
+  useEffect(() => {
+    if (!usuarioActivo) return;
+
+    async function cargarUsuarios() {
+      try {
+        // Consultamos la lista real usando el JWT.
+        const lista = await obtenerUsuariosAPI();
+        setUsuarios(lista);
+      } catch (error) {
+        console.error("Error al cargar usuarios:", error);
+        mostrarAviso("No fue posible cargar los usuarios.");
+      }
+    }
+
+    cargarUsuarios();
+  }, [usuarioActivo?.id]);
 
   useEffect(() => {
     async function recuperarSesion() {
@@ -345,45 +366,21 @@ function App() {
   }
 
   // Es la funcion que Acceso recibe como onRegister
-  function registrarUsuario(datos) {
-    // siempre limpiamos el correo al guardarlo
-    const email = datos.email.trim().toLowerCase();
+  async function registrarUsuario(datos) {
+    try {
+      // Registramos el usuario directamente en MongoDB.
+      await registrarUsuarioAPI(datos);
 
-    // Evita dupes o crear otra cuenta con el mismo correo.
-    if (cuentas.some((cuenta) => cuenta.email.trim().toLowerCase() === email)) {
-      return { ok: false, mensaje: "Ese correo ya está registrado." };
+      // Iniciamos sesión con las credenciales recién registradas.
+      return await iniciarSesion(datos.email, datos.password);
+    } catch (error) {
+      return {
+        ok: false,
+        mensaje:
+          error.response?.data?.mensaje ||
+          "No es posible registrar el usuario. Intentalo de nuevo.",
+      };
     }
-
-    const id = `u-${Date.now()}`; // lo buscamos: forma practica de generar un ID casi unico
-
-    // Agrega stats iniciales y toma los datos de los inputs del form
-    const nuevoUsuario = {
-      id,
-      nombreCompleto: datos.nombreCompleto.trim(),
-      email,
-      especialidad: datos.especialidad,
-      avatarUrl: datos.avatarUrl.trim(),
-      puntos: 0,
-      rarezaTotal: 0,
-      precisionCatador: 0,
-      participacion: 100,
-    };
-
-    // Se agregan a usuarios y les crea su cuenta
-    setUsuarios((anteriores) => [...anteriores, nuevoUsuario]);
-    setCuentas((anteriores) => [
-      ...anteriores,
-      {
-        email: nuevoUsuario.email,
-        password: datos.password,
-        usuarioId: id,
-        etiqueta: "Perfil nuevo",
-      },
-    ]);
-
-    // Un plus: inicio de sesion automatico tras registro
-    setUsuarioActivo(nuevoUsuario);
-    return { ok: true };
   }
 
   function cerrarSesion() {

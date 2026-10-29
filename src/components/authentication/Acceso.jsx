@@ -10,6 +10,7 @@ import {
 } from "react-icons/fi";
 import { GiPotionBall, GiSparkles } from "react-icons/gi";
 import { ESPECIALIDADES } from "../../data/seedData";
+import { CUENTAS_ACCESO } from "../../data/cuentasAcceso";
 import FondoAlquimico from "../common/FondoAlquimico";
 
 // Puerta de entrada de la App
@@ -19,7 +20,7 @@ const claseCampoAcceso = "acceso-campo-formulario";
 
 // La logica importante es delegada a otros metodos, aqui solo
 // nos encargamos de manejar la interfaz, el form, sus estados, validaciones, y eventos.
-function Acceso({ cuentasDemo, onLogin, onRegister }) {
+function Acceso({ onLogin, onRegister }) {
   const [modo, setModo] = useState("login");
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [error, setError] = useState("");
@@ -27,11 +28,11 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
   // estado que evita enviar varias peticiones mientras esperamos al Backend.
   const [cargando, setCargando] = useState(false);
 
-  // se guarda un objeto para que el login aparezca precargado con una cuenta de prueba
+  // Precargamos la primera cuenta de demostracion.
   const [formulario, setFormulario] = useState({
     nombreCompleto: "",
-    email: cuentasDemo[0].email,
-    password: cuentasDemo[0].password,
+    email: CUENTAS_ACCESO[0].email,
+    password: CUENTAS_ACCESO[0].password,
     especialidad: ESPECIALIDADES[0],
     avatarUrl: "",
   });
@@ -39,8 +40,17 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
   // se ejecuta cada que se actualicen los datos del form
   function manejarCambio(evento) {
     const { name, value } = evento.target;
-
     setFormulario((anterior) => ({ ...anterior, [name]: value }));
+    setError("");
+  }
+
+  // Para la cuentas de prueba: Autocompletamos el formulario sin omitir la auth real.
+  function usarCuenta(cuenta) {
+    setFormulario((anterior) => ({
+      ...anterior,
+      email: cuenta.email,
+      password: cuenta.password,
+    }));
     setError("");
   }
 
@@ -114,12 +124,14 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
           <p className="acceso-descripcion-nueva-temporada-carnaval-del">
             <GiSparkles /> Nueva Actualizacion Proximamente
           </p>
+
           <h1 className="acceso-titulo-principal-de-ideas-a-pociones">
             De ideas a
             <span className="acceso-texto-pociones-definitivas">
               pociones definitivas
             </span>
           </h1>
+
           <p className="acceso-descripcion-organiza-tu-gremio-propone">
             Organiza tu gremio, propone fórmulas y decide cada ingrediente con
             un sistema de votación claro.
@@ -147,7 +159,7 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
         </div>
 
         <p className="acceso-descripcion-proyecto-academico-ingenieria">
-          Entrega #1: Frontend · Ingeniería Web
+          Entrega #3: Full Stack · Ingeniería Web
         </p>
       </section>
 
@@ -185,10 +197,11 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
                   {etiqueta}
                 </button>
               ))}
-              {/* Este particularmente cambia el boton y actualiza el estado. 
-               Boton activo: Login
-               Boton inactivo: Register
-               */}
+
+              {/* Este particularmente cambia el boton y actualiza el estado.
+                  Boton activo: Login
+                  Boton inactivo: Register
+              */}
             </div>
 
             {/* Usamos textos condicionales para asi reutilizar el contenedor para el login y el crear perfil */}
@@ -196,15 +209,17 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
               <p className="acceso-descripcion-sea-bienvenido-mago">
                 {modo === "login" ? "Sea bienvenido mago" : "Aprendiz de mago"}
               </p>
+
               <h2 className="acceso-titulo-seccion-abre-tu-portal-magico">
                 {modo === "login"
                   ? "Abre tu portal mágico"
                   : "Crea tu identidad"}
               </h2>
+
               <p className="acceso-descripcion-usa-nuestras-cuentas-de">
                 {modo === "login"
-                  ? "Usa nuestras cuentas de prueba para explorar la app."
-                  : "Tu perfil se guardará únicamente en este navegador."}
+                  ? "Elige una cuenta de prueba o introduce tus credenciales."
+                  : "Tu perfil se guardará en nuestra base de datos."}
               </p>
             </div>
 
@@ -250,7 +265,6 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
               </label>
 
               {/* Para poder mostrar/ocultar la contraseña el atributo type cambia de estado. El setter se actualiza mediante el boton (no cambia lo escrito, solo la forma en la que el navegador representa la info)*/}
-
               <label className="acceso-etiqueta-campo-contrasena-lock">
                 <span className="acceso-texto-contrasena">Contraseña</span>
                 <span className="acceso-texto-lock">
@@ -301,6 +315,7 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
                       ))}
                     </select>
                   </label>
+
                   <label className="acceso-etiqueta-campo-avatar-url-opcional">
                     <span className="acceso-texto-avatar-url-opcional">
                       Avatar URL (opcional)
@@ -339,8 +354,9 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
                 <p className="acceso-descripcion-cuentas-de-prueba-acceso">
                   Cuentas de Prueba: Acceso Rápido
                 </p>
+
                 <div className="acceso-cuadricula-cuentas-demo">
-                  {cuentasDemo.map((cuenta) => (
+                  {CUENTAS_ACCESO.map((cuenta) => (
                     <button
                       className="acceso-boton-etiqueta-email"
                       key={cuenta.email}
