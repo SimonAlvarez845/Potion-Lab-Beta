@@ -39,10 +39,6 @@ import {
 } from "./services/formulaService";
 import { obtenerGrimorioAPI } from "./services/grimorioService";
 
-import { CUENTAS_DEMO } from "./data/seedData";
-
-import useLocalStorage from "./hooks/useLocalStorage";
-
 import FormulaDetallePage from "./pages/FormulaDetallePage";
 import FormulasPage from "./pages/FormulasPage";
 import GremioDetallePage from "./pages/GremioDetallePage";
@@ -64,44 +60,6 @@ function App() {
 
   // Obtenemos el Socket de nuestro Context (se usa en algunos useEffect como el de formulas)
   const { socket } = useContext(SocketContext);
-
-  const [cuentas, setCuentas] = useLocalStorage(
-    "potionlab-v2-cuentas",
-    CUENTAS_DEMO,
-  );
-
-  // Toma las cuentas demo guardadas para mostrar sus correos actuales en Acceso.
-  const cuentasDemoActuales = CUENTAS_DEMO.map(
-    (cuentaDemo) =>
-      cuentas.find((cuenta) => cuenta.usuarioId === cuentaDemo.usuarioId) ??
-      cuentaDemo,
-  );
-
-  // Mantiene actualizadas las "cuentas demo" aunque el navegador tenga una version vieja guardada.
-  // Las cuentas creadas por el usuario se conservan y evitan posibles bugs a usuarios que ya usaron una version anterior.
-
-  useEffect(() => {
-    setCuentas((anteriores) => {
-      const cuentasCreadas = anteriores.filter(
-        (cuenta) =>
-          !CUENTAS_DEMO.some(
-            (cuentaDemo) => cuentaDemo.usuarioId === cuenta.usuarioId,
-          ),
-      );
-
-      // Mantenemos "sincronizados" el usuario activo, la lista de usuarios y las cuentas demo para que todos tengan siempre el mismo correo.
-      const cuentasDemoActualizadas = CUENTAS_DEMO.map((cuentaDemo) => ({
-        ...cuentaDemo,
-        email:
-          usuarios.find((usuario) => usuario.id === cuentaDemo.usuarioId)
-            ?.email ?? cuentaDemo.email,
-      }));
-
-      // combinamos los dos arrays y ponemos el de cuentasCreadas al final para que lo nuevo tenga prioridad
-      return [...cuentasDemoActualizadas, ...cuentasCreadas];
-    });
-  }, [setCuentas, usuarios]);
-  // debe repetirse cada que cambie usuarios o se modifique el setter de la cuenta
 
   // el estado de la sesion del usuario depende del JWT
   const [usuarioActivo, setUsuarioActivo] = useState(null);
@@ -680,13 +638,7 @@ function App() {
   }
 
   if (!usuarioActivo) {
-    return (
-      <Acceso
-        cuentasDemo={cuentasDemoActuales}
-        onLogin={iniciarSesion}
-        onRegister={registrarUsuario}
-      />
-    );
+    return <Acceso onLogin={iniciarSesion} onRegister={registrarUsuario} />;
   }
 
   // Uso del Context:
