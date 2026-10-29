@@ -6,6 +6,7 @@ import Aviso from "./components/common/Aviso";
 import EstadoVacio from "./components/common/EstadoVacio";
 import LayoutPrincipal from "./components/layout/LayoutPrincipal";
 import UsuarioContext from "./context/UsuarioContext";
+import { iniciarSesionAPI, obtenerMiPerfilAPI } from "./services/authService";
 import {
   AUDITORIA_INICIAL,
   CUENTAS_DEMO,
@@ -78,10 +79,39 @@ function App() {
   }, [setCuentas, usuarios]);
   // debe repetirse cada que cambie usuarios o se modifique el setter de la cuenta
 
-  const [usuarioActivo, setUsuarioActivo] = useLocalStorage(
-    "potionlab-v2-sesion",
-    null,
-  );
+  // el estado de la sesion del usuario depende del JWT
+  const [usuarioActivo, setUsuarioActivo] = useState(null);
+
+  // estado que evita mostrar el login mientras verificamos un token guardado.
+  const [verificandoSesion, setVerificandoSesion] = useState(true);
+
+  useEffect(() => {
+    async function recuperarSesion() {
+      const token = localStorage.getItem("potionlab-token");
+
+      if (!token) {
+        setVerificandoSesion(false);
+        return;
+      }
+
+      try {
+        // El backend comprueba si el JWT sigue siendo válido.
+        const usuario = await obtenerMiPerfilAPI();
+        setUsuarioActivo(usuario);
+      } catch (error) {
+        // Solo eliminamos el token si fue rechazado.
+        if ([401, 403].includes(error.response?.status)) {
+          localStorage.removeItem("potionlab-token");
+        }
+        console.error("No se pudo recuperar la sesión:", error);
+      } finally {
+        setVerificandoSesion(false);
+      }
+    }
+
+    recuperarSesion();
+  }, []);
+
   const [gremios, setGremios] = useLocalStorage(
     "potionlab-v2-gremios",
     GREMIOS_INICIALES,
@@ -284,27 +314,34 @@ function App() {
   // ------------------------------------------------------------------------------------------------
 
   // es la funcion que Acceso.jsx recibe como onLogin
-  function iniciarSesion(email, password) {
-    const cuenta = cuentas.find(
-      (item) =>
-        item.email.toLowerCase() === email.trim().toLowerCase() &&
-        item.password === password,
-    );
 
-    // Son los mensajes de validaciones de auth, si no encuentraada nada el setter se encarga de que estos mensajes aparezcan en pantalla
-    if (!cuenta) {
-      return { ok: false, mensaje: "El correo o la contraseña no coinciden." };
+  async function iniciarSesion(email, password) {
+    try {
+      // Express valida la contraseña y genera el JWT.
+      const { usuario, token } = await iniciarSesionAPI(email, password);
+
+      if (!usuario || !token) {
+        return {
+          ok: false,
+          mensaje: "No se ha devuelto una sesión válida en este servidor.",
+        };
+      }
+
+      // Guardamos el JWT para las siguientes peticiones.
+      localStorage.setItem("potionlab-token", token);
+
+      // Activamos el perfil correspondiente de MongoDB.
+      setUsuarioActivo(usuario);
+
+      return { ok: true };
+    } catch (error) {
+      return {
+        ok: false,
+        mensaje:
+          error.response?.data?.mensaje ||
+          "No fue posible iniciar sesión. Revisa tus credenciales o el servidor.",
+      };
     }
-
-    const usuario = usuarios.find((item) => item.id === cuenta.usuarioId);
-
-    // "Si falta el perfil (nos protege aun mas asegurando que exista ese id)
-    if (!usuario) {
-      return { ok: false, mensaje: "No encontramos el perfil asociado." };
-    }
-
-    setUsuarioActivo(usuario);
-    return { ok: true };
   }
 
   // Es la funcion que Acceso recibe como onRegister
@@ -349,8 +386,9 @@ function App() {
     return { ok: true };
   }
 
-  // Para decidir que interfaz mostrar cuando el usuario se salga
   function cerrarSesion() {
+    // Cerramos la sesión local y eliminamos el JWT, luego elegimos que interfaz mostrar cuando el usuario se salga.
+    localStorage.removeItem("potionlab-token");
     setUsuarioActivo(null);
   }
 
@@ -846,7 +884,11 @@ function App() {
     mostrarAviso("Perfil actualizado correctamente crack.");
   }
 
-  // Si el usuario es null entonces no esta activo y app solo devuelve <Acceso/>, de lo contrario si debe aparecer toda la App
+  // Si el usuario es null entonces no esta activo y app solo devuelve el <p> como estado de carga, de lo contrario si debe aparecer toda la App
+  if (verificandoSesion) {
+    return <p>Verificando sesión...</p>;
+  }
+
   if (!usuarioActivo) {
     return (
       <Acceso

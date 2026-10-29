@@ -24,6 +24,9 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [error, setError] = useState("");
 
+  // estado que evita enviar varias peticiones mientras esperamos al Backend.
+  const [cargando, setCargando] = useState(false);
+
   // se guarda un objeto para que el login aparezca precargado con una cuenta de prueba
   const [formulario, setFormulario] = useState({
     nombreCompleto: "",
@@ -41,45 +44,49 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
     setError("");
   }
 
-  // se ejecuta solo cuando se mande el form
-  function manejarEnvio(evento) {
-    // validaciones sencillas
+  async function manejarEnvio(evento) {
+    // Validaciones sencillas
     evento.preventDefault();
 
-    if (modo === "login") {
-      const resultado = onLogin(formulario.email, formulario.password);
-      if (!resultado.ok) setError(resultado.mensaje);
-      return;
-    }
-
-    // si no estamos en login, estamos en el registro
-
-    if (formulario.nombreCompleto.trim().length < 3) {
-      setError("Escribe tu nombre completo para crear el perfil.");
-      return;
-    }
-
-    if (formulario.password.length < 6) {
-      setError("La contraseña debe tener mínimo 6 caracteres.");
-      return;
-    }
-
-    // si pasa las validaciones envia todo el objeto
-    const resultado = onRegister(formulario);
-    if (!resultado.ok) setError(resultado.mensaje);
-  }
-
-  // se ejecuta cuando haces click en una cuenta demo
-  function usarCuenta(cuenta) {
-    setModo("login");
-
-    // este setter "autorellena" o actualiza email y password por los de la cuenta demo
-    setFormulario((anterior) => ({
-      ...anterior,
-      email: cuenta.email,
-      password: cuenta.password,
-    }));
+    // Limpiamos el error anterior y activamos la carga.
     setError("");
+    setCargando(true);
+
+    try {
+      if (modo === "login") {
+        // Esperamos respuesta del backend.
+        const resultado = await onLogin(formulario.email, formulario.password);
+
+        if (!resultado.ok) {
+          setError(resultado.mensaje);
+        }
+
+        return;
+      }
+
+      // si no estamos en login, estamos en el registro
+      if (formulario.nombreCompleto.trim().length < 3) {
+        setError("Escribe tu nombre completo para crear el perfil.");
+        return;
+      }
+
+      if (formulario.password.length < 6) {
+        setError("La contraseña debe tener mínimo 6 caracteres.");
+        return;
+      }
+
+      // si pasa las validaciones envia todo el objeto
+      const resultado = await onRegister(formulario);
+
+      if (!resultado.ok) {
+        setError(resultado.mensaje);
+      }
+    } catch {
+      setError("No pudimos conectar con el servidor.");
+    } finally {
+      // Se habilita nuevamente el formulario en caso de que falle.
+      setCargando(false);
+    }
   }
 
   // El layout del login se penso como un inicio de sesion normal dividido en dos secciones: izquierda (presentacion) y derecha (form)
@@ -314,9 +321,14 @@ function Acceso({ cuentasDemo, onLogin, onRegister }) {
 
               <button
                 className="acceso-boton-entra-a-tu-laboratorio"
+                disabled={cargando}
                 type="submit"
               >
-                {modo === "login" ? "Entra a tu laboratorio" : "Crear perfil"}
+                {cargando
+                  ? "Procesando..."
+                  : modo === "login"
+                    ? "Entra a tu laboratorio"
+                    : "Crear perfil"}
                 <FiArrowRight />
               </button>
             </form>
