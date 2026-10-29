@@ -114,9 +114,9 @@ Autenticarse → consultar gremios → crear gremio si corresponde → crear pro
 
 ## Documentación relacionada
 
-- [Arquitectura general](../../docs/ARQUITECTURA.md)
-- [Guía técnica del frontend](../../docs/FRONTEND.md)
-- [Plan de pruebas](../../docs/PRUEBAS.md)
-- [Auditoría del contrato](../../docs/AUDITORIA-SWAGGER.md)
+- [Arquitectura general](ARQUITECTURA.md)
+- [Guía técnica del frontend](FRONTEND.md)
+- [Plan de pruebas](PRUEBAS.md)
+- [Auditoría del contrato](AUDITORIA-SWAGGER.md)
 
 La cobertura de rutas es de **24/24** frente a las declaraciones de Express revisadas, pero la validación detallada de respuestas y permisos permanece documentada como trabajo pendiente en la auditoría.

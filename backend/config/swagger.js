@@ -1,6 +1,6 @@
 // Swagger UI sirve la documentación OpenAPI sin modificar los endpoints.
 const swaggerUi = require("swagger-ui-express");
-const especificacion = require("./openapi.json");
+const especificacion = require("../../docs/openapi.json");
 
 module.exports = (app) => {
   app.use(

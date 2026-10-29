@@ -62,7 +62,7 @@ app.use(cors());
 app.use(express.json());
 
 // Publicamos Swagger UI y el contrato OpenAPI antes de las rutas de negocio.
-require("./docs/swagger")(app);
+require("./config/swagger")(app);
 
 // Ruta de prueba para comprobar que la API esté funcionando.
 app.get("/api/salud", (req, res) => {

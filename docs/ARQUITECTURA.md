@@ -118,4 +118,4 @@ La compilación de Vite se ejecuta desde la **raíz del repositorio**, con salid
 - JWT validado por middleware para las rutas protegidas.
 - OpenAPI como documentación interactiva del servidor y Markdown como documentación de frontend y arquitectura.
 
-Consultar [FRONTEND.md](FRONTEND.md), [PRUEBAS.md](PRUEBAS.md) y [documentación de la API](../backend/docs/README.md).
+Consultar [FRONTEND.md](FRONTEND.md), [PRUEBAS.md](PRUEBAS.md) y [documentación de la API](API.md).
