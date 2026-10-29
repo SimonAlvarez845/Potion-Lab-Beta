@@ -75,7 +75,7 @@ function FormulasPage({
                 gremio={gremios.find((item) => item.id === formula.gremioId)}
                 key={formula.id}
                 votosCompletados={
-                  Object.keys(votos[formula.id]?.[usuario?.id] ?? {}).length
+                  Object.keys(formula.votos?.[usuario?.id] ?? {}).length
                 }
               />
             ))}

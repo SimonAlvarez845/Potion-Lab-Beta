@@ -8,7 +8,6 @@ function GremioDetallePage({
   usuarios,
   gremios,
   formulas,
-  votos,
   onChangeRole,
   onAppointTaster,
   onRemoveMember,
@@ -124,7 +123,7 @@ function GremioDetallePage({
               gremio={gremio}
               key={formula.id}
               votosCompletados={
-                Object.keys(votos[formula.id]?.[usuario.id] ?? {}).length
+                Object.keys(formula.votos?.[usuario.id] ?? {}).length
               }
             />
           ))}

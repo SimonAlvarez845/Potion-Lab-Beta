@@ -11,9 +11,28 @@ function PerfilPage() {
     setFormulario((anterior) => ({ ...anterior, [name]: value }));
   }
 
-  function manejarEnvio(evento) {
+  async function manejarEnvio(evento) {
     evento.preventDefault();
-    guardarPerfil(formulario);
+
+    // Solo enviamos los campos del perfil que realmente cambiaron.
+    const cambios = {};
+
+    for (const campo of [
+      "nombreCompleto",
+      "email",
+      "especialidad",
+      "avatarUrl",
+    ]) {
+      if (formulario[campo] !== usuario[campo]) {
+        cambios[campo] = formulario[campo];
+      }
+    }
+
+    if (Object.keys(cambios).length === 0) {
+      return;
+    }
+
+    await guardarPerfil(cambios);
   }
 
   return (
@@ -25,15 +44,31 @@ function PerfilPage() {
         </p>
       </header>
 
-      <form className="perfil-formulario-informacion-personal-la-autenticacion" onSubmit={manejarEnvio}>
-        <div className="perfil-avatar imagen-con-respaldo" role="img" aria-label={`Vista previa del avatar de ${formulario.nombreCompleto}`}>
+      <form
+        className="perfil-formulario-informacion-personal-la-autenticacion"
+        onSubmit={manejarEnvio}
+      >
+        <div
+          className="perfil-avatar imagen-con-respaldo"
+          role="img"
+          aria-label={`Vista previa del avatar de ${formulario.nombreCompleto}`}
+        >
           <span aria-hidden="true">{formulario.nombreCompleto.charAt(0)}</span>
           {formulario.avatarUrl && (
-            <img key={formulario.avatarUrl} src={formulario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+            <img
+              key={formulario.avatarUrl}
+              src={formulario.avatarUrl}
+              alt=""
+              onError={(evento) => {
+                evento.currentTarget.hidden = true;
+              }}
+            />
           )}
         </div>
         <label className="perfil-etiqueta-campo-user-nombre-completo">
-          <span className="perfil-texto-user-nombre-completo">Nombre completo</span>
+          <span className="perfil-texto-user-nombre-completo">
+            Nombre completo
+          </span>
           <input
             className="perfil-campo-nombre-completo"
             name="nombreCompleto"
@@ -44,7 +79,9 @@ function PerfilPage() {
         </label>
 
         <label className="perfil-etiqueta-campo-mail-correo-universitario">
-          <span className="perfil-texto-mail-correo-universitario">Correo universitario</span>
+          <span className="perfil-texto-mail-correo-universitario">
+            Correo universitario
+          </span>
           <input
             className="perfil-campo-email"
             name="email"
@@ -70,7 +107,9 @@ function PerfilPage() {
         </label>
 
         <label className="perfil-etiqueta-campo-image-url-del-avatar">
-          <span className="perfil-texto-image-url-del-avatar">URL del avatar (opcional)</span>
+          <span className="perfil-texto-image-url-del-avatar">
+            URL del avatar (opcional)
+          </span>
           <input
             className="perfil-campo-avatar-url"
             name="avatarUrl"

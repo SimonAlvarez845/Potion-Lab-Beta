@@ -6,7 +6,7 @@ import useUsuario from "../hooks/useUsuario";
 
 // Es el panel principal de la App y lo primero que se ve al entrar a tu cuenta
 // Se encarga de: recibir y filtrar datos --> calcular indicadores --> mostrar los accesos mediante las tarjetas
-function ResumenPage({ gremios, formulas, votos, usuarios }) {
+function ResumenPage({ gremios, formulas, usuarios }) {
   const { usuarioActivo: usuario } = useUsuario();
 
   // Almacena los gremios donde aparece el usuario conectado.
@@ -46,7 +46,7 @@ function ResumenPage({ gremios, formulas, votos, usuarios }) {
           Votaciones abiertas: <strong>{formulasActivas.length}</strong>
         </p>
         <p>
-          Participación: <strong>{usuario.participacion}%</strong>
+          Participación: <strong>{Math.round(usuario.participacion)}%</strong>
         </p>
       </section>
 
@@ -68,7 +68,7 @@ function ResumenPage({ gremios, formulas, votos, usuarios }) {
               gremio={gremios.find((item) => item.id === formula.gremioId)}
               key={formula.id}
               votosCompletados={
-                Object.keys(votos[formula.id]?.[usuario.id] ?? {}).length
+                Object.keys(formula.votos?.[usuario.id] ?? {}).length
               }
             />
           ))}

@@ -94,15 +94,29 @@ const validarActualizacionPerfil = [
     .bail()
     .trim()
     .if((valor) => valor !== "")
-    .isURL({ protocols: ["http", "https"], require_protocol: true })
+    .isURL({
+      protocols: ["http", "https"],
+      require_protocol: true,
+      require_tld: false,
+    })
     .withMessage("El avatar debe ser una URL HTTP o HTTPS valida"),
 ];
 
 // Todas ruta de usuarios requieren un JWT.
 router.use(autenticar);
 router.use(actualizarPlazos);
-router.get("/", query("gremioId").optional().isMongoId(), validarCampos, listar);
-router.get("/ranking", query("gremioId").optional().isMongoId(), validarCampos, ranking);
+router.get(
+  "/",
+  query("gremioId").optional().isMongoId(),
+  validarCampos,
+  listar,
+);
+router.get(
+  "/ranking",
+  query("gremioId").optional().isMongoId(),
+  validarCampos,
+  ranking,
+);
 
 // GET /me — obtiene el perfil del usuario autenticado
 router.get("/me", obtenerPerfil);
