@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { Link, Route, Routes } from "react-router-dom";
+
 import Acceso from "./components/authentication/Acceso";
 import Aviso from "./components/common/Aviso";
 import EstadoVacio from "./components/common/EstadoVacio";
 import LayoutPrincipal from "./components/layout/LayoutPrincipal";
+
 import UsuarioContext from "./context/UsuarioContext";
+
 import {
   iniciarSesionAPI,
   obtenerMiPerfilAPI,
   registrarUsuarioAPI,
 } from "./services/authService";
 import { obtenerUsuariosAPI } from "./services/usuarioService";
+import {
+  obtenerGremiosAPI,
+  crearGremioAPI,
+  unirseAGremioAPI,
+  cambiarRolGremioAPI,
+  nombrarCatadorAPI,
+  retirarMiembroAPI,
+} from "./services/gremioService";
 
 import {
   AUDITORIA_INICIAL,
@@ -133,10 +144,52 @@ function App() {
     recuperarSesion();
   }, []);
 
+  // Estado temporal de gremios simulados.
   const [gremios, setGremios] = useLocalStorage(
     "potionlab-v2-gremios",
     GREMIOS_INICIALES,
   );
+
+  // Almacenamos por separado los gremios reales mientras migramos la interfaz.
+  const [gremiosAPI, setGremiosAPI] = useState([]);
+
+  // Consultamos MongoDB cuando existe una sesion autenticada.
+  useEffect(() => {
+    if (!usuarioActivo) {
+      setGremiosAPI([]);
+      return;
+    }
+
+    async function cargarGremios() {
+      try {
+        const lista = await obtenerGremiosAPI();
+        setGremiosAPI(lista);
+      } catch (error) {
+        console.error("Error al cargar gremios:", error);
+        mostrarAviso("No fue posible cargar los gremios.");
+      }
+    }
+
+    cargarGremios();
+  }, [usuarioActivo?.id]);
+
+  // Actualiza un gremio en el estado usando la respuesta de MongoDB.
+  function actualizarGremioAPI(gremioActualizado) {
+    setGremiosAPI((anteriores) => {
+      const existe = anteriores.some(
+        (gremio) => gremio.id === gremioActualizado.id,
+      );
+
+      if (!existe) {
+        return [gremioActualizado, ...anteriores];
+      }
+
+      return anteriores.map((gremio) =>
+        gremio.id === gremioActualizado.id ? gremioActualizado : gremio,
+      );
+    });
+  }
+
   const [formulas, setFormulas] = useLocalStorage(
     "potionlab-v2-formulas",
     FORMULAS_INICIALES,
@@ -390,154 +443,108 @@ function App() {
   }
 
   // Es la funcion que GremiosPage.jsx recibe como OnCreateGuild
-  function crearGremio(datos) {
-    // si existe un nombre disponible para el gremio, lo crea
-    if (
-      gremios.some(
-        (gremio) =>
-          gremio.nombre.toLowerCase() === datos.nombre.trim().toLowerCase(),
-      )
-    ) {
-      return { ok: false, mensaje: "Ya existe un gremio con ese nombre." };
+  async function crearGremio(datos) {
+    try {
+      const nuevoGremio = await crearGremioAPI(datos);
+
+      actualizarGremioAPI(nuevoGremio);
+
+      mostrarAviso(
+        nuevoGremio.tipo === "privado"
+          ? `Gremio creado. Código de invitación: ${nuevoGremio.codigoInvitacion}`
+          : "El nuevo gremio fue creado correctamente.",
+      );
+
+      return { ok: true, gremioId: nuevoGremio.id };
+    } catch (error) {
+      return {
+        ok: false,
+        mensaje:
+          error.response?.data?.mensaje || "No fue posible crear el gremio.",
+      };
     }
-
-    const acentos = ["#9b87f5", "#55d9e8", "#f4c96b", "#6ee7b7"];
-    const id = `g-${Date.now()}`;
-    // buscamos como se hacia en los juegos: lo genera aleatoriariamente y debe ser de 6 caracteres.
-    const codigo = Math.random().toString(36).slice(2, 8).toUpperCase();
-    const nuevoGremio = {
-      id,
-      nombre: datos.nombre.trim(),
-      lema: datos.lema.trim(),
-      descripcion: datos.descripcion.trim(),
-      tipo: datos.tipo,
-      emblemaUrl: datos.emblemaUrl.trim(),
-      codigoInvitacion: codigo,
-      acento: acentos[gremios.length % acentos.length],
-      // para que vaya rotando entre los distintos colores
-      miembros: [
-        {
-          usuarioId: usuarioActivo.id,
-          rol: "Gran Maestre",
-          fechaIngreso: new Date().toISOString(), // convierte el date a texto
-        },
-      ],
-    };
-
-    // Le agregamos el estado al final y lo guardamos en LocalStorage
-    setGremios((anteriores) => [...anteriores, nuevoGremio]);
-
-    mostrarAviso(
-      datos.tipo === "privado"
-        ? `Gremio creado. Código de invitación: ${codigo}`
-        : "El nuevo gremio fue creado correctamente.",
-    );
-    return { ok: true, gremioId: id };
   }
 
   // necesita saber a que gremio quiero entrar y su codigo (si es publico lo tomamos como vacio)
-  function unirseAGremio(gremioId, codigo) {
-    const gremio = gremios.find((item) => item.id === gremioId);
+  async function unirseAGremio(gremioId, codigo) {
+    try {
+      const gremioActualizado = await unirseAGremioAPI(gremioId, codigo);
 
-    // Validaciones
-    if (!gremio) return { ok: false, mensaje: "El gremio no existe." };
+      actualizarGremioAPI(gremioActualizado);
+      mostrarAviso(`Ahora perteneces a ${gremioActualizado.nombre}.`);
 
-    if (
-      gremio.miembros.some((miembro) => miembro.usuarioId === usuarioActivo.id)
-    ) {
-      return { ok: false, mensaje: "Ya perteneces a este gremio." };
+      return { ok: true };
+    } catch (error) {
+      return {
+        ok: false,
+        mensaje:
+          error.response?.data?.mensaje || "No fue posible unirse al gremio.",
+      };
     }
-
-    // Solo validamos el codigo si el gremio es privado para verificar si el codigo es correcto
-    if (
-      gremio.tipo === "privado" &&
-      gremio.codigoInvitacion !== codigo.trim().toUpperCase()
-    ) {
-      return { ok: false, mensaje: "El código de invitación no es válido." };
-    }
-
-    // Ahora si en caso de que pueda entrar debemos modificar la lista de miembros y esa persona entra por defecto como aprendiz
-    setGremios((anteriores) =>
-      anteriores.map((item) =>
-        item.id === gremioId
-          ? {
-              ...item,
-              miembros: [
-                ...item.miembros,
-                {
-                  usuarioId: usuarioActivo.id,
-                  rol: "Aprendiz",
-                  fechaIngreso: new Date().toISOString(),
-                },
-              ],
-            }
-          : item,
-      ),
-    );
-    mostrarAviso(`Ahora perteneces a ${gremio.nombre}.`);
-    return { ok: true };
   }
 
   // Asciende un usuario dentro de un gremio a "moderador"
-  function cambiarRol(gremioId, usuarioId, nuevoRol) {
-    const gremio = gremios.find((item) => item.id === gremioId);
-
-    // Contamos el # de Alquimistas Séniors sin incluir al usuario seleccionado
-    const cantidadSenior = gremio.miembros.filter(
-      (miembro) =>
-        miembro.rol === "Alquimista sénior" && miembro.usuarioId !== usuarioId,
-    ).length;
-
-    // Validacion del enunciado
-    // 1) Senior Alchemist --> max 3.
-    if (nuevoRol === "Alquimista sénior" && cantidadSenior >= 3) {
-      mostrarAviso(
-        "El gremio ya alcanzó el máximo de tres Alquimistas sénior.",
+  async function cambiarRol(gremioId, usuarioId, nuevoRol) {
+    try {
+      const gremioActualizado = await cambiarRolGremioAPI(
+        gremioId,
+        usuarioId,
+        nuevoRol,
       );
 
-      return;
-    }
+      actualizarGremioAPI(gremioActualizado);
+      mostrarAviso(`Rol actualizado a ${nuevoRol}.`);
 
-    setGremios((anteriores) =>
-      anteriores.map((item) =>
-        item.id === gremioId
-          ? {
-              ...item,
-              miembros: item.miembros.map((miembro) =>
-                miembro.usuarioId === usuarioId
-                  ? { ...miembro, rol: nuevoRol }
-                  : miembro,
-              ),
-            }
-          : item,
-      ),
-    );
-    mostrarAviso(`Rol actualizado a ${nuevoRol}.`);
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible actualizar el rol.",
+      );
+
+      return { ok: false };
+    }
   }
 
   // Asciende un unico usuario por gremio a "special" (realmente a veces manipula dos usuarios)
-  function nombrarCatador(gremioId, usuarioId) {
-    setGremios((anteriores) =>
-      anteriores.map((gremio) =>
-        gremio.id === gremioId
-          ? // crea una copia modificada en donde recorre los miembros y separa en tres casos:
-            // si el usuario es elegido se le da el rol, si ya habia otro catador (los cambia modificando ambos), si esta persona fue elegida ni es el catador no hagas nada
-            {
-              ...gremio,
-              miembros: gremio.miembros.map((miembro) => {
-                if (miembro.usuarioId === usuarioId) {
-                  return { ...miembro, rol: "Catador oficial" };
-                }
-                if (miembro.rol === "Catador oficial") {
-                  return { ...miembro, rol: "Aprendiz" };
-                }
-                return miembro;
-              }),
-            }
-          : gremio,
-      ),
-    );
-    mostrarAviso("Un nuevo Catador Oficial fue nombrado.");
+  async function nombrarCatador(gremioId, usuarioId) {
+    try {
+      const gremioActualizado = await nombrarCatadorAPI(gremioId, usuarioId);
+
+      actualizarGremioAPI(gremioActualizado);
+      mostrarAviso("Un nuevo Catador Oficial fue nombrado.");
+
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje ||
+          "No fue posible nombrar al Catador oficial.",
+      );
+
+      return { ok: false };
+    }
+  }
+
+  // Permite abandonar un gremio o expulsar miembros desde MongoDB.
+  async function retirarMiembro(gremioId, usuarioId) {
+    try {
+      const gremioActualizado = await retirarMiembroAPI(gremioId, usuarioId);
+
+      actualizarGremioAPI(gremioActualizado);
+
+      mostrarAviso(
+        usuarioId === usuarioActivo.id
+          ? "Abandonaste el gremio correctamente."
+          : "El miembro fue retirado del gremio.",
+      );
+
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible retirar al miembro.",
+      );
+
+      return { ok: false };
+    }
   }
 
   // los datos vienen del form de creacion de formula
@@ -921,7 +928,7 @@ function App() {
             path="gremios"
             element={
               <GremiosPage
-                gremios={gremios}
+                gremios={gremiosAPI}
                 onCreateGuild={crearGremio}
                 onJoinGuild={unirseAGremio}
                 usuario={usuarioActivo}
@@ -933,9 +940,10 @@ function App() {
             element={
               <GremioDetallePage
                 formulas={formulas}
-                gremios={gremios}
+                gremios={gremiosAPI}
                 onAppointTaster={nombrarCatador}
                 onChangeRole={cambiarRol}
+                onRemoveMember={retirarMiembro}
                 usuario={usuarioActivo}
                 usuarios={usuarios}
                 votos={votos}

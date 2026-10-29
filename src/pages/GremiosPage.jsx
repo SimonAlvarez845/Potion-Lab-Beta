@@ -23,6 +23,9 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
   const [union, setUnion] = useState(unionInicial);
   const [errorCrear, setErrorCrear] = useState("");
 
+  // Bloquea los forms mientras se procesa una petición.
+  const [cargando, setCargando] = useState(false);
+
   const gremiosFiltrados = gremios.filter((gremio) =>
     `${gremio.nombre} ${gremio.lema}`
       .toLowerCase()
@@ -35,40 +38,89 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
     setErrorCrear("");
   }
 
-  function manejarCrear(evento) {
+  async function manejarCrear(evento) {
     evento.preventDefault();
-    const resultado = onCreateGuild({
-      ...formulario,
-      descripcion: `Gremio creado por ${usuario.nombreCompleto}.`,
-    });
+    if (cargando) return;
 
-    if (!resultado.ok) {
-      setErrorCrear(resultado.mensaje);
-      return;
+    setErrorCrear("");
+    setCargando(true);
+
+    try {
+      const resultado = await onCreateGuild({
+        ...formulario,
+        descripcion: `Gremio creado por ${usuario.nombreCompleto}.`,
+      });
+
+      if (!resultado.ok) {
+        setErrorCrear(resultado.mensaje);
+        return;
+      }
+
+      setFormulario(formularioInicial);
+    } catch (error) {
+      setErrorCrear("No fue posible crear el gremio.");
+    } finally {
+      setCargando(false);
     }
-
-    setFormulario(formularioInicial);
   }
 
-  function manejarUnion(gremio) {
-    if (gremio.tipo === "publico") {
-      onJoinGuild(gremio.id, "");
+  async function manejarUnion(gremio) {
+    if (cargando) return;
+
+    if (gremio.tipo === "privado") {
+      setUnion({ gremio, codigo: "", error: "" });
       return;
     }
 
-    setUnion({ gremio, codigo: "", error: "" });
+    setCargando(true);
+
+    try {
+      const resultado = await onJoinGuild(gremio.id, "");
+
+      if (!resultado.ok) {
+        setUnion({
+          gremio,
+          codigo: "",
+          error: resultado.mensaje,
+        });
+      }
+    } catch (error) {
+      setUnion({
+        gremio,
+        codigo: "",
+        error: "No fue posible unirse al gremio.",
+      });
+    } finally {
+      setCargando(false);
+    }
   }
 
-  function validarCodigo(evento) {
+  async function validarCodigo(evento) {
     evento.preventDefault();
-    const resultado = onJoinGuild(union.gremio.id, union.codigo);
+    if (cargando) return;
 
-    if (!resultado.ok) {
-      setUnion((anterior) => ({ ...anterior, error: resultado.mensaje }));
-      return;
+    setCargando(true);
+
+    try {
+      const resultado = await onJoinGuild(union.gremio.id, union.codigo);
+
+      if (!resultado.ok) {
+        setUnion((anterior) => ({
+          ...anterior,
+          error: resultado.mensaje,
+        }));
+        return;
+      }
+
+      setUnion(unionInicial);
+    } catch (error) {
+      setUnion((anterior) => ({
+        ...anterior,
+        error: "No fue posible validar el código.",
+      }));
+    } finally {
+      setCargando(false);
     }
-
-    setUnion(unionInicial);
   }
 
   return (
@@ -79,7 +131,10 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
         titulo="Gremios"
       />
 
-      <form className="gremios-formulario-nombre-del-gremio-lema" onSubmit={manejarCrear}>
+      <form
+        className="gremios-formulario-nombre-del-gremio-lema"
+        onSubmit={manejarCrear}
+      >
         <h2 className="gremios-texto-nombre-del-gremio">Crear gremio</h2>
         <label className="gremios-etiqueta-campo-nombre-del-gremio">
           <span className="gremios-texto-nombre-del-gremio">Nombre</span>
@@ -90,6 +145,7 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
             onChange={manejarCambio}
             required
             value={formulario.nombre}
+            disabled={cargando}
           />
         </label>
         <label className="gremios-etiqueta-campo-lema">
@@ -101,6 +157,7 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
             onChange={manejarCambio}
             required
             value={formulario.lema}
+            disabled={cargando}
           />
         </label>
         <label className="gremios-etiqueta-campo-lema">
@@ -111,6 +168,7 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
             onChange={manejarCambio}
             type="url"
             value={formulario.emblemaUrl}
+            disabled={cargando}
           />
         </label>
         <label className="gremios-etiqueta-campo-visibilidad-publico-privado">
@@ -120,13 +178,18 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
             name="tipo"
             onChange={manejarCambio}
             value={formulario.tipo}
+            disabled={cargando}
           >
             <option value="publico">Público</option>
             <option value="privado">Privado</option>
           </select>
         </label>
-        {errorCrear && <p className="gremios-descripcion-error">{errorCrear}</p>}
-        <button className="gremios-boton-crear-gremio" type="submit">Crear gremio</button>
+        {errorCrear && (
+          <p className="gremios-descripcion-error">{errorCrear}</p>
+        )}
+        <button className="gremios-boton-crear-gremio" type="submit">
+          {cargando ? "Creando..." : "Crear gremio"}
+        </button>
       </form>
 
       <label className="gremios-etiqueta-campo-buscar-gremios-search">
@@ -147,6 +210,7 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
               key={gremio.id}
               onJoin={manejarUnion}
               usuarioId={usuario.id}
+              cargando={cargando}
             />
           ))}
         </section>
@@ -159,24 +223,45 @@ function GremiosPage({ usuario, gremios, onCreateGuild, onJoinGuild }) {
       )}
 
       {union.gremio && (
-        <form className="gremios-formulario-lock-codigo-de-invitacion" onSubmit={validarCodigo}>
+        <form
+          className="gremios-formulario-lock-codigo-de-invitacion"
+          onSubmit={validarCodigo}
+        >
           <h2 className="gremios-texto-lock-codigo-de-invitacion">
             Código de {union.gremio.nombre}
           </h2>
+
           <input
             className="gremios-campo-codigo-invitacion"
             maxLength="6"
-            onChange={(evento) => setUnion((anterior) => ({
-              ...anterior,
-              codigo: evento.target.value.toUpperCase(),
-              error: "",
-            }))}
+            onChange={(evento) =>
+              setUnion((anterior) => ({
+                ...anterior,
+                codigo: evento.target.value.toUpperCase(),
+                error: "",
+              }))
+            }
             required
             value={union.codigo}
+            disabled={cargando}
           />
+
           {union.error && <p className="gremios-error-union">{union.error}</p>}
-          <button className="gremios-boton-validar-y-unirme" type="submit">Unirme</button>
-          <button onClick={() => setUnion(unionInicial)} type="button">Cancelar</button>
+          <button
+            className="gremios-boton-validar-y-unirme"
+            type="submit"
+            disabled={cargando}
+          >
+            {cargando ? "Uniendome..." : "Unirme"}
+          </button>
+
+          <button
+            onClick={() => setUnion(unionInicial)}
+            type="button"
+            disabled={cargando}
+          >
+            Cancelar
+          </button>
         </form>
       )}
     </div>

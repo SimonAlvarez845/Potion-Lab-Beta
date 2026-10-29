@@ -1,24 +1,42 @@
 import { Link } from "react-router-dom";
 
 function TarjetaGremio({ gremio, usuarioId, onJoin }) {
-  const pertenece = gremio.miembros.some((miembro) => miembro.usuarioId === usuarioId);
+  const pertenece = gremio.miembros.some(
+    (miembro) => miembro.usuarioId === usuarioId,
+  );
 
   return (
     <article className="tarjeta-gremio-tarjeta-publico-nombre-lema">
-      <div className="tarjeta-gremio-franja-color" style={{ background: gremio.acento }} />
+      <div
+        className="tarjeta-gremio-franja-color"
+        style={{ background: gremio.acento }}
+      />
       <div className="tarjeta-gremio-contenedor-flexible-publico-nombre-lema">
         <div className="tarjeta-gremio-encabezado">
-          <div className="tarjeta-gremio-emblema imagen-con-respaldo" role="img" aria-label={`Emblema de ${gremio.nombre}`}>
+          <div
+            className="tarjeta-gremio-emblema imagen-con-respaldo"
+            role="img"
+            aria-label={`Emblema de ${gremio.nombre}`}
+          >
             <span aria-hidden="true">{gremio.nombre.charAt(0)}</span>
             {gremio.emblemaUrl && (
-              <img key={gremio.emblemaUrl} src={gremio.emblemaUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+              <img
+                key={gremio.emblemaUrl}
+                src={gremio.emblemaUrl}
+                alt=""
+                onError={(evento) => {
+                  evento.currentTarget.hidden = true;
+                }}
+              />
             )}
           </div>
           <div className="tarjeta-gremio-contenedor-flexible-nombre-lema">
             <p className="tarjeta-gremio-texto-publico">
               Gremio {gremio.tipo === "publico" ? "público" : "privado"}
             </p>
-            <h2 className="tarjeta-gremio-titulo-seccion-nombre">{gremio.nombre}</h2>
+            <h2 className="tarjeta-gremio-titulo-seccion-nombre">
+              {gremio.nombre}
+            </h2>
             <p className="tarjeta-gremio-descripcion-lema">“{gremio.lema}”</p>
           </div>
         </div>
@@ -28,7 +46,10 @@ function TarjetaGremio({ gremio, usuarioId, onJoin }) {
             {gremio.miembros.length} miembros
           </p>
           {pertenece ? (
-            <Link className="tarjeta-gremio-enlace-gremios" to={`/gremios/${gremio.id}`}>
+            <Link
+              className="tarjeta-gremio-enlace-gremios"
+              to={`/gremios/${gremio.id}`}
+            >
               Ver gremio
             </Link>
           ) : (
@@ -37,7 +58,9 @@ function TarjetaGremio({ gremio, usuarioId, onJoin }) {
               onClick={() => onJoin(gremio)}
               type="button"
             >
-              {gremio.tipo === "publico" ? "Unirme al gremio" : "Ingresar código"}
+              {gremio.tipo === "publico"
+                ? "Unirme al gremio"
+                : "Ingresar código"}
             </button>
           )}
         </div>

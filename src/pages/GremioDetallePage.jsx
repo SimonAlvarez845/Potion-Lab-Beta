@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import TarjetaFormula from "../components/formula/TarjetaFormula";
 import ListaMiembros from "../components/gremio/ListaMiembros";
 import { puedeAdministrarGremio, puedeCrearFormula } from "../utils/roles";
@@ -11,8 +11,10 @@ function GremioDetallePage({
   votos,
   onChangeRole,
   onAppointTaster,
+  onRemoveMember,
 }) {
   const { gremioId } = useParams();
+  const navegar = useNavigate();
   const gremio = gremios.find((item) => item.id === gremioId);
 
   if (!gremio) {
@@ -42,10 +44,21 @@ function GremioDetallePage({
 
       <section className="gremio-detalle-seccion-gremio-publico-nombre">
         <div className="gremio-detalle-identidad">
-          <div className="gremio-detalle-emblema imagen-con-respaldo" role="img" aria-label={`Emblema de ${gremio.nombre}`}>
+          <div
+            className="gremio-detalle-emblema imagen-con-respaldo"
+            role="img"
+            aria-label={`Emblema de ${gremio.nombre}`}
+          >
             <span aria-hidden="true">{gremio.nombre.charAt(0)}</span>
             {gremio.emblemaUrl && (
-              <img key={gremio.emblemaUrl} src={gremio.emblemaUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+              <img
+                key={gremio.emblemaUrl}
+                src={gremio.emblemaUrl}
+                alt=""
+                onError={(evento) => {
+                  evento.currentTarget.hidden = true;
+                }}
+              />
             )}
           </div>
           <div className="gremio-detalle-presentacion">
@@ -81,6 +94,16 @@ function GremioDetallePage({
           }
           puedeAdministrar={puedeAdministrar}
           usuarios={usuarios}
+          usuarioActualId={usuario.id}
+          onRemoveMember={async (usuarioId) => {
+            const resultado = await onRemoveMember(gremio.id, usuarioId);
+
+            if (resultado.ok && usuarioId === usuario.id) {
+              navegar("/gremios");
+            }
+
+            return resultado;
+          }}
         />
       </section>
 
