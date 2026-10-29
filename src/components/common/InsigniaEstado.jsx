@@ -1,11 +1,10 @@
-import { ESTADOS_FORMULA } from "../../data/seedData";
+import { ESTADOS_FORMULA } from "../../data/constants";
 
 // Componente reutilizable que actua como traductor de estados. Se usa en el menu de "Formulas"
 // Le dice a React que texto que debe mostrar y que clase de color que debe usar: cada texto usa una distinta
 
 // Muestra una insignia visual según el estado actual de una fórmula.
 function InsigniaEstado({ estado }) {
-
   // Busca la configuración del estado recibido.
   // Si el estado no existe, usa "proposal" como valor por defecto.
   const configuracion = ESTADOS_FORMULA[estado] ?? ESTADOS_FORMULA.proposal;
@@ -18,12 +17,12 @@ function InsigniaEstado({ estado }) {
     violet: "insignia-estado-tono-violeta",
   };
 
-  // Variable que almacene la informacion y el color 
+  // Variable que almacene la informacion y el color
   const claseTono = tonos[configuracion.tono];
 
   // Devuelve la etiqueta con la insignia completa
   return (
-      <span className={`insignia-estado-etiqueta ${claseTono}`}>      
+    <span className={`insignia-estado-etiqueta ${claseTono}`}>
       <span className="insignia-estado-indicador" />
       {configuracion.etiqueta}
     </span>

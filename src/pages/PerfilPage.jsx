@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ESPECIALIDADES } from "../data/seedData";
+import { ESPECIALIDADES } from "../data/constants";
 import useUsuario from "../hooks/useUsuario";
 
 function PerfilPage() {

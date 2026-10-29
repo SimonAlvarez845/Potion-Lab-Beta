@@ -9,7 +9,7 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { GiPotionBall, GiSparkles } from "react-icons/gi";
-import { ESPECIALIDADES, CUENTAS_ACCESO } from "../../data/seedData";
+import { ESPECIALIDADES, CUENTAS_ACCESO } from "../../data/constants";
 import FondoAlquimico from "../common/FondoAlquimico";
 
 // Puerta de entrada de la App
