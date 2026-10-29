@@ -10,7 +10,7 @@ function ListaMiembros({
   onRemoveMember,
   usuarioActualId,
 }) {
-  // NEWCOMMENT: Evita ejecutar dos operaciones simultáneas.
+  // Evita ejecutar mas de una operacion a la vez.
   const [procesando, setProcesando] = useState(false);
 
   async function ejecutarOperacion(operacion) {

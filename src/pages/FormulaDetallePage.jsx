@@ -55,15 +55,6 @@ function FormulaDetallePage({
   const catadorOficial = esCatadorOficial(gremio, usuario.id);
   const puedeGestionar = ["Gran Maestre", "Alquimista sénior"].includes(rol);
   const puedeVotar = formula.estado === "voting" && rol !== "Visitante";
-  // AJUSTE TEMPORAL de permisos para votar.
-  console.log("DIAGNÓSTICO VOTACIÓN:", {
-    estado: formula.estado,
-    usuarioId: usuario.id,
-    gremioId: formula.gremioId,
-    gremioEncontrado: Boolean(gremio),
-    rol,
-    puedeVotar,
-  });
   const puedeVetar = formula.estado === "voting" && catadorOficial;
 
   // Todos los votos de una formula y la pocion destilada vienen incluidos en las respuestas de MongoDB.

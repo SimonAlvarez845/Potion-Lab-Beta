@@ -78,9 +78,12 @@ async function procesarPlazos() {
 
         // El plazo empieza desde la apertura de la votación o desde el nombramiento,
         // dependiendo de cuál de las dos fechas sea más reciente.
+        const fechaApertura =
+          formula.fechaAperturaVotacion ?? formula.fechaCierre;
+
         formula.fechaInicioCatador = new Date(
           Math.max(
-            formula.fechaAperturaVotacion.getTime(),
+            fechaApertura.getTime(),
             catadorActual.fechaNombramientoCatador?.getTime() || 0,
           ),
         );
@@ -203,7 +206,7 @@ function actualizarPlazos() {
 function iniciarPlazos() {
   const reloj = setInterval(() => {
     actualizarPlazos().catch((error) => {
-      console.error("No se pudieron actualizar los plazos:", error.name);
+      console.error("No se pudieron actualizar los plazos:", error);
     });
   }, 1000);
 

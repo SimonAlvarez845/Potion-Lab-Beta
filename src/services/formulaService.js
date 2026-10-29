@@ -41,3 +41,13 @@ export async function destilarFormulaAPI(formulaId) {
   const respuesta = await api.post(`/formulas/${formulaId}/destilar`);
   return respuesta.data.formula;
 }
+
+// Aplica el veto del Catador oficial y devuelve la formula actualizada desde MongoDB.
+export async function vetarOpcionAPI(formulaId, categoriaId, opcionId) {
+  const respuesta = await api.post(`/formulas/${formulaId}/veto`, {
+    categoriaId,
+    opcionId,
+  });
+
+  return respuesta.data.formula;
+}

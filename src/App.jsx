@@ -32,7 +32,9 @@ import {
   votarFormulaAPI,
   cerrarVotacionAPI,
   destilarFormulaAPI,
+  vetarOpcionAPI,
 } from "./services/formulaService";
+import { obtenerGrimorioAPI } from "./services/grimorioService";
 
 import {
   AUDITORIA_INICIAL,
@@ -462,6 +464,27 @@ function App() {
     });
   }, [formulas]);
 
+  const [grimorioAPI, setGrimorioAPI] = useState([]);
+
+  // Consulta el Grimorio cuando hay una sesion activa.
+  useEffect(() => {
+    if (!usuarioActivo?.id) {
+      setGrimorioAPI([]);
+      return;
+    }
+
+    async function cargarGrimorio() {
+      try {
+        const pociones = await obtenerGrimorioAPI();
+        setGrimorioAPI(pociones);
+      } catch (error) {
+        console.error("Error cargando el Grimorio:", error);
+      }
+    }
+
+    cargarGrimorio();
+  }, [usuarioActivo?.id]);
+
   // ------------------------------------------------------------------------------------------------
   // Toda funcion de App suele seguir el mismo flujo:
   // Busqueda -> Validacion -> Actualizacion Estado -> Guardado en localStorage
@@ -749,6 +772,10 @@ function App() {
         ),
       );
 
+      // Recarga el Grimorio para mostrar inmediatamente la nueva pocion.
+      const pocionesActualizadas = await obtenerGrimorioAPI();
+      setGrimorioAPI(pocionesActualizadas);
+
       return { ok: true };
     } catch (error) {
       mostrarAviso(
@@ -805,49 +832,31 @@ function App() {
   }
 
   // Es la función que FormulaDetallePage.jsx recibe como onVeto.
-  function vetarOpcion(formulaId, categoriaId, opcionId) {
-    const formula = formulas.find((item) => item.id === formulaId);
-    const gremio = gremios.find((item) => item.id === formula?.gremioId);
 
-    // Un veto debe cancelarse si no existe la formula, no esta en estado de votacion, ya existe otro veto activo y no es catador oficial
-    if (
-      !formula ||
-      formula.estado !== "voting" ||
-      formula.veto ||
-      !esCatadorOficial(gremio, usuarioActivo.id)
-    ) {
-      return;
-    }
-
-    //function votar La añade al principio al igual que el log
-    setFormulas((anteriores) =>
-      anteriores.map((item) =>
-        item.id === formulaId
-          ? {
-              ...item,
-              veto: {
-                categoriaId,
-                opcionId,
-                usuarioId: usuarioActivo.id,
-                fecha: new Date().toISOString(),
-              },
-            }
-          : item,
-      ),
-    );
-    setAuditoria((anterior) => [
-      {
-        id: `a-${Date.now()}`,
+  // Guarda el veto en MongoDB y sincroniza la formula en React.
+  async function vetarOpcion(formulaId, categoriaId, opcionId) {
+    try {
+      const formulaActualizada = await vetarOpcionAPI(
         formulaId,
-        fecha: new Date().toISOString(),
-        titulo: "Veto aplicado",
-        detalle: `${usuarioActivo.nombreCompleto} utilizó su veto de Catador.`,
-      },
-      ...anterior,
-    ]);
-    mostrarAviso(
-      "Veto aplicado. Solo puedes usar esta acción una vez por fórmula.",
-    );
+        categoriaId,
+        opcionId,
+      );
+
+      setFormulasAPI((anteriores) =>
+        anteriores.map((formula) =>
+          formula.id === formulaId ? formulaActualizada : formula,
+        ),
+      );
+
+      mostrarAviso("Veto aplicado correctamente.");
+      return { ok: true };
+    } catch (error) {
+      mostrarAviso(
+        error.response?.data?.mensaje || "No fue posible aplicar el veto.",
+      );
+
+      return { ok: false };
+    }
   }
 
   // Es la función que FormulaDetallePage.jsx recibe como onDistill.
@@ -1078,7 +1087,9 @@ function App() {
           />
           <Route
             path="grimorio"
-            element={<GrimorioPage gremios={gremios} grimorio={grimorio} />}
+            element={
+              <GrimorioPage gremios={gremiosAPI} grimorio={grimorioAPI} />
+            }
           />
           <Route
             path="ranking"
