@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import useUsuario from "../../hooks/useUsuario";
-
+import { normalizarImagen } from "../../utils/normalizarImagenes";
 
 function BarraSuperior() {
-
   // Para obtener los datos del usuario compartidos por UsuarioContext.
   const { usuarioActivo: usuario, cerrarSesion } = useUsuario();
 
@@ -12,22 +11,38 @@ function BarraSuperior() {
     <header className="barra-superior-encabezado-potion-lab-laboratorio-conectado">
       <div className="barra-superior-contenedor-flexible-potion-lab-laboratorio-conectado">
         <Link className="barra-superior-enlace-potion-lab" to="/">
-          <strong className="barra-superior-dato-destacado-potion-lab">Potion Lab</strong>
+          <strong className="barra-superior-dato-destacado-potion-lab">
+            Potion Lab
+          </strong>
         </Link>
 
         <div className="barra-superior-contenedor-flexible-bell-nombre-completo-especialidad">
-          
-        {/* Para que el usuario pueda acceder en todo momento a su perfil o cerrar sesion . */}
+          {/* Para que el usuario pueda acceder en todo momento a su perfil o cerrar sesion . */}
           <Link className="barra-superior-enlace-perfil" to="/perfil">
-            <span className="barra-superior-insignia-iniciales imagen-con-respaldo" role="img" aria-label={`Perfil de ${usuario.nombreCompleto}`}>
+            <span
+              className="barra-superior-insignia-iniciales imagen-con-respaldo"
+              role="img"
+              aria-label={`Perfil de ${usuario.nombreCompleto}`}
+            >
               <span aria-hidden="true">{usuario.nombreCompleto.charAt(0)}</span>
               {usuario.avatarUrl && (
-                <img key={usuario.avatarUrl} src={usuario.avatarUrl} alt="" onError={(evento) => { evento.currentTarget.hidden = true; }} />
+                <img
+                  key={usuario.avatarUrl}
+                  src={normalizarImagen(usuario.avatarUrl)}
+                  alt=""
+                  onError={(evento) => {
+                    evento.currentTarget.hidden = true;
+                  }}
+                />
               )}
             </span>
             <span className="barra-superior-texto-nombre-completo-especialidad">
-              <strong className="barra-superior-dato-destacado-nombre-completo">{usuario.nombreCompleto}</strong>
-              <small className="barra-superior-detalle-especialidad">{usuario.especialidad}</small>
+              <strong className="barra-superior-dato-destacado-nombre-completo">
+                {usuario.nombreCompleto}
+              </strong>
+              <small className="barra-superior-detalle-especialidad">
+                {usuario.especialidad}
+              </small>
             </span>
           </Link>
 

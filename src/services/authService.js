@@ -1,13 +1,17 @@
 import api from "./api";
+import { normalizarUsuario } from "../utils/normalizarImagenes";
 
-// Envía las credenciales al Backend y devuelve un Usuario y JWT.
+// Envia las credenciales al Backend y devuelve un Usuario y JWT.
 export async function iniciarSesionAPI(email, password) {
   const respuesta = await api.post("/auth/login", {
     email: email.trim().toLowerCase(),
     password,
   });
 
-  return respuesta.data;
+  return {
+    ...respuesta.data,
+    usuario: normalizarUsuario(respuesta.data.usuario),
+  };
 }
 
 // Registra un usuario nuevo en MongoDB.
@@ -26,5 +30,5 @@ export async function registrarUsuarioAPI(datos) {
 // Recupera el perfil usando el JWT enviado por Axios.
 export async function obtenerMiPerfilAPI() {
   const respuesta = await api.get("/usuarios/me");
-  return respuesta.data.usuario;
+  return normalizarUsuario(respuesta.data.usuario);
 }
