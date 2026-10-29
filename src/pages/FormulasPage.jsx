@@ -5,7 +5,15 @@ import EncabezadoPagina from "../components/common/EncabezadoPagina";
 import EstadoVacio from "../components/common/EstadoVacio";
 import TarjetaFormula from "../components/formula/TarjetaFormula";
 
-function FormulasPage({ formulas, gremios, usuario, usuarios, votos }) {
+function FormulasPage({
+  formulas,
+  gremios,
+  usuario,
+  usuarios,
+  votos,
+  cargando,
+  error,
+}) {
   // Estado de la busqueda
   const [busqueda, setBusqueda] = useState("");
 
@@ -43,28 +51,42 @@ function FormulasPage({ formulas, gremios, usuario, usuarios, votos }) {
         {formulasFiltradas.length} fórmulas encontradas
       </p>
 
-      {/* Si existen resultados muestra tarjetas, sino muestra el estado vacío. */}
-      {formulasFiltradas.length > 0 ? (
-        <section className="formulas-cuadricula-map">
-          {formulasFiltradas.map((formula) => (
-            <TarjetaFormula
-              creador={usuarios.find((item) => item.id === formula.creadaPorId)}
-              formula={formula}
-              gremio={gremios.find((item) => item.id === formula.gremioId)}
-              key={formula.id}
-              votosCompletados={
-                Object.keys(votos[formula.id]?.[usuario?.id] ?? {}).length
-              }
-            />
-          ))}
-        </section>
-      ) : (
-        <EstadoVacio
-          descripcion="Prueba con otro nombre o efecto."
-          icono={FiLayers}
-          titulo="No hay fórmulas con ese criterio"
-        />
+      {/* Muestra un estado de carga mientras se consultan las formulas reales. */}
+      {cargando && <p>Cargando fórmulas...</p>}
+
+      {/* Muestra un estado de error si falla la consulta al Backend. */}
+      {!cargando && error && (
+        <p role="alert" className="nueva-formula-descripcion-error">
+          {error}
+        </p>
       )}
+
+      {/* Si existen resultados muestra las tarjetas */}
+      {!cargando &&
+        !error &&
+        (formulasFiltradas.length > 0 ? (
+          <section className="formulas-cuadricula-map">
+            {formulasFiltradas.map((formula) => (
+              <TarjetaFormula
+                creador={usuarios.find(
+                  (item) => item.id === formula.creadaPorId,
+                )}
+                formula={formula}
+                gremio={gremios.find((item) => item.id === formula.gremioId)}
+                key={formula.id}
+                votosCompletados={
+                  Object.keys(votos[formula.id]?.[usuario?.id] ?? {}).length
+                }
+              />
+            ))}
+          </section>
+        ) : (
+          <EstadoVacio
+            descripcion="Prueba con otro nombre o efecto."
+            icono={FiLayers}
+            titulo="No hay fórmulas con ese criterio"
+          />
+        ))}
     </div>
   );
 }
