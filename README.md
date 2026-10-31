@@ -157,14 +157,12 @@ stateDiagram-v2
     distilled --> [*]
 ```
 
-Cada fórmula puede recibir votos en tres categorías:
+Cada formula puede recibir votos en tres categorías:
 
-| Categoría | Elemento seleccionado |
-|---|---|
-| 🌿 Ingrediente | Componente principal de la poción |
-| 🔮 Método | Procedimiento de preparación |
-| 🧴 Frasco | Recipiente utilizado |
-
+- **🌿 Ingrediente:** componente principal de la poción.
+- **🔮 Método:** procedimiento de preparación.
+- **🧴 Frasco:** recipiente utilizado.
+  
 ### Ponderación de votos
 
 El corazón del sistema es un motor aislado en `src/utils/`, dividido en tres pasos:
