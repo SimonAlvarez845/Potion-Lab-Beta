@@ -165,20 +165,11 @@ Cada formula puede recibir votos en tres categorías:
   
 ### Ponderación de votos
 
-El corazón del sistema es un motor aislado en `src/utils/`, dividido en tres pasos:
+El sistema calcula los resultados de las votaciones aplicando las siguientes reglas:
 
-| Paso               | Función           | Qué hace                                                                                                                  |
-| ------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| ⚖️ Ponderación     | `obtenerPesoVoto` | Especialista en la categoría → `x1.2` · Maestro Cervecero → `x1.2` transversal · Catador Oficial → `x2` sobre el total    |
-| 🚫 Filtro de vetos | normalización     | Marca `vetada: true` y excluye del conteo; ajusta el residuo porcentual en el último elemento para cerrar siempre en 100% |
-| 🎲 Desempate       | `resolverEmpate`  | 1) coincide con el voto del Catador Oficial → 2) coincide con el Gran Maestre → 3) elección aleatoria determinista        |
-
-El sistema considera las especialidades y responsabilidades de los participantes para calcular los resultados.
-Entre estas reglas se encuentran:
-
-- **Especialistas:** reciben una ponderación de `1.2` en su categoría correspondiente.
-- **Maestro Cervecero:** dispone de una ponderación transversal de `1.2`.
-- **Catador Oficial:** aplica una ponderación especial de `2` sobre el peso correspondiente.
+- **⚖️ Ponderación:** los especialistas reciben un peso de `x1.2` en su categoría, el Maestro Cervecero `x1.2` transversal y el Catador Oficial `x2` sobre el peso correspondiente.
+- **🚫 Vetos:** las opciones vetadas se excluyen del conteo de votos.
+- **🎲 Desempates:** se prioriza el voto del Catador Oficial, luego el del Gran Maestre y, si persiste el empate, se aplica una selección determinista.
 
 ---
 
