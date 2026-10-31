@@ -1,6 +1,6 @@
 <div align="center">
 
-# **Potion Lab - David Botero & Simon Alvarez**
+# **Full Stack: Potion Lab - David Botero & Simon Alvarez**
   
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge\&logo=vite\&logoColor=white)
@@ -10,6 +10,12 @@
 [![HTML](https://img.shields.io/badge/HTML-E34F26?logo=html5\&logoColor=white\&style=for-the-badge)](https://developer.mozilla.org/es/docs/Web/HTML)
 ![Status](https://img.shields.io/badge/Status-Finished-success?style=for-the-badge)
 
+
+| Servicio | Plataforma | Enlace |
+|---|---|---|
+| Frontend | Netlify | [  Potion Lab](https://potionlab.netlify.app) |
+| Backend | Render | [API Potion Lab](https://potion-lab-beta.onrender.com/api/salud) |
+| Swagger | Render | [Documentación](https://potion-lab-beta.onrender.com/api/docs) |
 </div>
 
 ## 📋 Tabla de contenidos
@@ -38,40 +44,97 @@ Potion Lab cuenta con un frontend desarrollado con React y Vite y una API REST e
 | -------------------------- | --------------------------------------------------------------- | -------- |
 | 🧙 Gremios                 | Creación, directorio y gestión de miembros/solicitudes          | Done     |
 | 🧪 Fórmulas                | Propuesta, catálogo y filtrado por estado                       | Done     |
-| 🗳️ Votación por categoría | `ingrediente`, `metodo` y `frasco`, con peso según especialidad | Done     |
+| 🗳️ Votación por categoría  | `ingrediente`, `metodo` y `frasco`, con peso según especialidad | Done     |
 | 🚫 Vetos                   | Exclusión automática de opciones vetadas del conteo             | Done     |
 | ⚖️ Desempate en cascada    | Catador Oficial → Gran Maestre → azar determinista              | Done     |
 | 📚 Grimorio                | Registro histórico inmutable de pociones aprobadas              | Done     |
 | 🏆 Ranking                 | Clasificación de alquimistas y gremios destacados               | Done     |
 | 💾 Persistencia            | API REST y MongoDB Atlas; existen utilidades locales en el frontend | Done |
+| 🏆 Ranking | Clasificación de alquimistas y gremios | Done |
+| 🔐 Autenticación | Registro, inicio de sesión y acceso mediante JWT | Done |
+| 🛡️ Autorización | Validación de permisos según membresía, rol y operación | Done |
+| ⚡ Tiempo real | Notificaciones de actualización de votaciones con Socket.IO | Done |
+| 💾 Persistencia | Almacenamiento de los recursos mediante MongoDB Atlas | Done |
+| 📖 Swagger | Documentación interactiva de la API REST | Done |
+| 🌐 Producción | Frontend en Netlify y Backend en Render | Done |
 
 ---
 
 ## 🏗️ Estructura del proyecto
 
-```txt
-src/
-├── components/
-│   ├── authentication/  # Control de acceso e inicio de sesión
-│   ├── common/          # Modales, avisos, badges e insignias
-│   ├── formula/         # Paneles de votación y tarjetas de fórmulas
-│   ├── gremio/          # Directorio y gestión de integrantes
-│   └── layout/          # Header, Nav y estructura general
-├── context/             # UsuarioContext (estado global de sesión)
-├── data/                # seedData de prueba
-├── hooks/               # useLocalStorage
-├── pages/               # Vistas vinculadas a React Router
-├── styles/              # CSS modular con clases semánticas
-├── utils/               # Motores de voto, desempate y formateo
-├── App.jsx
-└── index.css
+Potion Lab sigue una arquitectura **cliente-servidor**, con separación entre frontend, API REST y base de datos.
+
+```text
+Potion-Lab-Beta/
+├── frontend/
+│   └── public/
+│       ├── components/
+│       ├── context/
+│       ├── hooks/
+│       ├── pages/
+│       ├── services/
+│       ├── styles/
+│       └── utils/
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── scripts/
+│   ├── services/
+│   ├── sockets/
+│   ├── utils/
+│   ├── .env.example
+│   ├── index.js
+│   └── package.json
+│
+├── docs/
+│   ├── ARQUITECTURA.md
+│   └── openapi.json
+│
+├── package.json
+└── README.md
+```
+
+> La estructura representa los módulos principales. El repositorio puede contener archivos adicionales de configuración, pruebas y documentación.
+
+```mermaid
+flowchart TB
+    FE["FRONTEND<br/>React + Vite"]
+    BE["BACKEND<br/>Express"]
+    DB[("BASE DE DATOS<br/>MongoDB Atlas")]
+
+    FE -->|"Solicitudes"| BE
+    BE -->|"Persistencia"| DB
+
+    classDef front fill:#dbeafe,stroke:#2563eb,color:#1e40af,stroke-width:2px
+    classDef back fill:#dcfce7,stroke:#16a34a,color:#166534,stroke-width:2px
+    classDef data fill:#f3e8ff,stroke:#9333ea,color:#6b21a8,stroke-width:2px
+
+    class FE front
+    class BE back
+    class DB data
 ```
 
 ---
 
 ## 🧩 Lógica de votación
 
-El corazón del sistema es un motor de cómputo aislado en `src/utils/`, dividido en tres pasos:
+La votación constituye uno de los componentes centrales del proyecto.
+
+Cada fórmula puede recibir votos en tres categorías:
+
+| Categoría | Elemento seleccionado |
+|---|---|
+| 🌿 Ingrediente | Componente principal de la poción |
+| 🔮 Método | Procedimiento de preparación |
+| 🧴 Frasco | Recipiente utilizado |
+
+### Ponderación de votos
+
+El corazón del sistema es un motor aislado en `src/utils/`, dividido en tres pasos:
 
 | Paso               | Función           | Qué hace                                                                                                                  |
 | ------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -79,19 +142,41 @@ El corazón del sistema es un motor de cómputo aislado en `src/utils/`, dividid
 | 🚫 Filtro de vetos | normalización     | Marca `vetada: true` y excluye del conteo; ajusta el residuo porcentual en el último elemento para cerrar siempre en 100% |
 | 🎲 Desempate       | `resolverEmpate`  | 1) coincide con el voto del Catador Oficial → 2) coincide con el Gran Maestre → 3) elección aleatoria determinista        |
 
+El sistema considera las especialidades y responsabilidades de los participantes para calcular los resultados.
+Entre estas reglas se encuentran:
+
+- **Especialistas:** reciben una ponderación de `1.2` en su categoría correspondiente.
+- **Maestro Cervecero:** dispone de una ponderación transversal de `1.2`.
+- **Catador Oficial:** aplica una ponderación especial de `2` sobre el peso correspondiente.
+
 ---
 
 ## 🗺️ Rutas
 
-| Ruta                            | Propósito                              |
-| ------------------------------- | -------------------------------------- |
-| `/`                             | Dashboard con métricas del laboratorio |
-| `/gremios` · `/gremios/:id`     | Directorio y gestión de un gremio      |
-| `/formulas` · `/formulas/nueva` | Catálogo y registro de fórmulas        |
-| `/formulas/:id`                 | Votación, vetos y destilación          |
-| `/grimorio`                     | Historial de pociones aprobadas        |
-| `/ranking`                      | Clasificación de alquimistas           |
-| `/perfil`                       | Configuración de sesión                |
+
+<div align="center">
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruta</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>/</code></td><td>Panel principal del laboratorio</td></tr>
+    <tr><td><code>/gremios</code></td><td>Directorio de gremios</td></tr>
+    <tr><td><code>/gremios/:gremioId</code></td><td>Detalle y administración de un gremio</td></tr>
+    <tr><td><code>/formulas</code></td><td>Catálogo de fórmulas</td></tr>
+    <tr><td><code>/formulas/nueva</code></td><td>Creación de fórmulas</td></tr>
+    <tr><td><code>/formulas/:formulaId</code></td><td>Detalle, votaciones y gestión de una fórmula</td></tr>
+    <tr><td><code>/grimorio</code></td><td>Historial de pociones destiladas</td></tr>
+    <tr><td><code>/ranking</code></td><td>Clasificación de alquimistas y gremios</td></tr>
+    <tr><td><code>/perfil</code></td><td>Perfil del usuario</td></tr>
+  </tbody>
+</table>
+
+</div>
 
 ---
 
@@ -100,8 +185,9 @@ El corazón del sistema es un motor de cómputo aislado en `src/utils/`, dividid
 ### Requisitos previos
 
 - Node.js **22.12 o superior** y npm.
-- Un clúster de **MongoDB Atlas** activo y accesible desde la IP del equipo.
+- Un clúster de **MongoDB Atlas** accesible.
 - Credenciales propias para MongoDB. **Nunca publiques el archivo `.env` ni los tokens JWT.**
+- Un editor de código, como VS Code.
 
 ### 1. Descargar el proyecto
 
@@ -110,7 +196,7 @@ git clone https://github.com/SimonAlvarez845/Potion-Lab-Beta.git
 cd Potion-Lab-Beta
 ```
 
-### 2. Configurar el backend
+### 2. Configurar el Backend
 
 En una terminal, entra a `backend` e instala sus dependencias:
 
@@ -136,20 +222,40 @@ Inicia el servidor:
 npm run dev
 ```
 
-También puedes utilizar `npm start` para ejecutarlo sin Nodemon. Espera los mensajes de conexión a la base de datos y de inicio del servidor. Comprueba la API en [http://localhost:3000/api/salud](http://localhost:3000/api/salud).
+También puedes utilizar `npm start` para ejecutarlo sin Nodemon. Espera los mensajes de conexión a la base de datos y de inicio del servidor.
 
-### 3. Iniciar el frontend
+Comprueba la API en [http://localhost:3000/api/salud](http://localhost:3000/api/salud).
 
-Abre **otra terminal** desde la raíz del proyecto:
+### 3. Iniciar el Frontend
+
+Abre **otra terminal** desde la raíz del proyecto e instala sus dependencias:
 
 ```bash
 npm install
+```
+
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```dotenv
+VITE_API_URL=http://localhost:3000/api
+VITE_SOCKET_URL=http://localhost:3000
+```
+
+Estas variables permiten conectar el frontend con la API REST y el servidor Socket.IO.
+
+Inicia el frontend:
+
+```bash
 npm run dev
 ```
 
-El frontend de Vite suele estar disponible en [http://localhost:5173](http://localhost:5173). Los comandos `npm run lint` y `npm run build` permiten comprobar el código y generar la compilación de producción del frontend.
+El frontend de Vite suele estar disponible en [http://localhost:5173](http://localhost:5173).
 
-> **Nota:** iniciar el frontend y el backend no implica que estén integrados entre sí. Comprueba el estado de la conexión frontend–API antes de evaluar flujos completos desde la interfaz.
+Los comandos `npm run lint` y `npm run build` permiten comprobar el código y generar la compilación de producción del frontend.
+
+> **Nota:** para utilizar todas las funcionalidades es necesario mantener encendidos el frontend y el backend, además de contar con una conexión válida a MongoDB Atlas.
+
+---
 
 ## 📖 Documentación de la API con Swagger
 
@@ -158,18 +264,23 @@ Con el **backend encendido**, abre:
 - **Swagger UI:** [http://localhost:3000/api/docs/](http://localhost:3000/api/docs/)
 - **OpenAPI JSON:** [http://localhost:3000/api/openapi.json](http://localhost:3000/api/openapi.json)
 
-Swagger documenta las **24 operaciones** de la API en los módulos de sistema, autenticación, usuarios, gremios, fórmulas, votaciones, destilación y grimorio.
+También puedes consultar la documentación desplegada en producción:
+
+- **Swagger UI:** [https://potion-lab-beta.onrender.com/api/docs](https://potion-lab-beta.onrender.com/api/docs)
+- **OpenAPI JSON:** [https://potion-lab-beta.onrender.com/api/openapi.json](https://potion-lab-beta.onrender.com/api/openapi.json)
+
+Swagger documenta las operaciones de la API en los módulos de sistema, autenticación, usuarios, gremios, fórmulas, votaciones, destilación y grimorio.
 
 Para probar rutas protegidas, ejecuta primero `POST /api/auth/register` o `POST /api/auth/login`. Copia el `token` devuelto y pulsa **Authorize** en Swagger; pega el token JWT sin añadir manualmente la palabra `Bearer`. Después utiliza **Try it out → Execute** en la ruta deseada.
 
-**Precaución:** las operaciones `POST`, `PUT`, `PATCH` y `DELETE` pueden modificar datos reales en MongoDB. Para una evaluación académica se recomienda una base de datos y usuarios de demostración, independientes de los datos que quieras conservar.
+**Precaución:** las operaciones `POST`, `PUT`, `PATCH` y `DELETE` pueden modificar datos reales en MongoDB. Para una evaluación académica se recomienda utilizar usuarios y recursos de demostración.
 
-La documentación adicional del backend está en [backend/docs/README.md](backend/docs/README.md).
+La documentación adicional del proyecto está en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 
 ---
 
 <div align="center">
 
-[![typing](https://readme-typing-svg.demolab.com?font=Georgia\&size=22\&duration=3000\&pause=1000\&color=FFFFFF\&center=true\&vCenter=true\&width=600\&lines=Construido+con+%E2%98%95+y+muchos+errores)](https://git.io/typing-svg)
+[![typing](https://readme-typing-svg.demolab.com?font=Georgia&size=22&duration=3000&pause=1000&color=FFFFFF&center=true&vCenter=true&width=600&lines=Construido+con+%E2%98%95+y+muchos+errores)](https://git.io/typing-svg)
 
 </div>
