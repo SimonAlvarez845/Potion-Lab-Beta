@@ -297,8 +297,6 @@ Para probar rutas protegidas, ejecuta primero `POST /api/auth/register` o `POST 
 
 **Precaución:** las operaciones `POST`, `PUT`, `PATCH` y `DELETE` pueden modificar datos reales en MongoDB. Para una evaluación académica se recomienda utilizar usuarios y recursos de demostración.
 
-La documentación adicional del proyecto está en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
-
 ---
 
 <div align="center">
