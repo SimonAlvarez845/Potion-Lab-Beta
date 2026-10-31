@@ -118,11 +118,44 @@ flowchart TB
     class DB data
 ```
 
+- El frontend utiliza Axios para consumir la API REST y enviar el JWT en las solicitudes autenticadas.
+- El backend verifica los permisos, ejecuta las operaciones y almacena los cambios en MongoDB Atlas.
+- Socket.IO permite notificar las actualizaciones de votación a los usuarios conectados.
+
 ---
 
 ## 🧩 Lógica de votación
 
 La votación constituye uno de los componentes centrales del proyecto.
+
+### Secuencia de una votación:
+
+```mermaid
+sequenceDiagram
+    actor U as Usuario
+    participant F as React
+    participant A as Express
+    participant D as MongoDB
+
+    U->>F: Realiza un voto
+    F->>A: Envía solicitud con JWT
+    A->>A: Valida permisos y voto
+    A->>D: Guarda el voto
+    D-->>A: Confirma operación
+    A-->>F: Devuelve resultado
+    F-->>U: Actualiza la interfaz
+```
+
+### Ciclo de vida de una fórmula:
+
+```mermaid
+stateDiagram-v2
+    [*] --> proposal
+    proposal --> voting
+    voting --> closed
+    closed --> distilled
+    distilled --> [*]
+```
 
 Cada fórmula puede recibir votos en tres categorías:
 
