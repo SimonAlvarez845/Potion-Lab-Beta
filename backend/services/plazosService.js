@@ -103,7 +103,7 @@ async function procesarPlazos() {
         const fin = formula.fechaCierreEfectivo || formula.fechaCierre;
 
         // Evaluamos cuando pasan las 48 horas o si la votación termina antes.
-        if (ahora >= limite || fin < limite) {
+        if (ahora >= limite || (ahora >= fin && fin < limite)) {
           // some devuelve true si encuentra al menos un voto del Catador dentro del plazo.
           // Usamos la fecha del primer voto para conservarla aunque cambie su elección.
           const voto = formula.votos.some(
@@ -202,13 +202,13 @@ function actualizarPlazos() {
   return actualizacion;
 }
 
-// Iniciamos una revisión automática cada segundo.
+// Iniciamos una revisión automática cada 30 segundos lo cual equivale a 120 revisiones por hora.
 function iniciarPlazos() {
   const reloj = setInterval(() => {
     actualizarPlazos().catch((error) => {
       console.error("No se pudieron actualizar los plazos:", error);
     });
-  }, 1000);
+  }, 30000);
 
   // Permite que este temporizador no impida que Node termine el proceso.
   reloj.unref();
