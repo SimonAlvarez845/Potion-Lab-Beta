@@ -4,6 +4,11 @@ const mongoose = require("mongoose");
 // Esperamos a que la conexión con MongoDB Atlas termine antes de continuar.
 const conectarBaseDatos = async () => {
   try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error(
+        "Falta configurar MONGODB_URI en las variables de entorno",
+      );
+    }
     await mongoose.connect(process.env.MONGODB_URI);
 
     console.log("Base de datos conectada correctamente");

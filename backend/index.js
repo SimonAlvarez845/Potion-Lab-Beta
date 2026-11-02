@@ -38,10 +38,21 @@ const app = express();
 // Creamos el servidor HTTP utilizando nuestra aplicación Express.
 const server = http.createServer(app);
 
+// En producción necesitamos conocer la dirección del frontend.
+if (process.env.NODE_ENV === "production" && !process.env.FRONTEND_URL) {
+  throw new Error("Falta configurar FRONTEND_URL en producción");
+}
+
+// Definimos qué direcciones pueden comunicarse con nuestro backend.
+const origenesPermitidos = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+].filter(Boolean);
+
 // Configuramos Socket.IO sobre el mismo servidor.
 const io = new Server(server, {
   cors: {
-    origin: [process.env.CORS_ORIGIN, "http://localhost:5173"].filter(Boolean),
+    origin: origenesPermitidos,
     methods: ["GET", "POST"],
   },
 });
@@ -55,8 +66,12 @@ app.set("io", io);
 // Si existe un puerto en process.env lo usamos. Si no existe, usamos el 3000.
 const PORT = process.env.PORT || 3000;
 
-// Permitimos peticiones desde otros puntos como nuestro frontend de React.
-app.use(cors());
+// Permitimos peticiones únicamente desde los origenes autorizados.
+app.use(
+  cors({
+    origin: origenesPermitidos,
+  }),
+);
 
 // Convertimos el JSON recibido en un objeto de JavaScript.
 app.use(express.json());
