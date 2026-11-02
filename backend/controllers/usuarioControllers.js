@@ -18,18 +18,45 @@ const actualizarPerfil = async (req, res) => {
 };
 
 async function listar(req, res) {
-  const usuarios = await usuarioService.listarUsuarios(req.query.gremioId, req.usuario._id);
+  const usuarios = await usuarioService.listarUsuarios(
+    req.query.gremioId,
+    req.usuario._id,
+  );
   res.json({ usuarios });
 }
 
 async function ranking(req, res) {
-  const usuarios = await usuarioService.listarUsuarios(req.query.gremioId, req.usuario._id, true);
+  const usuarios = await usuarioService.listarUsuarios(
+    req.query.gremioId,
+    req.usuario._id,
+    true,
+  );
   res.json({ usuarios });
 }
 
 async function rankingGremio(req, res) {
-  const usuarios = await usuarioService.listarUsuarios(req.params.id, req.usuario._id, true);
+  const usuarios = await usuarioService.listarUsuarios(
+    req.params.id,
+    req.usuario._id,
+    true,
+  );
   res.json({ usuarios });
 }
 
-module.exports = { obtenerPerfil, actualizarPerfil, listar, ranking, rankingGremio };
+// Devuelve la cantidad de usuarios registrados para el administrador.
+async function resumenAdmin(req, res) {
+  const Usuario = require("../models/usuario");
+
+  const totalUsuarios = await Usuario.countDocuments(); // MongoDB cuenta los docs de una coleccion.
+
+  res.status(200).json({ totalUsuarios });
+}
+
+module.exports = {
+  obtenerPerfil,
+  actualizarPerfil,
+  listar,
+  ranking,
+  rankingGremio,
+  resumenAdmin,
+};

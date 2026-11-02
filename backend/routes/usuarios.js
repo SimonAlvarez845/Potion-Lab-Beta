@@ -7,6 +7,7 @@ const express = require("express");
 const { body, query } = require("express-validator");
 
 const autenticar = require("../middleware/autenticar");
+const autorizar = require("../middleware/autorizar");
 const validarCampos = require("../middleware/validarCampos");
 const actualizarPlazos = require("../middleware/actualizarPlazos");
 
@@ -16,6 +17,7 @@ const {
   actualizarPerfil,
   listar,
   ranking,
+  resumenAdmin,
 } = require("../controllers/usuarioControllers");
 
 const { ESPECIALIDADES } = require("../config/catalogo");
@@ -117,6 +119,9 @@ router.get(
   validarCampos,
   ranking,
 );
+
+// Solo un admin global puede consultar el resumen de usuarios.
+router.get("/admin/resumen", autorizar("admin"), resumenAdmin);
 
 // GET /me — obtiene el perfil del usuario autenticado
 router.get("/me", obtenerPerfil);
