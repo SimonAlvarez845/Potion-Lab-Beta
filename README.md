@@ -1,7 +1,10 @@
 <div align="center">
 
-# **Full Stack: Potion Lab - David Botero & Simon Alvarez**
-  
+<img src="docs/codex-hero.svg" alt="Potion Lab — The Alchemist's Codex" width="100%" />
+
+# **Ingenieria Web - David Botero & Simon Alvarez**
+
+
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge\&logo=vite\&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
@@ -9,8 +12,6 @@
 ![CSS](https://img.shields.io/badge/css-%23663399.svg?style=for-the-badge\&logo=css\&logoColor=white)
 [![HTML](https://img.shields.io/badge/HTML-E34F26?logo=html5\&logoColor=white\&style=for-the-badge)](https://developer.mozilla.org/es/docs/Web/HTML)
 ![Status](https://img.shields.io/badge/Status-Finished-success?style=for-the-badge)
-
-<img src="docs/codex-hero.svg" alt="Potion Lab — The Alchemist's Codex" width="100%" />
 
 | Servicio | Plataforma | Enlace |
 |---|---|---|
