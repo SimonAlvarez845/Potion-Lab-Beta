@@ -52,11 +52,9 @@ Potion Lab cuenta con un frontend desarrollado con React y Vite y una API REST e
 | 📚 Grimorio                | Registro histórico inmutable de pociones aprobadas              | Done     |
 | 🏆 Ranking                 | Clasificación de alquimistas y gremios destacados               | Done     |
 | 💾 Persistencia            | API REST y MongoDB Atlas; existen utilidades locales en el frontend | Done |
-| 🏆 Ranking | Clasificación de alquimistas y gremios | Done |
 | 🔐 Autenticación | Registro, inicio de sesión y acceso mediante JWT | Done |
 | 🛡️ Autorización | Validación de permisos según membresía, rol y operación | Done |
 | ⚡ Tiempo real | Notificaciones de actualización de votaciones con Socket.IO | Done |
-| 💾 Persistencia | Almacenamiento de los recursos mediante MongoDB Atlas | Done |
 | 📖 Swagger | Documentación interactiva de la API REST | Done |
 | 🌐 Producción | Frontend en Netlify y Backend en Render | Done |
 
@@ -67,16 +65,18 @@ Potion Lab cuenta con un frontend desarrollado con React y Vite y una API REST e
 Potion Lab sigue una arquitectura **cliente-servidor**, con separación entre frontend, API REST y base de datos.
 
 ```text
+
 Potion-Lab-Beta/
 ├── frontend/
-│   └── public/
-│       ├── components/
-│       ├── context/
-│       ├── hooks/
-│       ├── pages/
-│       ├── services/
-│       ├── styles/
-│       └── utils/
+│   ├── components/
+│   ├── context/
+│   ├── hooks/
+│   ├── pages/
+│   ├── services/
+│   ├── styles/
+│   ├── utils/
+│   ├── App.jsx
+│   └── main.jsx
 │
 ├── backend/
 │   ├── config/
@@ -93,10 +93,13 @@ Potion-Lab-Beta/
 │   └── package.json
 │
 ├── docs/
-│   ├── ARQUITECTURA.md
+│   ├── codex-hero.svg
 │   └── openapi.json
 │
+├── public/
+├── index.html
 ├── package.json
+├── vite.config.js
 └── README.md
 ```
 
