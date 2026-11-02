@@ -10,6 +10,8 @@
 [![HTML](https://img.shields.io/badge/HTML-E34F26?logo=html5\&logoColor=white\&style=for-the-badge)](https://developer.mozilla.org/es/docs/Web/HTML)
 ![Status](https://img.shields.io/badge/Status-Finished-success?style=for-the-badge)
 
+<img src="docs/codex-hero.svg" width="100%" alt="Potion Lab — The Alchemist's Codex, portada de fantasía violeta y dorada" />
+
 
 | Servicio | Plataforma | Enlace |
 |---|---|---|
